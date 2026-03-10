@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, User, Tag } from 'lucide-react';
 import AnimatedSection from '../components/AnimatedSection';
@@ -10,35 +10,33 @@ import TiltCard from '../components/TiltCard';
 const BlogPostPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [post, setPost] = useState<BlogPost | null>(null);
-  const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
+
+  const post = useMemo(() => blogs.find(b => b.id === id) || null, [id]);
+
+  const relatedPosts = useMemo(() => {
+    if (!post) return [];
+    return blogs
+      .filter(b => b.category === post.category && b.id !== post.id)
+      .slice(0, 3);
+  }, [post]);
 
   useEffect(() => {
-    const foundPost = blogs.find(b => b.id === id);
-    if (foundPost) {
-      setPost(foundPost);
-      
+    if (post) {
       // Update meta description
-      document.title = `${foundPost.title} | AgroSymbiont Blog`;
+      document.title = `${post.title} | AgroSymbiont Blog`;
       let metaDescription = document.querySelector('meta[name="description"]');
       if (metaDescription) {
-        metaDescription.setAttribute("content", foundPost.metaDescription || foundPost.excerpt);
+        metaDescription.setAttribute("content", post.metaDescription || post.excerpt);
       } else {
         const meta = document.createElement('meta');
         meta.name = "description";
-        meta.content = foundPost.metaDescription || foundPost.excerpt;
+        meta.content = post.metaDescription || post.excerpt;
         document.head.appendChild(meta);
       }
-
-      // Find related posts
-      const related = blogs
-        .filter(b => b.category === foundPost.category && b.id !== foundPost.id)
-        .slice(0, 3);
-      setRelatedPosts(related);
     } else {
       navigate('/blog');
     }
-  }, [id, navigate]);
+  }, [post, navigate]);
 
   if (!post) {
     return (
