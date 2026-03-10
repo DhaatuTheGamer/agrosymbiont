@@ -39,8 +39,10 @@ const ContactPage: React.FC = () => {
     const validateField = (name: string, value: string): string => {
         if (name === 'name' && !value.trim()) return 'Full Name is required.';
         if (name === 'email') {
-            if (!value.trim()) return 'Email Address is required.';
-            if (!/\S+@\S+\.\S+/.test(value)) return 'Please enter a valid email address.';
+            const trimmedValue = value.trim();
+            if (!trimmedValue) return 'Email Address is required.';
+            const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+            if (!emailRegex.test(trimmedValue)) return 'Please enter a valid email address.';
         }
         if (name === 'phone' && !value.trim()) return 'Phone Number is required.';
         if (name === 'inquiryType' && !value) return 'Please select an inquiry type.';
