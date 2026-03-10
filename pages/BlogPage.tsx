@@ -111,9 +111,10 @@ const BlogPage: React.FC = () => {
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       setEmail(value);
-      if (!value.trim()) {
+      const trimmedValue = value.trim();
+      if (!trimmedValue) {
           setEmailError('Email Address is required.');
-      } else if (!/\S+@\S+\.\S+/.test(value)) {
+      } else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/.test(trimmedValue)) {
           setEmailError('Please enter a valid email address.');
       } else {
           setEmailError('');
@@ -122,10 +123,11 @@ const BlogPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!email.trim()) {
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) {
         setEmailError('Email Address is required.');
         return;
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
+    } else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/.test(trimmedEmail)) {
         setEmailError('Please enter a valid email address.');
         return;
     }
