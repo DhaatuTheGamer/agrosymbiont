@@ -7,41 +7,44 @@ import {
 } from 'react-simple-maps';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, TrendingUp, Droplets, Leaf } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
-const markers = [
-  {
-    markerOffset: -30,
-    name: "Maharashtra, India",
-    coordinates: [75.7139, 19.7515] as [number, number],
-    stats: { yieldBoost: "+28%", farmers: "4,500+", soilHealth: "Excellent" },
-    crop: "Cotton & Soybeans"
-  },
-  {
-    markerOffset: -30,
-    name: "Punjab, India",
-    coordinates: [75.3412, 31.1471] as [number, number],
-    stats: { yieldBoost: "+22%", farmers: "2,100+", soilHealth: "Improving" },
-    crop: "Wheat & Rice"
-  },
-  {
-    markerOffset: 15,
-    name: "Kenya",
-    coordinates: [37.9062, -0.0236] as [number, number],
-    stats: { yieldBoost: "+35%", farmers: "850+", soilHealth: "Good" },
-    crop: "Coffee & Tea"
-  },
-  {
-    markerOffset: 15,
-    name: "Vietnam",
-    coordinates: [108.2022, 14.0583] as [number, number],
-    stats: { yieldBoost: "+19%", farmers: "1,200+", soilHealth: "Good" },
-    crop: "Coffee & Spices"
-  }
-];
-
 const ImpactMap: React.FC = () => {
+    const { t } = useTranslation();
+
+    const markers = [
+      {
+        markerOffset: -30,
+        nameKey: "map_maharashtra",
+        coordinates: [75.7139, 19.7515] as [number, number],
+        stats: { yieldBoost: "+28%", farmers: "4,500+", soilHealthKey: "map_excellent" },
+        cropKey: "map_maharashtra_crop"
+      },
+      {
+        markerOffset: -30,
+        nameKey: "map_punjab",
+        coordinates: [75.3412, 31.1471] as [number, number],
+        stats: { yieldBoost: "+22%", farmers: "2,100+", soilHealthKey: "map_improving" },
+        cropKey: "map_punjab_crop"
+      },
+      {
+        markerOffset: 15,
+        nameKey: "map_kenya",
+        coordinates: [37.9062, -0.0236] as [number, number],
+        stats: { yieldBoost: "+35%", farmers: "850+", soilHealthKey: "map_good" },
+        cropKey: "map_kenya_crop"
+      },
+      {
+        markerOffset: 15,
+        nameKey: "map_vietnam",
+        coordinates: [108.2022, 14.0583] as [number, number],
+        stats: { yieldBoost: "+19%", farmers: "1,200+", soilHealthKey: "map_good" },
+        cropKey: "map_vietnam_crop"
+      }
+    ];
+
     const [activeTooltip, setActiveTooltip] = useState<(typeof markers)[0] | null>(null);
 
     return (
@@ -50,8 +53,8 @@ const ImpactMap: React.FC = () => {
                 <div className="absolute top-0 right-0 w-64 h-64 bg-mustard-yellow/5 rounded-full blur-3xl pointer-events-none -mt-32 -mr-32"></div>
                 
                 <div className="text-center mb-8 relative z-10">
-                    <h3 className="text-2xl md:text-4xl font-black text-gray-900 dark:text-white mb-2 tracking-tight">Global Impact Zones</h3>
-                    <p className="text-stone-500 dark:text-stone-400">Click a marker to see real-time localized success stats.</p>
+                    <h3 className="text-2xl md:text-4xl font-black text-gray-900 dark:text-white mb-2 tracking-tight">{t('map_title')}</h3>
+                    <p className="text-stone-500 dark:text-stone-400">{t('map_subtitle')}</p>
                 </div>
                 
                 <div className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] overflow-hidden rounded-2xl bg-blue-50/50 dark:bg-stone-900/50">
@@ -106,31 +109,31 @@ const ImpactMap: React.FC = () => {
                                 </button>
                                 <div className="flex items-center gap-2 mb-1">
                                     <MapPin className="w-5 h-5 text-mustard-yellow" />
-                                    <h4 className="font-bold text-lg text-gray-900 dark:text-white">{activeTooltip.name}</h4>
+                                    <h4 className="font-bold text-lg text-gray-900 dark:text-white">{t(activeTooltip.nameKey)}</h4>
                                 </div>
-                                <p className="text-sm text-stone-500 dark:text-stone-400 mb-4 font-medium">{activeTooltip.crop}</p>
+                                <p className="text-sm text-stone-500 dark:text-stone-400 mb-4 font-medium">{t(activeTooltip.cropKey)}</p>
                                 
                                 <div className="space-y-3">
                                     <div className="flex items-center justify-between bg-stone-50 dark:bg-stone-700/50 p-2 rounded-lg">
                                         <div className="flex items-center gap-2">
                                             <TrendingUp className="w-4 h-4 text-green-500" />
-                                            <span className="text-sm font-medium text-stone-600 dark:text-stone-300">Yield Boost</span>
+                                            <span className="text-sm font-medium text-stone-600 dark:text-stone-300">{t('map_yield_boost')}</span>
                                         </div>
                                         <span className="font-bold text-green-600 dark:text-green-400">{activeTooltip.stats.yieldBoost}</span>
                                     </div>
                                     <div className="flex items-center justify-between bg-stone-50 dark:bg-stone-700/50 p-2 rounded-lg">
                                         <div className="flex items-center gap-2">
                                             <Leaf className="w-4 h-4 text-cerulean-blue dark:text-blue-400" />
-                                            <span className="text-sm font-medium text-stone-600 dark:text-stone-300">Farmers Active</span>
+                                            <span className="text-sm font-medium text-stone-600 dark:text-stone-300">{t('map_farmers_active')}</span>
                                         </div>
                                         <span className="font-bold text-gray-800 dark:text-white">{activeTooltip.stats.farmers}</span>
                                     </div>
                                     <div className="flex items-center justify-between bg-stone-50 dark:bg-stone-700/50 p-2 rounded-lg">
                                         <div className="flex items-center gap-2">
                                             <Droplets className="w-4 h-4 text-blue-500" />
-                                            <span className="text-sm font-medium text-stone-600 dark:text-stone-300">Soil Health</span>
+                                            <span className="text-sm font-medium text-stone-600 dark:text-stone-300">{t('map_soil_health')}</span>
                                         </div>
-                                        <span className="font-bold text-gray-800 dark:text-white">{activeTooltip.stats.soilHealth}</span>
+                                        <span className="font-bold text-gray-800 dark:text-white">{t(activeTooltip.stats.soilHealthKey)}</span>
                                     </div>
                                 </div>
                             </motion.div>

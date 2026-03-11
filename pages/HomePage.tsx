@@ -95,9 +95,9 @@ const HomePage: React.FC = () => {
       <section className="py-20 md:py-32 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="text-center mb-24">
-             <h2 className="text-sm font-bold text-burnt-orange dark:text-orange-400 uppercase tracking-[0.2em] mb-4">Who We Are</h2>
+             <h2 className="text-sm font-bold text-burnt-orange dark:text-orange-400 uppercase tracking-[0.2em] mb-4">{t('home_who_we_are')}</h2>
             <p className="text-3xl md:text-5xl font-medium text-gray-800 dark:text-gray-200 max-w-5xl mx-auto leading-tight">
-                We combine <span className="font-bold text-cerulean-blue dark:text-blue-400 relative inline-block after:content-[''] after:absolute after:bottom-1 after:left-0 after:w-full after:h-3 after:bg-mustard-yellow/40 dark:after:bg-mustard-yellow/20 after:-z-10">nanotechnology</span>, <span className="font-bold text-cerulean-blue dark:text-blue-400 relative inline-block after:content-[''] after:absolute after:bottom-1 after:left-0 after:w-full after:h-3 after:bg-mustard-yellow/40 dark:after:bg-mustard-yellow/20 after:-z-10">certified organic inputs</span>, and <span className="font-bold text-cerulean-blue dark:text-blue-400 relative inline-block after:content-[''] after:absolute after:bottom-1 after:left-0 after:w-full after:h-3 after:bg-mustard-yellow/40 dark:after:bg-mustard-yellow/20 after:-z-10">expert agronomy</span>.
+                {t('home_who_desc_1')}<span className="font-bold text-cerulean-blue dark:text-blue-400 relative inline-block after:content-[''] after:absolute after:bottom-1 after:left-0 after:w-full after:h-3 after:bg-mustard-yellow/40 dark:after:bg-mustard-yellow/20 after:-z-10">{t('home_who_highlight_1')}</span>{t('home_who_mid')}<span className="font-bold text-cerulean-blue dark:text-blue-400 relative inline-block after:content-[''] after:absolute after:bottom-1 after:left-0 after:w-full after:h-3 after:bg-mustard-yellow/40 dark:after:bg-mustard-yellow/20 after:-z-10">{t('home_who_highlight_2')}</span>{t('home_who_and')}<span className="font-bold text-cerulean-blue dark:text-blue-400 relative inline-block after:content-[''] after:absolute after:bottom-1 after:left-0 after:w-full after:h-3 after:bg-mustard-yellow/40 dark:after:bg-mustard-yellow/20 after:-z-10">{t('home_who_highlight_3')}</span>{t('home_who_end')}
             </p>
           </AnimatedSection>
 
@@ -110,22 +110,22 @@ const HomePage: React.FC = () => {
                     
                     <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         <div className="translate-z-4">
-                            <h3 className="text-3xl md:text-5xl font-bold mb-8 leading-tight drop-shadow-lg">Real Impact,<br/>Measured in Growth.</h3>
+                            <h3 className="text-3xl md:text-5xl font-bold mb-8 leading-tight drop-shadow-lg">{t('home_impact_title')}<br/>{t('home_impact_title_2')}</h3>
                              <p className="text-blue-100 dark:text-blue-200 text-lg leading-relaxed mb-10 font-light">
-                                With farmers across India and global markets, AgroSymbiont is redefining agriculture. From nano-powered crop care to sustainable soil solutions, we deliver measurable improvements that support resilient farming systems worldwide.
+                                {t('home_impact_desc')}
                             </p>
                              <div className="grid grid-cols-3 gap-8 border-t border-white/10 pt-8">
                                 <Link to="/stories" className="block hover:-translate-y-1 transition-transform group cursor-pointer">
                                     <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md group-hover:text-yellow-300 transition-colors">10K+</div>
-                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300 group-hover:text-white transition-colors">Farmers Empowered</div>
+                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300 group-hover:text-white transition-colors">{t('home_stat_farmers')}</div>
                                 </Link>
                                 <Link to="/stories" className="block hover:-translate-y-1 transition-transform group cursor-pointer">
                                     <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md group-hover:text-yellow-300 transition-colors">25%</div>
-                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300 group-hover:text-white transition-colors">Avg Yield Increase</div>
+                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300 group-hover:text-white transition-colors">{t('home_stat_yield')}</div>
                                 </Link>
                                 <Link to="/stories" className="block hover:-translate-y-1 transition-transform group cursor-pointer">
                                     <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md group-hover:text-yellow-300 transition-colors">100%</div>
-                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300 group-hover:text-white transition-colors">Eco-Friendly</div>
+                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300 group-hover:text-white transition-colors">{t('home_stat_eco')}</div>
                                 </Link>
                             </div>
                         </div>
@@ -152,28 +152,28 @@ const HomePage: React.FC = () => {
       <section className="py-24 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
            <AnimatedSection className="text-center mb-20">
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">Key Highlights</h2>
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">{t('home_highlights_title')}</h2>
                 <div className="w-24 h-1.5 bg-gradient-to-r from-mustard-yellow to-burnt-orange mx-auto rounded-full shadow-lg"></div>
            </AnimatedSection>
              <AnimatedSection className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 perspective-1000">
                  <FeatureCard 
-                    title="Boost Productivity"
-                    description="Advanced nanotech and bio-stimulants designed to dramatically increase crop yields."
+                    title={t('home_feat_1_title')}
+                    description={t('home_feat_1_desc')}
                     icon={<TrendingUp className="w-8 h-8" strokeWidth={1.5} />}
                  />
                  <FeatureCard 
-                    title="Restore Soil Health"
-                    description="Carbon enhancers and beneficial microbes build long-term fertility for resilient soil."
+                    title={t('home_feat_2_title')}
+                    description={t('home_feat_2_desc')}
                     icon={<Sparkles className="w-8 h-8" strokeWidth={1.5} />}
                  />
                  <FeatureCard 
-                    title="Cut Farming Costs"
-                    description="Precision organic solutions engineered to lower input expenses and boost bottom lines."
+                    title={t('home_feat_3_title')}
+                    description={t('home_feat_3_desc')}
                     icon={<Coins className="w-8 h-8" strokeWidth={1.5} />}
                  />
                  <FeatureCard 
-                    title="Global Quality"
-                    description="Certified and trusted by Tea, Spice, and Coffee Boards to meet global standards."
+                    title={t('home_feat_4_title')}
+                    description={t('home_feat_4_desc')}
                     icon={<CheckCircle className="w-8 h-8" strokeWidth={1.5} />}
                  />
             </AnimatedSection>
@@ -187,10 +187,10 @@ const HomePage: React.FC = () => {
            <div className="absolute -right-20 -top-20 w-96 h-96 bg-burnt-orange/10 dark:bg-burnt-orange/5 rounded-full blur-3xl"></div>
            
           <AnimatedSection className="text-center max-w-4xl mx-auto px-4 relative z-10">
-              <h2 className="text-3xl md:text-5xl font-bold text-gray-800 dark:text-gray-200 mb-10 leading-tight drop-shadow-sm">Discover how AgroSymbiont can help you <br/><span className="text-cerulean-blue dark:text-blue-400">grow more, sustainably.</span></h2>
+              <h2 className="text-3xl md:text-5xl font-bold text-gray-800 dark:text-gray-200 mb-10 leading-tight drop-shadow-sm">{t('home_cta_title_1')}<br/><span className="text-cerulean-blue dark:text-blue-400">{t('home_cta_title_2')}</span></h2>
               <div>
                   <Link to="/technology" className="inline-block bg-gradient-to-r from-cerulean-blue to-blue-600 text-white text-lg font-bold py-5 px-12 rounded-full shadow-[0_8px_0_#1e3a8a] hover:shadow-[0_10px_0_#1e3a8a] hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:-translate-y-1 active:translate-y-2 active:shadow-[0_0px_0_#1e3a8a]">
-                      Explore Our Solutions
+                      {t('home_cta_btn')}
                   </Link>
               </div>
           </AnimatedSection>

@@ -6,45 +6,46 @@ import { useTranslation } from 'react-i18next';
 type CropType = 'wheat' | 'apple' | 'coffee' | 'vegetables' | null;
 type SymptomType = 'yellow_leaves' | 'stunted_growth' | 'low_yield' | 'pests' | null;
 
-const cropOptions = [
-  { id: 'wheat' as CropType, label: 'Cereals', icon: <Wheat className="w-6 h-6" /> },
-  { id: 'apple' as CropType, label: 'Fruits', icon: <Apple className="w-6 h-6" /> },
-  { id: 'coffee' as CropType, label: 'Cash Crops', icon: <Coffee className="w-6 h-6" /> },
-  { id: 'vegetables' as CropType, label: 'Vegetables', icon: <Sprout className="w-6 h-6" /> },
-];
-
-const symptomOptions = {
-    wheat: [
-        { id: 'yellow_leaves', label: 'Yellowing Leaves' },
-        { id: 'low_yield', label: 'Below Average Yield' },
-        { id: 'pests', label: 'Aphid/Rust Infestation' }
-    ],
-    apple: [
-        { id: 'stunted_growth', label: 'Stunted Growth' },
-        { id: 'low_yield', label: 'Small Fruit Size' },
-        { id: 'pests', label: 'Scab or Mites' }
-    ],
-    coffee: [
-        { id: 'yellow_leaves', label: 'Nutrient Deficiency' },
-        { id: 'low_yield', label: 'Berry Drop' },
-        { id: 'pests', label: 'Berry Borer' }
-    ],
-    vegetables: [
-        { id: 'stunted_growth', label: 'Poor Germination' },
-        { id: 'yellow_leaves', label: 'Wilted or Yellow Leaves' },
-        { id: 'pests', label: 'Whiteflies/Caterpillars' }
-    ]
-};
-
-const solutions = {
-    yellow_leaves: { name: 'Nano-N Master', desc: 'Foliar nitrogen boost with perfect targeted delivery to recover green color.' },
-    stunted_growth: { name: 'RootStim Pro', desc: 'Phosphorus and zinc nano-particles for immediate root system expansion.' },
-    low_yield: { name: 'YieldMax PK', desc: 'Optimized Potassium-Phosphate complex to boost fruiting and seed filling.' },
-    pests: { name: 'BioGuard Armor', desc: 'Silica and organic oils formulation for enhanced natural plant resistance.' }
-};
-
 const CropProblemSolver: React.FC = () => {
   const { t } = useTranslation();
+
+  const cropOptions = [
+    { id: 'wheat' as CropType, label: t('solver_crop_cereals'), icon: <Wheat className="w-6 h-6" /> },
+    { id: 'apple' as CropType, label: t('solver_crop_fruits'), icon: <Apple className="w-6 h-6" /> },
+    { id: 'coffee' as CropType, label: t('solver_crop_cash'), icon: <Coffee className="w-6 h-6" /> },
+    { id: 'vegetables' as CropType, label: t('solver_crop_vegetables'), icon: <Sprout className="w-6 h-6" /> },
+  ];
+
+  const symptomOptions: Record<string, { id: string; label: string }[]> = {
+    wheat: [
+      { id: 'yellow_leaves', label: t('solver_sym_yellow_wheat') },
+      { id: 'low_yield', label: t('solver_sym_low_wheat') },
+      { id: 'pests', label: t('solver_sym_pest_wheat') }
+    ],
+    apple: [
+      { id: 'stunted_growth', label: t('solver_sym_stunted_apple') },
+      { id: 'low_yield', label: t('solver_sym_low_apple') },
+      { id: 'pests', label: t('solver_sym_pest_apple') }
+    ],
+    coffee: [
+      { id: 'yellow_leaves', label: t('solver_sym_yellow_coffee') },
+      { id: 'low_yield', label: t('solver_sym_low_coffee') },
+      { id: 'pests', label: t('solver_sym_pest_coffee') }
+    ],
+    vegetables: [
+      { id: 'stunted_growth', label: t('solver_sym_stunted_veg') },
+      { id: 'yellow_leaves', label: t('solver_sym_yellow_veg') },
+      { id: 'pests', label: t('solver_sym_pest_veg') }
+    ]
+  };
+
+  const solutions: Record<string, { name: string; desc: string }> = {
+    yellow_leaves: { name: t('solver_sol_yellow_name'), desc: t('solver_sol_yellow_desc') },
+    stunted_growth: { name: t('solver_sol_stunted_name'), desc: t('solver_sol_stunted_desc') },
+    low_yield: { name: t('solver_sol_low_name'), desc: t('solver_sol_low_desc') },
+    pests: { name: t('solver_sol_pest_name'), desc: t('solver_sol_pest_desc') }
+  };
+
   const [selectedCrop, setSelectedCrop] = useState<CropType>(null);
   const [selectedSymptom, setSelectedSymptom] = useState<SymptomType>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -68,14 +69,14 @@ const CropProblemSolver: React.FC = () => {
       <div className="absolute top-0 right-0 w-64 h-64 bg-cerulean-blue/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
       
       <div className="text-center mb-8 relative z-10">
-        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">Interactive Diagnostics</h2>
-        <p className="text-stone-500 dark:text-stone-400">Select your crop and symptoms to get an instant nano-agronomy recommendation.</p>
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">{t('solver_title')}</h2>
+        <p className="text-stone-500 dark:text-stone-400">{t('solver_subtitle')}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
         <div className="space-y-6">
             <div>
-                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">1. Select Crop Type</label>
+                <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">{t('solver_step1')}</label>
                 <div className="grid grid-cols-2 gap-3">
                     {cropOptions.map((crop) => (
                         <button
@@ -100,7 +101,7 @@ const CropProblemSolver: React.FC = () => {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                     >
-                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3 mt-4">2. Observed Symptoms</label>
+                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3 mt-4">{t('solver_step2')}</label>
                         <div className="flex flex-col gap-2">
                             {currentSymptoms.map((symptom) => (
                                 <button
@@ -126,7 +127,7 @@ const CropProblemSolver: React.FC = () => {
                             onClick={handleDiagnose}
                             className="w-full bg-cerulean-blue text-white font-bold py-3 px-6 rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 shadow-lg"
                         >
-                            <Search className="w-5 h-5" /> Analyze Problem
+                            <Search className="w-5 h-5" /> {t('solver_analyze')}
                         </button>
                     </motion.div>
                 )}
@@ -137,7 +138,7 @@ const CropProblemSolver: React.FC = () => {
             {isAnalyzing ? (
                 <div className="flex flex-col items-center gap-4">
                     <div className="w-16 h-16 border-4 border-cerulean-blue/30 border-t-cerulean-blue rounded-full animate-spin"></div>
-                    <p className="text-stone-500 font-medium animate-pulse">Running diagnostic algorithms...</p>
+                    <p className="text-stone-500 font-medium animate-pulse">{t('solver_analyzing')}</p>
                 </div>
             ) : showResult && recommendedSolution ? (
                 <motion.div 
@@ -148,17 +149,17 @@ const CropProblemSolver: React.FC = () => {
                     <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center mb-4">
                         <CheckCircle2 className="w-8 h-8" />
                     </div>
-                    <h3 className="text-sm font-bold text-stone-500 uppercase tracking-wider mb-2">Recommended Solution</h3>
+                    <h3 className="text-sm font-bold text-stone-500 uppercase tracking-wider mb-2">{t('solver_recommended')}</h3>
                     <h4 className="text-2xl font-black text-cerulean-blue dark:text-blue-400 mb-4">{recommendedSolution.name}</h4>
                     <p className="text-stone-600 dark:text-stone-300 mb-6 max-w-sm">{recommendedSolution.desc}</p>
                     <button className="bg-mustard-yellow text-stone-900 font-bold py-2 px-6 rounded-lg hover:bg-yellow-500 transition-colors shadow-md flex items-center gap-2">
-                        View Product <ArrowRight className="w-4 h-4" />
+                        {t('solver_view_product')} <ArrowRight className="w-4 h-4" />
                     </button>
                 </motion.div>
             ) : (
                 <div className="text-stone-400 dark:text-stone-500 flex flex-col items-center gap-3">
                     <Search className="w-12 h-12 opacity-50" />
-                    <p>Select your crop and symptoms to view recommendations.</p>
+                    <p>{t('solver_placeholder')}</p>
                 </div>
             )}
         </div>
