@@ -5,10 +5,11 @@ import AnimatedSection from '../components/AnimatedSection';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X, Bell, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { blogs, BlogPost } from '../data/blogs';
+import { useTranslation } from 'react-i18next';
 
 import TiltCard from '../components/TiltCard';
 
-const BlogCard: React.FC<{ post: BlogPost; onCategoryClick: (category: string) => void; onReadMore: () => void }> = ({ post, onCategoryClick, onReadMore }) => {
+const BlogCard: React.FC<{ post: BlogPost; onCategoryClick: (category: string) => void; onReadMore: () => void; readPreviewText: string; readArticleText: string }> = ({ post, onCategoryClick, onReadMore, readPreviewText, readArticleText }) => {
     const handleReadMore = (e: React.MouseEvent) => {
         e.preventDefault();
         onReadMore();
@@ -44,7 +45,7 @@ const BlogCard: React.FC<{ post: BlogPost; onCategoryClick: (category: string) =
                         onClick={handleReadMore}
                         className="text-cerulean-blue dark:text-blue-400 font-bold text-sm hover:text-burnt-orange dark:hover:text-orange-400 transition-colors self-start flex items-center mt-auto group/btn bg-blue-50 dark:bg-blue-900/20 px-5 py-2.5 rounded-full hover:bg-orange-50 dark:hover:bg-orange-900/20 shadow-sm hover:shadow-md active:translate-y-1 active:shadow-none"
                     >
-                        {post.date === "Coming Soon" ? "Read Preview" : "Read Article"} <span className="ml-2 transform transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
+                        {post.date === "Coming Soon" ? readPreviewText : readArticleText} <span className="ml-2 transform transition-transform duration-300 group-hover/btn:translate-x-1">→</span>
                     </button>
                 </div>
             </div>
@@ -69,6 +70,7 @@ const BlogSkeletonCard: React.FC = () => (
 );
 
 const BlogPage: React.FC = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -90,7 +92,6 @@ const BlogPage: React.FC = () => {
   };
 
   useEffect(() => {
-      // Simulate data fetching
       const timer = setTimeout(() => {
           setIsLoading(false);
       }, 1500);
@@ -113,9 +114,9 @@ const BlogPage: React.FC = () => {
       setEmail(value);
       const trimmedValue = value.trim();
       if (!trimmedValue) {
-          setEmailError('Email Address is required.');
+          setEmailError(t('blog_email_required'));
       } else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/.test(trimmedValue)) {
-          setEmailError('Please enter a valid email address.');
+          setEmailError(t('blog_email_invalid'));
       } else {
           setEmailError('');
       }
@@ -125,18 +126,15 @@ const BlogPage: React.FC = () => {
     e.preventDefault();
     const trimmedEmail = email.trim();
     if (!trimmedEmail) {
-        setEmailError('Email Address is required.');
+        setEmailError(t('blog_email_required'));
         return;
     } else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/.test(trimmedEmail)) {
-        setEmailError('Please enter a valid email address.');
+        setEmailError(t('blog_email_invalid'));
         return;
     }
     
     setIsSubmitting(true);
-    
-    // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
     setIsSubmitting(false);
     setIsSubmitted(true);
   };
@@ -145,15 +143,15 @@ const BlogPage: React.FC = () => {
     <div className="py-20 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection className="text-center mb-20">
-          <h1 className="text-5xl font-extrabold text-gray-900 dark:text-white mb-6">Insights & News</h1>
+          <h1 className="text-5xl font-extrabold text-gray-900 dark:text-white mb-6">{t('blog_title')}</h1>
            <p className="text-xl text-stone-gray dark:text-stone-300 max-w-3xl mx-auto font-light">
-            Exploring the frontiers of sustainable agriculture, technology, and soil science.
+            {t('blog_subtitle')}
           </p>
         </AnimatedSection>
 
         <AnimatedSection className="mb-24">
             <div className="flex flex-col md:flex-row items-center justify-between mb-10 gap-6">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Latest Updates</h2>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{t('blog_latest')}</h2>
                 <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto scrollbar-hide p-1">
                     {categories.map((category) => (
                         <button
@@ -165,7 +163,7 @@ const BlogPage: React.FC = () => {
                                     : 'bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-stone-500 dark:text-stone-400 hover:border-cerulean-blue dark:hover:border-blue-500 hover:text-cerulean-blue dark:hover:text-blue-400'
                             }`}
                         >
-                            {category === 'All' ? 'All Posts' : category}
+                            {category === 'All' ? t('blog_cat_all') : t(`blog_cat_${category}`)}
                         </button>
                     ))}
                 </div>
@@ -182,9 +180,11 @@ const BlogPage: React.FC = () => {
                             key={post.id} 
                             post={post} 
                             onCategoryClick={setSelectedCategory}
+                            readPreviewText={t('blog_read_preview')}
+                            readArticleText={t('blog_read_article')}
                             onReadMore={() => {
                                 if (post.date === "Coming Soon") {
-                                    showToast("This article is currently in the final stages of editing. Sign up for our newsletter below to be notified when it goes live!");
+                                    showToast(t('blog_toast_msg'));
                                 } else {
                                     navigate(`/blog/${post.id}`);
                                 }
@@ -194,12 +194,12 @@ const BlogPage: React.FC = () => {
                 </div>
             ) : (
                 <div className="text-center py-24 bg-white/50 dark:bg-stone-800/50 rounded-[2rem] border border-dashed border-stone-300 dark:border-stone-700">
-                    <p className="text-stone-500 dark:text-stone-400 text-lg mb-4">No articles found in this category.</p>
+                    <p className="text-stone-500 dark:text-stone-400 text-lg mb-4">{t('blog_no_articles')}</p>
                     <button 
                         onClick={() => setSelectedCategory('All')}
                         className="text-cerulean-blue dark:text-blue-400 hover:underline font-bold"
                     >
-                        View all posts
+                        {t('blog_view_all')}
                     </button>
                 </div>
             )}
@@ -215,20 +215,20 @@ const BlogPage: React.FC = () => {
                 <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
                     <CheckCircle className="w-10 h-10 text-green-400" strokeWidth={2} />
                 </div>
-                <h3 className="text-4xl font-bold text-white mb-4">Welcome to the Community!</h3>
-                <p className="text-gray-300 text-xl">You've successfully subscribed. We'll notify you when these articles go live.</p>
+                <h3 className="text-4xl font-bold text-white mb-4">{t('blog_welcome')}</h3>
+                <p className="text-gray-300 text-xl">{t('blog_welcome_desc')}</p>
               </div>
             ) : (
               <div className="relative z-10">
-                <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">Stay Ahead of the Curve</h3>
+                <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">{t('blog_stay_ahead')}</h3>
                 <p className="text-gray-300 mb-10 max-w-xl mx-auto text-lg font-light">
-                    Get the latest insights on regenerative farming, nanotechnology, and agritech delivered directly to your inbox.
+                    {t('blog_stay_ahead_desc')}
                 </p>
                 <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto relative">
                   <div className="flex-grow relative w-full">
                       <input
                         type="email"
-                        placeholder="Enter your email address"
+                        placeholder={t('blog_email_placeholder')}
                         value={email}
                         onChange={handleEmailChange}
                         className={`w-full px-8 py-4 bg-white/10 border ${emailError ? 'border-red-500 bg-red-900/20' : 'border-white/20'} rounded-full shadow-inner focus:outline-none focus:ring-2 focus:ring-mustard-yellow transition-all text-white placeholder-gray-400 backdrop-blur-sm text-center sm:text-left`}
@@ -249,15 +249,15 @@ const BlogPage: React.FC = () => {
                     {isSubmitting ? (
                         <>
                             <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-cerulean-blue" />
-                            Submitting...
+                            {t('blog_submitting')}
                         </>
                     ) : (
-                        'Notify Me'
+                        t('blog_notify')
                     )}
                   </button>
                 </form>
                 <p className="mt-8 text-xs text-gray-500">
-                    We respect your privacy. No spam, ever. Unsubscribe at any time.
+                    {t('blog_privacy')}
                 </p>
               </div>
             )}
@@ -278,7 +278,7 @@ const BlogPage: React.FC = () => {
                     <Bell className="w-5 h-5 text-cerulean-blue" />
                 </div>
                 <div className="flex-grow pr-2">
-                    <h4 className="font-bold text-sm mb-1">Coming Soon</h4>
+                    <h4 className="font-bold text-sm mb-1">{t('blog_coming_soon')}</h4>
                     <p className="text-sm text-gray-300 leading-relaxed">{toastMessage}</p>
                 </div>
                 <button 

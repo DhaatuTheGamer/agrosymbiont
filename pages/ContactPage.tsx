@@ -2,22 +2,25 @@
 import React, { useState, useCallback } from 'react';
 import AnimatedSection from '../components/AnimatedSection';
 import { Check, AlertCircle, ChevronDown, Loader2, MapPin, Phone, Mail } from 'lucide-react';
-
-const validateField = (name: string, value: string): string => {
-    if (name === 'name' && !value.trim()) return 'Full Name is required.';
-    if (name === 'email') {
-        const trimmedValue = value.trim();
-        if (!trimmedValue) return 'Email Address is required.';
-        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
-        if (!emailRegex.test(trimmedValue)) return 'Please enter a valid email address.';
-    }
-    if (name === 'phone' && !value.trim()) return 'Phone Number is required.';
-    if (name === 'inquiryType' && !value) return 'Please select an inquiry type.';
-    if (name === 'message' && !value.trim()) return 'Message is required.';
-    return '';
-};
+import { useTranslation } from 'react-i18next';
 
 const ContactPage: React.FC = () => {
+    const { t } = useTranslation();
+
+    const validateField = useCallback((name: string, value: string): string => {
+        if (name === 'name' && !value.trim()) return t('contact_name_required');
+        if (name === 'email') {
+            const trimmedValue = value.trim();
+            if (!trimmedValue) return t('contact_email_required');
+            const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+            if (!emailRegex.test(trimmedValue)) return t('contact_email_invalid');
+        }
+        if (name === 'phone' && !value.trim()) return t('contact_phone_required');
+        if (name === 'inquiryType' && !value) return t('contact_inquiry_required');
+        if (name === 'message' && !value.trim()) return t('contact_message_required');
+        return '';
+    }, [t]);
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -48,7 +51,7 @@ const ContactPage: React.FC = () => {
             }
             return newErrors;
         });
-    }, []);
+    }, [validateField]);
 
     const validateForm = useCallback((): { [key: string]: string } => {
         const newErrors: { [key: string]: string } = {};
@@ -63,7 +66,7 @@ const ContactPage: React.FC = () => {
         const messageError = validateField('message', formData.message);
         if (messageError) newErrors.message = messageError;
         return newErrors;
-    }, [formData]);
+    }, [formData, validateField]);
 
     const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -90,9 +93,9 @@ const ContactPage: React.FC = () => {
         <div className="py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <AnimatedSection className="text-center mb-16">
-                    <h1 className="text-5xl font-extrabold text-gray-900 dark:text-white mb-6">Get in Touch</h1>
+                    <h1 className="text-5xl font-extrabold text-gray-900 dark:text-white mb-6">{t('contact_title')}</h1>
                     <p className="text-xl text-stone-gray dark:text-stone-300 max-w-3xl mx-auto font-light">
-                        Have a question or a project in mind? We'd love to hear from you. Reach out to us, and let's cultivate the future together.
+                        {t('contact_subtitle')}
                     </p>
                 </AnimatedSection>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
@@ -102,8 +105,8 @@ const ContactPage: React.FC = () => {
                                 <div className="w-24 h-24 bg-green-50 dark:bg-green-900/30 text-green-500 dark:text-green-400 rounded-full flex items-center justify-center mb-8 shadow-inner">
                                     <Check className="h-12 w-12" strokeWidth={2} />
                                 </div>
-                                <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">Thank You!</h2>
-                                <p className="text-stone-gray dark:text-stone-400 text-lg max-w-sm">Your message has been sent successfully. We will get back to you shortly.</p>
+                                <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">{t('contact_thank_you')}</h2>
+                                <p className="text-stone-gray dark:text-stone-400 text-lg max-w-sm">{t('contact_success_msg')}</p>
                             </div>
                         ) : (
                             <form noValidate onSubmit={handleSubmit} className="bg-white/60 dark:bg-stone-800/60 backdrop-blur-xl p-10 rounded-[2.5rem] shadow-2xl border border-white/50 dark:border-stone-700/50 space-y-8">
@@ -111,7 +114,7 @@ const ContactPage: React.FC = () => {
                                     <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 rounded-xl flex items-start">
                                         <AlertCircle className="w-5 h-5 text-red-500 dark:text-red-400 mt-0.5 mr-3 flex-shrink-0" strokeWidth={2} />
                                         <div>
-                                            <h4 className="text-red-800 dark:text-red-300 font-bold text-sm mb-1">Please correct the following errors:</h4>
+                                            <h4 className="text-red-800 dark:text-red-300 font-bold text-sm mb-1">{t('contact_error_header')}</h4>
                                             <ul className="list-disc list-inside text-red-600 dark:text-red-400 text-sm">
                                                 {Object.values(errors).map((error, index) => (
                                                     <li key={index}>{error}</li>
@@ -121,8 +124,8 @@ const ContactPage: React.FC = () => {
                                     </div>
                                 )}
                                 <div>
-                                    <label htmlFor="name" className="block text-sm font-bold text-gray-700 dark:text-stone-300 mb-2 ml-1">Full Name <span className="text-burnt-orange dark:text-orange-400">*</span></label>
-                                    <input type="text" name="name" id="name" required value={formData.name} onChange={handleChange} className={`${inputClass} ${errors.name ? errorClass : ''}`} placeholder="e.g. Rahul Sharma" />
+                                    <label htmlFor="name" className="block text-sm font-bold text-gray-700 dark:text-stone-300 mb-2 ml-1">{t('contact_name_label')} <span className="text-burnt-orange dark:text-orange-400">*</span></label>
+                                    <input type="text" name="name" id="name" required value={formData.name} onChange={handleChange} className={`${inputClass} ${errors.name ? errorClass : ''}`} placeholder={t('contact_name_placeholder')} />
                                     {errors.name && (
                                         <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
                                             <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
@@ -132,8 +135,8 @@ const ContactPage: React.FC = () => {
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
-                                        <label htmlFor="email" className="block text-sm font-bold text-gray-700 dark:text-stone-300 mb-2 ml-1">Email Address <span className="text-burnt-orange dark:text-orange-400">*</span></label>
-                                        <input type="email" name="email" id="email" required value={formData.email} onChange={handleChange} className={`${inputClass} ${errors.email ? errorClass : ''}`} placeholder="e.g. rahul@example.com" />
+                                        <label htmlFor="email" className="block text-sm font-bold text-gray-700 dark:text-stone-300 mb-2 ml-1">{t('contact_email_label')} <span className="text-burnt-orange dark:text-orange-400">*</span></label>
+                                        <input type="email" name="email" id="email" required value={formData.email} onChange={handleChange} className={`${inputClass} ${errors.email ? errorClass : ''}`} placeholder={t('contact_email_placeholder')} />
                                         {errors.email && (
                                             <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
                                                 <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
@@ -142,8 +145,8 @@ const ContactPage: React.FC = () => {
                                         )}
                                     </div>
                                      <div>
-                                        <label htmlFor="phone" className="block text-sm font-bold text-gray-700 dark:text-stone-300 mb-2 ml-1">Phone Number <span className="text-burnt-orange dark:text-orange-400">*</span></label>
-                                        <input type="tel" name="phone" id="phone" required value={formData.phone} onChange={handleChange} pattern="[0-9]*" className={`${inputClass} ${errors.phone ? errorClass : ''}`} placeholder="e.g. +91 98765 43210" />
+                                        <label htmlFor="phone" className="block text-sm font-bold text-gray-700 dark:text-stone-300 mb-2 ml-1">{t('contact_phone_label')} <span className="text-burnt-orange dark:text-orange-400">*</span></label>
+                                        <input type="tel" name="phone" id="phone" required value={formData.phone} onChange={handleChange} pattern="[0-9]*" className={`${inputClass} ${errors.phone ? errorClass : ''}`} placeholder={t('contact_phone_placeholder')} />
                                         {errors.phone && (
                                             <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
                                                 <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
@@ -153,14 +156,14 @@ const ContactPage: React.FC = () => {
                                     </div>
                                 </div>
                                 <div>
-                                    <label htmlFor="inquiryType" className="block text-sm font-bold text-gray-700 dark:text-stone-300 mb-2 ml-1">Inquiry Type <span className="text-burnt-orange dark:text-orange-400">*</span></label>
+                                    <label htmlFor="inquiryType" className="block text-sm font-bold text-gray-700 dark:text-stone-300 mb-2 ml-1">{t('contact_inquiry_label')} <span className="text-burnt-orange dark:text-orange-400">*</span></label>
                                     <div className="relative">
                                         <select id="inquiryType" name="inquiryType" required value={formData.inquiryType} onChange={handleChange} className={`${inputClass} appearance-none ${errors.inquiryType ? errorClass : ''}`}>
-                                            <option value="">Please select an option</option>
-                                            <option value="General">General Inquiry</option>
-                                            <option value="Sales">Sales & Partnership</option>
-                                            <option value="Support">Technical Support</option>
-                                            <option value="Careers">Careers</option>
+                                            <option value="">{t('contact_inquiry_placeholder')}</option>
+                                            <option value="General">{t('contact_inquiry_general')}</option>
+                                            <option value="Sales">{t('contact_inquiry_sales')}</option>
+                                            <option value="Support">{t('contact_inquiry_support')}</option>
+                                            <option value="Careers">{t('contact_inquiry_careers')}</option>
                                         </select>
                                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-gray-500 dark:text-stone-400">
                                             <ChevronDown className="h-4 w-4" />
@@ -174,8 +177,8 @@ const ContactPage: React.FC = () => {
                                     )}
                                 </div>
                                 <div>
-                                    <label htmlFor="message" className="block text-sm font-bold text-gray-700 dark:text-stone-300 mb-2 ml-1">Message <span className="text-burnt-orange dark:text-orange-400">*</span></label>
-                                    <textarea id="message" name="message" rows={4} required value={formData.message} onChange={handleChange} className={`${inputClass} ${errors.message ? errorClass : ''}`} placeholder="How can we help you?"></textarea>
+                                    <label htmlFor="message" className="block text-sm font-bold text-gray-700 dark:text-stone-300 mb-2 ml-1">{t('contact_message_label')} <span className="text-burnt-orange dark:text-orange-400">*</span></label>
+                                    <textarea id="message" name="message" rows={4} required value={formData.message} onChange={handleChange} className={`${inputClass} ${errors.message ? errorClass : ''}`} placeholder={t('contact_message_placeholder')}></textarea>
                                     {errors.message && (
                                         <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
                                             <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
@@ -192,10 +195,10 @@ const ContactPage: React.FC = () => {
                                         {isSubmitting ? (
                                             <>
                                                 <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
-                                                Sending...
+                                                {t('contact_sending')}
                                             </>
                                         ) : (
-                                            'Send Message'
+                                            t('contact_send')
                                         )}
                                     </button>
                                 </div>
@@ -208,15 +211,15 @@ const ContactPage: React.FC = () => {
                              <div className="absolute top-0 right-0 -mr-16 -mt-16 w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
                              <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-mustard-yellow/20 dark:bg-yellow-900/20 rounded-full blur-2xl"></div>
                              
-                             <h3 className="text-3xl font-bold mb-8">Headquarters</h3>
+                             <h3 className="text-3xl font-bold mb-8">{t('contact_headquarters')}</h3>
                              <div className="space-y-8 relative z-10">
                                  <div className="flex items-start">
                                      <div className="bg-white/20 p-3 rounded-xl mr-4 backdrop-blur-sm">
                                         <MapPin className="w-6 h-6" strokeWidth={1.5} />
                                      </div>
                                      <div>
-                                        <p className="text-blue-200 text-xs uppercase font-bold tracking-widest mb-1">Address</p>
-                                        <p className="text-xl font-medium">123 AgriTech Ave, Kolkata, India</p>
+                                        <p className="text-blue-200 text-xs uppercase font-bold tracking-widest mb-1">{t('contact_address_label')}</p>
+                                        <p className="text-xl font-medium">{t('contact_address')}</p>
                                      </div>
                                  </div>
                                  <div className="flex items-start">
@@ -224,8 +227,8 @@ const ContactPage: React.FC = () => {
                                         <Phone className="w-6 h-6" strokeWidth={1.5} />
                                      </div>
                                      <div>
-                                        <p className="text-blue-200 text-xs uppercase font-bold tracking-widest mb-1">Phone</p>
-                                        <p className="text-xl font-medium">+91 11122 33344</p>
+                                        <p className="text-blue-200 text-xs uppercase font-bold tracking-widest mb-1">{t('contact_phone_label')}</p>
+                                        <p className="text-xl font-medium">{t('contact_phone_val')}</p>
                                      </div>
                                  </div>
                                  <div className="flex items-start">
@@ -233,8 +236,8 @@ const ContactPage: React.FC = () => {
                                         <Mail className="w-6 h-6" strokeWidth={1.5} />
                                      </div>
                                      <div>
-                                        <p className="text-blue-200 text-xs uppercase font-bold tracking-widest mb-1">Email</p>
-                                        <p className="text-xl font-medium">contact@agrosymbiont.com</p>
+                                        <p className="text-blue-200 text-xs uppercase font-bold tracking-widest mb-1">{t('contact_email_label')}</p>
+                                        <p className="text-xl font-medium">{t('contact_email_val')}</p>
                                      </div>
                                  </div>
                              </div>
@@ -259,7 +262,7 @@ const ContactPage: React.FC = () => {
                                 className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white dark:bg-stone-800 text-cerulean-blue dark:text-blue-400 font-bold py-3 px-6 rounded-full shadow-xl hover:bg-cerulean-blue dark:hover:bg-blue-600 hover:text-white dark:hover:text-white transition-all duration-300 flex items-center gap-2 transform hover:scale-105"
                             >
                                 <MapPin className="w-5 h-5" strokeWidth={2} />
-                                Get Directions
+                                {t('contact_directions')}
                             </a>
                          </div>
                     </AnimatedSection>
