@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import TiltCard from '../components/TiltCard';
+import CropProblemSolver from '../components/CropProblemSolver';
 
 const ProductsPage: React.FC = () => {
   const { t } = useTranslation();
@@ -67,6 +68,10 @@ const ProductsPage: React.FC = () => {
         <p className="text-xl text-stone-gray dark:text-stone-400 mb-12 leading-relaxed max-w-2xl mx-auto">
           {t('prod_subtitle')}
         </p>
+
+        <div className="mb-16 w-full">
+            <CropProblemSolver />
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 perspective-1000">
             <div className="lg:col-span-2 bg-gradient-to-br from-white to-stone-50 dark:from-stone-800 dark:to-stone-900 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700 p-6 sm:p-8 flex flex-col justify-center relative overflow-hidden text-left hover:shadow-xl transition-shadow">

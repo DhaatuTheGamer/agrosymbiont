@@ -4,6 +4,7 @@ import AnimatedSection from '../components/AnimatedSection';
 import TiltCard from '../components/TiltCard';
 import { ChevronLeft, ChevronRight, Lightbulb, Leaf, ShieldCheck, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import ImpactMap from '../components/ImpactMap';
 
 const TeamMemberCard: React.FC<{ name: string, title: string, imageUrl: string }> = ({ name, title, imageUrl }) => (
     <TiltCard className="h-96 w-full">
@@ -86,6 +87,13 @@ const AboutPage: React.FC = () => {
                         <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-4 md:mb-6 relative z-10">{t('about_vision_title')}</h2>
                         <p className="text-stone-gray dark:text-stone-300 text-base md:text-lg leading-relaxed relative z-10">{t('about_vision_desc')}</p>
                     </div>
+                </AnimatedSection>
+            </div>
+
+            {/* Impact Map Section */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 md:mb-32">
+                <AnimatedSection>
+                    <ImpactMap />
                 </AnimatedSection>
             </div>
 

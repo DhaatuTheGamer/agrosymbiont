@@ -22,7 +22,23 @@ export default defineConfig(({ mode }) => {
         VitePWA({
           registerType: 'autoUpdate',
           workbox: {
-            globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+            globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+            runtimeCaching: [
+              {
+                urlPattern: ({ url }) => url.pathname.includes('/faq') || url.pathname.includes('/resources') || url.pathname.includes('/products'),
+                handler: 'CacheFirst',
+                options: {
+                  cacheName: 'essential-pages-cache',
+                  expiration: {
+                    maxEntries: 10,
+                    maxAgeSeconds: 60 * 60 * 24 * 7 // 7 days
+                  },
+                  cacheableResponse: {
+                    statuses: [0, 200]
+                  }
+                }
+              }
+            ]
           },
           manifest: {
             name: 'AgroSymbiont',

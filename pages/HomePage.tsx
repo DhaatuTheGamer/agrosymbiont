@@ -115,18 +115,18 @@ const HomePage: React.FC = () => {
                                 With farmers across India and global markets, AgroSymbiont is redefining agriculture. From nano-powered crop care to sustainable soil solutions, we deliver measurable improvements that support resilient farming systems worldwide.
                             </p>
                              <div className="grid grid-cols-3 gap-8 border-t border-white/10 pt-8">
-                                <div>
-                                    <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md">10K+</div>
-                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300">Farmers Empowered</div>
-                                </div>
-                                <div>
-                                    <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md">25%</div>
-                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300">Avg Yield Increase</div>
-                                </div>
-                                <div>
-                                    <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md">100%</div>
-                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300">Eco-Friendly</div>
-                                </div>
+                                <Link to="/stories" className="block hover:-translate-y-1 transition-transform group cursor-pointer">
+                                    <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md group-hover:text-yellow-300 transition-colors">10K+</div>
+                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300 group-hover:text-white transition-colors">Farmers Empowered</div>
+                                </Link>
+                                <Link to="/stories" className="block hover:-translate-y-1 transition-transform group cursor-pointer">
+                                    <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md group-hover:text-yellow-300 transition-colors">25%</div>
+                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300 group-hover:text-white transition-colors">Avg Yield Increase</div>
+                                </Link>
+                                <Link to="/stories" className="block hover:-translate-y-1 transition-transform group cursor-pointer">
+                                    <div className="text-4xl font-bold text-mustard-yellow dark:text-yellow-400 mb-1 drop-shadow-md group-hover:text-yellow-300 transition-colors">100%</div>
+                                    <div className="text-xs uppercase tracking-wider text-blue-200 dark:text-blue-300 group-hover:text-white transition-colors">Eco-Friendly</div>
+                                </Link>
                             </div>
                         </div>
                         <div className="h-full min-h-[400px] bg-white/10 dark:bg-stone-800/30 backdrop-blur-lg rounded-3xl border border-white/20 dark:border-stone-700/50 p-8 flex items-center justify-center relative group shadow-[0_20px_50px_rgba(0,0,0,0.3)] transform transition-transform hover:scale-105">
