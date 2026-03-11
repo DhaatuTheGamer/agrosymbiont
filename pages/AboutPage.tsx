@@ -86,6 +86,37 @@ const AboutPage: React.FC = () => {
                     </div>
                 </AnimatedSection>
             </div>
+
+            {/* Founder's Vision Section */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-32">
+                <AnimatedSection className="bg-gradient-to-br from-stone-900 to-black rounded-[3rem] p-8 md:p-16 shadow-2xl relative overflow-hidden text-white flex flex-col md:flex-row items-center gap-12">
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-cerulean-blue/20 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
+                    <div className="absolute bottom-0 left-0 w-96 h-96 bg-mustard-yellow/20 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none"></div>
+                    
+                    <div className="md:w-1/3 relative z-10 flex justify-center">
+                        <div className="relative group perspective-1000">
+                            <div className="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-stone-800 shadow-2xl relative z-10 transform transition-transform duration-700 group-hover:rotate-y-12">
+                                <img src="https://picsum.photos/400/400?random=10" alt="Founder" loading="lazy" className="w-full h-full object-cover" />
+                            </div>
+                            <div className="absolute inset-0 bg-gradient-to-tr from-cerulean-blue to-mustard-yellow rounded-full blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500 scale-110 -z-10"></div>
+                        </div>
+                    </div>
+                    <div className="md:w-2/3 relative z-10 text-center md:text-left">
+                        <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">A Personal Mission</h2>
+                        <blockquote className="text-xl md:text-2xl font-light leading-relaxed text-stone-300 italic mb-8 relative">
+                            <span className="absolute -left-8 -top-4 text-4xl text-stone-700 font-serif">"</span>
+                            My lifelong fascination with physics and artificial intelligence always felt disconnected from the natural world—until I realized that the future of farming relies precisely on those disciplines. AgroSymbiont was born from a desire to merge cutting-edge technology with ecological stewardship, solving the most pressing agricultural challenges of our time.
+                            <span className="absolute -right-8 bottom-0 text-4xl text-stone-700 font-serif rotate-180">"</span>
+                        </blockquote>
+                        <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-4">
+                            <div>
+                                <h4 className="font-bold text-xl text-white">Dhaatrik Chowdhury</h4>
+                                <p className="text-mustard-yellow font-medium uppercase tracking-wider text-sm">Founder & CEO</p>
+                            </div>
+                        </div>
+                    </div>
+                </AnimatedSection>
+            </div>
             
             {/* Values Section */}
              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-32">
@@ -100,6 +131,52 @@ const AboutPage: React.FC = () => {
                     <ValueCard title="Community" description="Farmer-first, solution-driven approach." icon={<Users className="w-full h-full" strokeWidth={1.5} />} />
                 </AnimatedSection>
              </div>
+
+            {/* Innovation Lab Section */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-32">
+                 <AnimatedSection className="text-center mb-16">
+                    <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">The Innovation Lab</h2>
+                    <p className="text-lg text-stone-gray dark:text-stone-400 max-w-3xl mx-auto">
+                        We don't just follow the science; we create it. Our dedicated R&D facilities are constantly pushing the boundaries of what's possible in sustainable agriculture, from engineered aeroponics to real-time AI sensor integration.
+                    </p>
+                </AnimatedSection>
+
+                <AnimatedSection className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <TiltCard className="h-full">
+                        <div className="bg-white dark:bg-stone-800 rounded-3xl overflow-hidden shadow-xl border border-stone-100 dark:border-stone-700 h-full flex flex-col group preserve-3d">
+                            <div className="h-64 relative overflow-hidden bg-stone-100 dark:bg-stone-900 border-b border-stone-200 dark:border-stone-700">
+                                <img src="https://picsum.photos/600/400?random=11" alt="Prototype Testing" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 translate-z-2 opacity-90" />
+                                <div className="absolute top-4 left-4 bg-white/90 dark:bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-green-600 dark:text-green-400 translate-z-4 shadow-sm border border-green-100 dark:border-green-900/50">
+                                    Active Prototype
+                                </div>
+                            </div>
+                            <div className="p-8 flex flex-col flex-grow text-center md:text-left translate-z-4 bg-white dark:bg-stone-800 relative z-10">
+                                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">DIY Aeroponic Towers</h3>
+                                <p className="text-stone-gray dark:text-stone-400 flex-grow leading-relaxed">
+                                    Our engineers are currently refining modular aeroponic systems designed for low-cost, high-yield urban farming. By precisely controlling the nutrient mist using our proprietary nanotech solutions, we're seeing up to 40% faster growth cycles.
+                                </p>
+                            </div>
+                        </div>
+                    </TiltCard>
+
+                    <TiltCard className="h-full">
+                        <div className="bg-white dark:bg-stone-800 rounded-3xl overflow-hidden shadow-xl border border-stone-100 dark:border-stone-700 h-full flex flex-col group preserve-3d">
+                            <div className="h-64 relative overflow-hidden bg-stone-100 dark:bg-stone-900 border-b border-stone-200 dark:border-stone-700">
+                                <img src="https://picsum.photos/600/400?random=12" alt="Sensor Integration" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 translate-z-2 opacity-90" />
+                                <div className="absolute top-4 left-4 bg-white/90 dark:bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-cerulean-blue dark:text-blue-400 translate-z-4 shadow-sm border border-blue-100 dark:border-blue-900/50">
+                                    Data Collection
+                                </div>
+                            </div>
+                            <div className="p-8 flex flex-col flex-grow text-center md:text-left translate-z-4 bg-white dark:bg-stone-800 relative z-10">
+                                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">AI Sensor Integration</h3>
+                                <p className="text-stone-gray dark:text-stone-400 flex-grow leading-relaxed">
+                                    We are testing real-time soil microbiome sensors linked to predictive AI models. This allows farmers to monitor soil health dynamically and receive precise recommendations on when to apply our organic enhancers, eliminating waste.
+                                </p>
+                            </div>
+                        </div>
+                    </TiltCard>
+                </AnimatedSection>
+            </div>
 
             {/* Timeline Section */}
             <div className="py-20 mb-24 overflow-hidden relative">

@@ -174,3 +174,41 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* Data Saver (Low-Bandwidth) Mode */
+html.data-saver *, html.data-saver ::before, html.data-saver ::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+html.data-saver [class*="bg-[url"], html.data-saver [class*="bg-gradient-"] {
+  background-image: none !important;
+}
+
+html.data-saver .blur-xl,
+html.data-saver .blur-2xl,
+html.data-saver .blur-3xl,
+html.data-saver .mix-blend-overlay {
+  display: none !important;
+}
+
+html.data-saver .preserve-3d,
+html.data-saver .transform-style-3d {
+  transform: none !important;
+  transform-style: flat !important;
+}
+
+html.data-saver video,
+html.data-saver iframe {
+  display: none !important;
+}
+
+/* Dark Mode Color Auditing */
+.dark .text-mustard-yellow { color: #d4a31e !important; }
+.dark .bg-mustard-yellow { background-color: #d4a31e !important; }
+.dark .text-burnt-orange { color: #cc5500 !important; }
+.dark .bg-burnt-orange { background-color: #cc5500 !important; }
+.dark .from-mustard-yellow { --tw-gradient-from: #d4a31e var(--tw-gradient-from-position) !important; }
+.dark .to-mustard-yellow { --tw-gradient-to: #d4a31e var(--tw-gradient-to-position) !important; }
+.dark .from-burnt-orange { --tw-gradient-from: #cc5500 var(--tw-gradient-from-position) !important; }
+.dark .to-burnt-orange { --tw-gradient-to: #cc5500 var(--tw-gradient-to-position) !important; }

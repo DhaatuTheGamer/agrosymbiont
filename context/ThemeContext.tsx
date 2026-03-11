@@ -5,6 +5,8 @@ type Theme = 'light' | 'dark';
 interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
+  dataSaver: boolean;
+  toggleDataSaver: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -21,6 +23,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return 'light';
   });
 
+  const [dataSaver, setDataSaver] = useState<boolean>(() => {
+    return localStorage.getItem('dataSaver') === 'true';
+  });
+
   useEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove('light', 'dark');
@@ -28,12 +34,26 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (dataSaver) {
+      root.classList.add('data-saver');
+    } else {
+      root.classList.remove('data-saver');
+    }
+    localStorage.setItem('dataSaver', String(dataSaver));
+  }, [dataSaver]);
+
   const toggleTheme = () => {
     setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
+  const toggleDataSaver = () => {
+    setDataSaver(prev => !prev);
+  };
+
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, dataSaver, toggleDataSaver }}>
       {children}
     </ThemeContext.Provider>
   );

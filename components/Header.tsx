@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
-import { Menu, X, Mail, Phone, Sun, Moon, Globe } from 'lucide-react';
+import { Menu, X, Mail, Phone, Sun, Moon, Globe, Zap, ZapOff } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
 
@@ -53,7 +53,7 @@ const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const location = useLocation();
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, dataSaver, toggleDataSaver } = useTheme();
   const { scrollY } = useScroll();
   const { i18n } = useTranslation();
 
@@ -111,6 +111,14 @@ const Header: React.FC = () => {
                 </select>
               </div>
               <button
+                onClick={toggleDataSaver}
+                className="p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                aria-label="Toggle Data Saver"
+                title={dataSaver ? "Disable Low-Bandwidth Mode" : "Enable Low-Bandwidth Mode"}
+              >
+                {dataSaver ? <ZapOff className="w-5 h-5 text-mustard-yellow" /> : <Zap className="w-5 h-5" />}
+              </button>
+              <button
                 onClick={toggleTheme}
                 className="p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
                 aria-label="Toggle Dark Mode"
@@ -120,6 +128,14 @@ const Header: React.FC = () => {
             </div>
           </div>
           <div className="lg:hidden flex items-center gap-2">
+            <button
+              onClick={toggleDataSaver}
+              className={`p-2 rounded-full transition-colors ${scrolled || isOpen ? 'text-gray-800 dark:text-gray-200' : 'text-gray-900 dark:text-white'}`}
+              aria-label="Toggle Data Saver"
+              title={dataSaver ? "Disable Low-Bandwidth Mode" : "Enable Low-Bandwidth Mode"}
+            >
+              {dataSaver ? <ZapOff className="w-5 h-5 text-mustard-yellow" /> : <Zap className="w-5 h-5" />}
+            </button>
             <button
               onClick={toggleTheme}
               className={`p-2 rounded-full transition-colors ${scrolled || isOpen ? 'text-gray-800 dark:text-gray-200' : 'text-gray-900 dark:text-white'}`}

@@ -5,7 +5,7 @@ import AnimatedSection from '../components/AnimatedSection';
 import ThreeDBackground from '../components/ThreeDBackground';
 import TiltCard from '../components/TiltCard';
 import { ArrowRight, TrendingUp, Sparkles, Coins, CheckCircle, Zap } from 'lucide-react';
-
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 
 const FeatureCard: React.FC<{ title: string; description: string; icon: React.ReactNode }> = ({ title, description, icon }) => (
@@ -30,6 +30,7 @@ const FeatureCard: React.FC<{ title: string; description: string; icon: React.Re
 
 
 const HomePage: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <div className="text-gray-800 dark:text-gray-200 -mt-24 relative">
       {/* 3D Background Layer */}
@@ -56,17 +57,17 @@ const HomePage: React.FC = () => {
               }}
               className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-gray-900 dark:text-white tracking-tighter leading-[0.9] mb-6 md:mb-8 drop-shadow-2xl perspective-text"
             >
-              <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="inline-block">Science</motion.span>{" "}
-              <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="inline-block">Meets</motion.span> <br/>
+              <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="inline-block">{t('hero_title_1')}</motion.span>{" "}
+              <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="inline-block">{t('hero_title_2')}</motion.span> <br/>
               <motion.span 
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
                 className="text-transparent bg-clip-text bg-gradient-to-r from-cerulean-blue via-blue-600 to-indigo-600 dark:from-blue-400 dark:via-blue-500 dark:to-indigo-400 relative inline-block hover:scale-105 transition-transform duration-500 origin-left pb-4"
               >
-                Sustainability
+                {t('hero_title_3')}
               </motion.span>
             </motion.h1>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 mb-10 md:mb-12 leading-relaxed max-w-2xl font-medium drop-shadow-sm">
-              Harnessing <span className="text-cerulean-blue dark:text-blue-400 font-bold">nanotechnology</span> and organic innovation to create profitable, eco-friendly farming systems.
+              {t('hero_subtitle_1')}<span className="text-cerulean-blue dark:text-blue-400 font-bold">{t('hero_subtitle_highlight')}</span>{t('hero_subtitle_2')}
             </p>
             <div className="flex flex-col sm:flex-row flex-wrap gap-4 mb-16 md:mb-0">
               <Link
@@ -74,7 +75,7 @@ const HomePage: React.FC = () => {
                 className="bg-burnt-orange text-white font-bold py-4 px-8 rounded-full hover:bg-mustard-yellow dark:hover:bg-yellow-500 hover:text-gray-900 transition-all duration-300 transform hover:-translate-y-1 active:translate-y-1 shadow-[0_6px_0_#994000] hover:shadow-[0_8px_0_#ccb046] active:shadow-[0_0px_0_#994000] flex items-center gap-2 relative overflow-hidden group"
               >
                 <span className="relative z-10 flex items-center gap-2">
-                  Start Growing with Us
+                  {t('start_growing')}
                   <ArrowRight className="w-5 h-5" strokeWidth={2} />
                 </span>
                 <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
@@ -83,7 +84,7 @@ const HomePage: React.FC = () => {
                 to="/about"
                 className="bg-white/40 dark:bg-stone-800/40 backdrop-blur-md border border-white/60 dark:border-stone-600/60 text-cerulean-blue dark:text-blue-400 font-bold py-4 px-8 rounded-full hover:bg-white dark:hover:bg-stone-800 transition-all duration-300 shadow-[0_6px_0_rgba(42,82,190,0.2)] dark:shadow-[0_6px_0_rgba(96,165,250,0.2)] hover:shadow-[0_8px_0_rgba(42,82,190,0.3)] dark:hover:shadow-[0_8px_0_rgba(96,165,250,0.3)] active:translate-y-1 active:shadow-[0_0px_0_rgba(42,82,190,0.2)] transform hover:-translate-y-1"
               >
-                Learn More
+                {t('learn_more')}
               </Link>
             </div>
           </AnimatedSection>

@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import AnimatedSection from '../components/AnimatedSection';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Droplet, Zap, Sprout, Sparkles, Check, Loader2, TrendingUp, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -12,6 +12,8 @@ const ProductsPage: React.FC = () => {
   const [emailError, setEmailError] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showParticles, setShowParticles] = useState(false);
+  const [farmSize, setFarmSize] = useState(10);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
@@ -43,6 +45,9 @@ const ProductsPage: React.FC = () => {
     await new Promise(resolve => setTimeout(resolve, 1500));
     
     setIsSubmitting(false);
+    setShowParticles(true);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    setShowParticles(false);
     setIsSubmitted(true);
   };
 
@@ -68,19 +73,43 @@ const ProductsPage: React.FC = () => {
                         <TrendingUp className="w-6 h-6 text-cerulean-blue dark:text-blue-400" /> ROI Calculator
                     </h3>
                     <p className="text-stone-500 dark:text-stone-400 mb-6">Estimate your potential yield boost with AgroSymbiont.</p>
-                    <div className="flex flex-col sm:flex-row gap-6 items-center">
-                        <div className="flex-1 w-full">
-                            <label className="block text-sm text-stone-600 dark:text-stone-300 font-medium mb-2" htmlFor="farm-size">Farm Size (Acres)</label>
-                            <input type="number" id="farm-size" min="1" max="10000" defaultValue="10" className="w-full px-4 py-3 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-cerulean-blue transition-all text-gray-800 dark:text-gray-200 text-lg shadow-sm" onChange={(e) => {
-                                const val = parseInt(e.target.value) || 0;
-                                document.getElementById('yield-boost')!.innerText = `+${Math.round(val * 0.25 * 10)} Tons`;
-                                document.getElementById('revenue-boost')!.innerText = `+$${(val * 1250).toLocaleString()}`;
-                            }} />
+                    <div className="flex flex-col gap-6">
+                        <div className="w-full">
+                            <div className="flex justify-between items-end mb-2">
+                                <label className="block text-sm text-stone-600 dark:text-stone-300 font-medium" htmlFor="farm-size">Farm Size</label>
+                                <div className="text-lg font-bold text-cerulean-blue dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded-lg">
+                                    {farmSize} <span className="text-sm font-medium text-stone-500 dark:text-stone-400">Acres</span>
+                                </div>
+                            </div>
+                            <input 
+                                type="range" 
+                                id="farm-size" 
+                                min="1" 
+                                max="1000" 
+                                value={farmSize} 
+                                className="w-full h-3 bg-stone-200 dark:bg-stone-700 rounded-lg appearance-none cursor-pointer hover:bg-stone-300 dark:hover:bg-stone-600 transition-colors focus:outline-none focus:ring-2 focus:ring-cerulean-blue" 
+                                style={{
+                                    accentColor: 'var(--color-cerulean-blue, #2a52be)',
+                                }}
+                                onChange={(e) => setFarmSize(parseInt(e.target.value))} 
+                                aria-label="Farm size in acres"
+                            />
+                            <div className="flex justify-between text-xs text-stone-400 mt-2 font-medium">
+                                <span>1 Acre</span>
+                                <span>1,000 Acres</span>
+                            </div>
                         </div>
-                        <div className="flex-1 bg-blue-50/50 dark:bg-blue-900/10 p-4 rounded-xl border border-blue-100/50 dark:border-blue-800/30 w-full relative overflow-hidden backdrop-blur-sm">
-                            <div className="absolute top-0 right-0 -mr-4 -mt-4 w-16 h-16 bg-blue-400/10 rounded-full blur-xl"></div>
-                            <div className="text-sm text-blue-600 dark:text-blue-400 font-medium mb-1">Est. Revenue Boost</div>
-                            <div className="text-3xl font-bold text-cerulean-blue dark:text-white drop-shadow-sm" id="revenue-boost">+$12,500</div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="bg-green-50/70 dark:bg-green-900/20 p-4 rounded-xl border border-green-200/50 dark:border-green-800/40 relative overflow-hidden backdrop-blur-sm shadow-sm">
+                                <div className="absolute top-0 right-0 -mr-4 -mt-4 w-16 h-16 bg-green-400/20 rounded-full blur-xl pointer-events-none"></div>
+                                <div className="text-sm text-green-700 dark:text-green-400 font-bold mb-1 tracking-wide">Yield Increase</div>
+                                <div className="text-2xl sm:text-3xl font-black text-green-600 dark:text-green-300 drop-shadow-sm transition-all">+{Math.round(farmSize * 0.25 * 10).toLocaleString()} <span className="text-sm font-medium opacity-80 text-green-700 dark:text-green-400">Tons</span></div>
+                            </div>
+                            <div className="bg-blue-50/70 dark:bg-blue-900/20 p-4 rounded-xl border border-blue-200/50 dark:border-blue-800/40 relative overflow-hidden backdrop-blur-sm shadow-sm">
+                                <div className="absolute top-0 right-0 -mr-4 -mt-4 w-16 h-16 bg-blue-400/20 rounded-full blur-xl pointer-events-none"></div>
+                                <div className="text-sm text-blue-700 dark:text-blue-400 font-bold mb-1 tracking-wide">Revenue Boost</div>
+                                <div className="text-2xl sm:text-3xl font-black text-cerulean-blue dark:text-blue-300 drop-shadow-sm transition-all">+${(farmSize * 1250).toLocaleString()}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -149,20 +178,78 @@ const ProductsPage: React.FC = () => {
                             />
                             {emailError && <p className="absolute -bottom-6 left-1 text-xs text-red-500 font-medium">{emailError}</p>}
                         </div>
-                        <button
-                            type="submit"
-                            disabled={isSubmitting}
-                            className={`bg-cerulean-blue dark:bg-blue-600 text-white font-bold py-4 px-8 rounded-xl transition duration-300 shadow-lg whitespace-nowrap flex items-center justify-center ${isSubmitting ? 'opacity-75 cursor-not-allowed' : 'hover:bg-blue-700 dark:hover:bg-blue-500 transform hover:-translate-y-1'}`}
-                        >
-                            {isSubmitting ? (
-                                <>
-                                    <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
-                                    Submitting...
-                                </>
-                            ) : (
-                                'Notify Me'
-                            )}
-                        </button>
+                        <div className="flex-shrink-0 relative flex justify-center w-full sm:w-auto">
+                            <button
+                                type="submit"
+                                disabled={isSubmitting || showParticles}
+                                className={`relative text-white font-bold rounded-xl transition-all duration-300 shadow-lg whitespace-nowrap flex items-center justify-center overflow-hidden h-14 w-full sm:w-auto ${
+                                    showParticles 
+                                        ? 'bg-green-500 sm:w-14 rounded-full mx-auto px-0' 
+                                        : 'bg-cerulean-blue dark:bg-blue-600 sm:w-40 hover:bg-blue-700 dark:hover:bg-blue-500 hover:-translate-y-1 px-8'
+                                } ${isSubmitting ? 'opacity-75 cursor-not-allowed sm:w-44 px-8' : ''}`}
+                            >
+                                <AnimatePresence mode="wait">
+                                    {showParticles ? (
+                                        <motion.div
+                                            key="success"
+                                            initial={{ scale: 0, opacity: 0 }}
+                                            animate={{ scale: 1, opacity: 1 }}
+                                            exit={{ scale: 0, opacity: 0 }}
+                                            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                                        >
+                                            <Check className="h-6 w-6 text-white" />
+                                        </motion.div>
+                                    ) : isSubmitting ? (
+                                        <motion.div
+                                            key="submitting"
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            exit={{ opacity: 0 }}
+                                            className="flex items-center"
+                                        >
+                                            <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
+                                            Wait...
+                                        </motion.div>
+                                    ) : (
+                                        <motion.div
+                                            key="idle"
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            exit={{ opacity: 0 }}
+                                        >
+                                            Notify Me
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                                
+                                {/* Micro-interaction Particles */}
+                                {showParticles && (
+                                    <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+                                        {[...Array(12)].map((_, i) => {
+                                            const angle = (Math.PI * 2 * i) / 12;
+                                            const v = 80 + Math.random() * 40;
+                                            return (
+                                              <motion.div
+                                                  key={i}
+                                                  className="absolute w-2 h-2"
+                                                  initial={{ x: 0, y: 0, scale: 1, opacity: 1 }}
+                                                  animate={{ 
+                                                      x: Math.cos(angle) * v, 
+                                                      y: Math.sin(angle) * v - (Math.random() * 50),
+                                                      scale: 0,
+                                                      opacity: 0,
+                                                      rotate: Math.random() * 360
+                                                  }}
+                                                  transition={{ duration: 0.6 + Math.random() * 0.2, ease: "easeOut" }}
+                                              >
+                                                  <Sprout className="w-5 h-5 text-green-200 drop-shadow-sm" />
+                                              </motion.div>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+                            </button>
+                        </div>
                     </form>
                 </div>
             )}

@@ -18,6 +18,7 @@ const CareersPage = lazy(() => import('./pages/CareersPage'));
 const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'));
 const TermsOfServicePage = lazy(() => import('./pages/TermsOfServicePage'));
 const FAQPage = lazy(() => import('./pages/FAQPage'));
+const InvestorsPage = lazy(() => import('./pages/InvestorsPage'));
 
 const ScrollToTop: React.FC = () => {
   const { pathname } = useLocation();
@@ -54,6 +55,7 @@ const App: React.FC = () => {
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="/terms-of-service" element={<TermsOfServicePage />} />
             <Route path="/faq" element={<FAQPage />} />
+            <Route path="/investors" element={<InvestorsPage />} />
           </Routes>
         </Suspense>
       </Layout>
