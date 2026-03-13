@@ -128,6 +128,8 @@ const ThreeDBackground: React.FC = () => {
     let time = 0;
     let animationFrameId: number;
 
+    const projectedParticles: ProjectedParticle[] = [];
+
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
       time += 0.01;
@@ -177,9 +179,17 @@ const ThreeDBackground: React.FC = () => {
       });
 
       // --- Render Connected Sphere ---
-      const projectedParticles: ProjectedParticle[] = [];
+      // Optimization: Reuse pre-allocated array and update object properties in place
+      // instead of re-creating hundreds of objects per frame to reduce GC pressure.
+      if (projectedParticles.length !== sphereParticles.length) {
+        projectedParticles.length = sphereParticles.length;
+        for (let i = 0; i < sphereParticles.length; i++) {
+          projectedParticles[i] = { x: 0, y: 0, z: 0, scale: 0, color: sphereParticles[i].color };
+        }
+      }
 
-      sphereParticles.forEach((p) => {
+      for (let i = 0; i < sphereParticles.length; i++) {
+        const p = sphereParticles[i];
         // Individual particle oscillation (organic feel)
         const individualPulse = Math.sin(time * p.pulseSpeed + p.pulseOffset) * 5;
         const currentRadius = baseRadius + breathingRadius + individualPulse;
@@ -203,8 +213,13 @@ const ThreeDBackground: React.FC = () => {
         const x2d = x1 * scale + width / 2;
         const y2d = y1 * scale + height / 2 - scrollParallaxY;
 
-        projectedParticles.push({ x: x2d, y: y2d, scale, z: z2, color: p.color });
-      });
+        const pp = projectedParticles[i];
+        pp.x = x2d;
+        pp.y = y2d;
+        pp.scale = scale;
+        pp.z = z2;
+        pp.color = p.color;
+      }
 
       // Sort for depth handling (painters algorithm)
       projectedParticles.sort((a, b) => b.z - a.z);
