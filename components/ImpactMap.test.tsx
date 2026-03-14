@@ -9,9 +9,9 @@ vi.mock('react-simple-maps', () => ({
   ZoomableGroup: ({ children }: { children: React.ReactNode }) => <div data-testid="zoomable-group">{children}</div>,
   Geographies: ({ children }: { children: any }) => <div data-testid="geographies">{children({ geographies: [] })}</div>,
   Geography: () => <div data-testid="geography" />,
-  Marker: ({ children, onClick, 'aria-label': ariaLabel }: { children: React.ReactNode, onClick: () => void, 'aria-label': string }) => (
+  Marker: ({ children, onClick, 'aria-label': ariaLabel, tabIndex, role, onKeyDown }: { children: React.ReactNode, onClick: () => void, 'aria-label': string, tabIndex?: number, role?: string, onKeyDown?: (e: any) => void }) => (
     // Only render children if they are valid SVG elements, or we just render a div to prevent warnings
-    <div data-testid="marker" onClick={onClick} aria-label={ariaLabel}>
+    <div data-testid="marker" onClick={onClick} onKeyDown={onKeyDown} tabIndex={tabIndex} role={role} aria-label={ariaLabel}>
        {/* Use a simple span instead of the original children to avoid the unknown tag warnings in JSDOM,
            since we only care about the click handler for this test */}
        <span>Marker</span>
@@ -102,6 +102,40 @@ describe('ImpactMap', () => {
       expect(screen.getByText('map_punjab')).toBeInTheDocument();
       expect(screen.getByText('map_punjab_crop')).toBeInTheDocument();
       expect(screen.getByText('+22%')).toBeInTheDocument();
+    });
+  });
+
+  it('selects a project on marker keydown (Enter)', async () => {
+    render(<ImpactMap />);
+    const markers = screen.getAllByTestId('marker');
+
+    // Initial state: no project selected
+    expect(screen.queryByText('map_maharashtra')).not.toBeInTheDocument();
+
+    // Keydown Enter on first marker (Maharashtra)
+    fireEvent.keyDown(markers[0], { key: 'Enter', code: 'Enter' });
+
+    // Check if details are shown
+    await waitFor(() => {
+      expect(screen.getByText('map_maharashtra')).toBeInTheDocument();
+      expect(screen.getByText('map_maharashtra_crop')).toBeInTheDocument();
+    });
+  });
+
+  it('selects a project on marker keydown (Space)', async () => {
+    render(<ImpactMap />);
+    const markers = screen.getAllByTestId('marker');
+
+    // Initial state: no project selected
+    expect(screen.queryByText('map_punjab')).not.toBeInTheDocument();
+
+    // Keydown Space on second marker (Punjab)
+    fireEvent.keyDown(markers[1], { key: ' ', code: 'Space' });
+
+    // Check if details are shown
+    await waitFor(() => {
+      expect(screen.getByText('map_punjab')).toBeInTheDocument();
+      expect(screen.getByText('map_punjab_crop')).toBeInTheDocument();
     });
   });
 });
