@@ -1,6 +1,3 @@
-## 2025-03-11 - Missing ARIA Labels on Navigation and Modal Close Buttons
-**Learning:** Found instances where interactive elements like image carousel navigation buttons (chevron icons) and modal/popup close buttons (X icons) were lacking accessible names. Since they only contained SVGs, screen readers wouldn't know their purpose.
-**Action:** Always ensure that icon-only buttons (like carousels or modals) have a descriptive `aria-label` so that their function is explicitly clear to assistive technologies.
-## 2024-03-13 - SVG Markers in React Simple Maps lack keyboard accessibility
-**Learning:** Custom SVG `<Marker>` elements in `react-simple-maps` are not natively focusable or interactive for keyboard users, even if an `onClick` handler is provided. Screen readers will skip them, and keyboard users cannot trigger them.
-**Action:** Always manually add `tabIndex={0}`, an `onKeyDown` handler (listening for 'Enter' or ' '), and an `aria-label` to interactive SVG map markers to ensure full accessibility. Also, ensure a visible focus state is applied using utilities like `focus-visible:ring-2`.
+## 2024-05-24 - SVG Element Keyboard Focus and Accessibility
+**Learning:** SVG elements (like `Marker` from `react-simple-maps`) are not natively keyboard accessible. Also, standard focus rings (e.g. `ring-2` in Tailwind) often render poorly on SVGs.
+**Action:** Manually add `tabIndex={0}`, `role="button"`, and an `onKeyDown` handler (for 'Enter' and 'Space') to make SVG markers actionable via keyboard. Use `outline` utilities (`focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2`) instead of `ring` utilities for a more consistent and accessible visual focus state.

@@ -100,7 +100,15 @@ const ImpactMap: React.FC = () => {
                 key={index}
                 coordinates={marker.coordinates}
                 onClick={() => setActiveTooltip(marker)}
-                className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cerulean-blue rounded-full"
+                onKeyDown={(e: React.KeyboardEvent<SVGGElement>) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setActiveTooltip(marker);
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                className="cursor-pointer focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cerulean-blue rounded-full"
                 aria-label={t(marker.nameKey)}
               >
                 <motion.g whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}>
