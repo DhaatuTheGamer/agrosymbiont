@@ -1,3 +1,3 @@
-## 2024-05-24 - SVG Element Keyboard Focus and Accessibility
-**Learning:** SVG elements (like `Marker` from `react-simple-maps`) are not natively keyboard accessible. Also, standard focus rings (e.g. `ring-2` in Tailwind) often render poorly on SVGs.
-**Action:** Manually add `tabIndex={0}`, `role="button"`, and an `onKeyDown` handler (for 'Enter' and 'Space') to make SVG markers actionable via keyboard. Use `outline` utilities (`focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2`) instead of `ring` utilities for a more consistent and accessible visual focus state.
+## 2024-05-24 - Interactive Navigation Elements Missing Keyboard Focus Indication
+**Learning:** Native `<select>` and `<button>` elements that act as toggles in navigation headers (like Language selector, Dark mode toggle) often lose distinct visible focus when custom Tailwind styling resets are applied without explicitly defining `focus-visible` variants. This makes keyboard navigation through top-level navigation highly confusing as users cannot tell which tool is active.
+**Action:** Always explicitly define `focus-visible:ring-2` (and related offset/color utility classes) alongside `focus:outline-none` on all interactive UI controls, especially when they only contain icons or have heavily customized non-standard appearances.
