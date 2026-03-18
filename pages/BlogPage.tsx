@@ -69,6 +69,10 @@ const BlogSkeletonCard: React.FC = () => (
     </div>
 );
 
+// Performance optimization: Pre-allocate static array outside the render loop
+// to avoid unnecessary object creation/GC pressure on every render.
+const BLOG_SKELETON_ITEMS = [1, 2, 3];
+
 const BlogPage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -171,7 +175,7 @@ const BlogPage: React.FC = () => {
             
             {isLoading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    {[1, 2, 3].map(i => <BlogSkeletonCard key={i} />)}
+                    {BLOG_SKELETON_ITEMS.map(i => <BlogSkeletonCard key={i} />)}
                 </div>
             ) : filteredPosts.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">

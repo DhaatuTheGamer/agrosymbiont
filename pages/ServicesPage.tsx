@@ -45,6 +45,10 @@ const WhyChooseItem: React.FC<{children: React.ReactNode}> = ({children}) => (
     </li>
 );
 
+// Performance optimization: Pre-allocate static array outside the render loop
+// to avoid unnecessary object creation/GC pressure on every render.
+const SERVICE_SKELETON_ITEMS = [1, 2, 3, 4];
+
 const ServicesPage: React.FC = () => {
     const { t } = useTranslation();
     const [isLoading, setIsLoading] = useState(true);
@@ -72,7 +76,7 @@ const ServicesPage: React.FC = () => {
                 <AnimatedSection className="mt-16">
                     {isLoading ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {[1, 2, 3, 4].map(i => <ServiceSkeletonCard key={i} />)}
+                            {SERVICE_SKELETON_ITEMS.map(i => <ServiceSkeletonCard key={i} />)}
                             <div className="md:col-span-2 flex justify-center">
                                 <div className="max-w-xl w-full">
                                     <ServiceSkeletonCard />
