@@ -65,7 +65,8 @@ export const renderDustParticles = (
   mouseY: number,
   scrollY: number
 ) => {
-  dustParticles.forEach(p => {
+  for (let i = 0; i < dustParticles.length; i++) {
+    const p = dustParticles[i];
     // Move dust
     p.x += p.speedX;
     p.y += p.speedY;
@@ -93,7 +94,7 @@ export const renderDustParticles = (
       ctx.arc(x2d, y2d, p.size * scale, 0, Math.PI * 2);
       ctx.fill();
     }
-  });
+  }
 };
 
 export const updateAndProjectSphereParticles = (
