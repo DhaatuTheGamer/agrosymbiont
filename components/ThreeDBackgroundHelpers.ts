@@ -207,7 +207,10 @@ export const renderSphereParticles = (
   projectedParticles: ProjectedParticle[],
   baseRadius: number
 ) => {
-  projectedParticles.forEach((p) => {
+  // Performance optimization: Standard for loops outperform Array.prototype.forEach
+  // in high-frequency 60fps render loops by avoiding closure/function call overhead.
+  for (let i = 0; i < projectedParticles.length; i++) {
+    const p = projectedParticles[i];
     // Fade out particles further back
     const alpha = (p.z + baseRadius * 2) / (4 * baseRadius);
     const finalAlpha = Math.max(0.15, Math.min(1, alpha + 0.2));
@@ -227,5 +230,5 @@ export const renderSphereParticles = (
         ctx.arc(p.x, p.y, 6 * p.scale, 0, Math.PI * 2);
         ctx.fill();
     }
-  });
+  }
 };
