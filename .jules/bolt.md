@@ -23,3 +23,8 @@ Avoid creating array instances (e.g., `[...Array(n)]` or `Array.from({ length: n
 ## 2024-03-19 - [Array.prototype.forEach Overhead in Render Loops]
 **Learning:** In high-frequency 60fps loops (e.g., canvas rendering using `requestAnimationFrame`), iterating over arrays with `Array.prototype.forEach` introduces unnecessary function call and closure overhead compared to standard indexed `for` loops. This can cause micro-stutters when iterating over hundreds of particles per frame.
 **Action:** Always use standard indexed `for` loops (e.g., `for (let i = 0; i < array.length; i++)`) instead of array iteration methods like `forEach` or `map` within performance-critical animation loops.
+## 2024-05-18
+
+**Optimization:** Memoized `filteredJobs` in `pages/CareersPage.tsx` using `useMemo`.
+**Rationale:** Standard React performance optimization to avoid filtering the `jobOpenings` array unnecessarily on every render when dependencies (`activeTab`) haven't changed.
+**Learnings:** Simple array filtering operations inside React components can trigger unnecessary re-calculations during renders if not wrapped in `useMemo`. Memoization helps maintain stable references and avoids potentially costly operations, especially if the array grows.
