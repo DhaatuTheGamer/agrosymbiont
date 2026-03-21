@@ -65,6 +65,15 @@ export const renderDustParticles = (
   mouseY: number,
   scrollY: number
 ) => {
+  // Optimization: Hoist invariant calculations outside the loop
+  const limitX = width * 0.75;
+  const limitY = height * 0.75;
+  const halfWidth = width / 2;
+  const halfHeight = height / 2;
+  const mouseX2000 = mouseX * 2000;
+  const mouseY2000 = mouseY * 2000;
+  const scrollY03 = scrollY * 0.3;
+
   for (let i = 0; i < dustParticles.length; i++) {
     const p = dustParticles[i];
     // Move dust
@@ -72,21 +81,22 @@ export const renderDustParticles = (
     p.y += p.speedY;
 
     // Wrap dust around screen
-    const limitX = width * 0.75;
-    const limitY = height * 0.75;
     if (p.x > limitX) p.x = -limitX;
     if (p.x < -limitX) p.x = limitX;
     if (p.y > limitY) p.y = -limitY;
     if (p.y < -limitY) p.y = limitY;
 
+    // Optimization: Calculate absolute depth factor once per particle
+    const zFactor = Math.abs(p.z) / 1000;
+
     // Parallax effect for dust
-    const parallaxX = p.x - (mouseX * 2000 * (Math.abs(p.z)/1000));
-    const parallaxY = p.y - (mouseY * 2000 * (Math.abs(p.z)/1000)) - (scrollY * 0.3 * (Math.abs(p.z)/1000));
+    const parallaxX = p.x - (mouseX2000 * zFactor);
+    const parallaxY = p.y - (mouseY2000 * zFactor) - (scrollY03 * zFactor);
 
     // 3D projection for dust
     const scale = 800 / (800 + p.z);
-    const x2d = parallaxX * scale + width / 2;
-    const y2d = parallaxY * scale + height / 2;
+    const x2d = parallaxX * scale + halfWidth;
+    const y2d = parallaxY * scale + halfHeight;
 
     if (scale > 0) {
       ctx.beginPath();

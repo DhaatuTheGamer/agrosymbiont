@@ -29,3 +29,7 @@ Avoid creating array instances (e.g., `[...Array(n)]` or `Array.from({ length: n
 * **Why**: The function `renderConnections` is called frequently (in a 60fps loop via `requestAnimationFrame`) and iterating over particles involves an inner loop whose maximum iteration limit is `Math.min(i + connectionWindow, projectedParticles.length)`. By computing this `Math.min` once outside the `j` loop, we reduce redundant calculations and improve the benchmark throughput from ~9,014 ops/sec to ~14,513 ops/sec.
 * **Impact**: ~60% increase in operations per second for the connection drawing logic without any loss in visual quality or functional correctness.
 * **Measurement**: Used `vitest bench` on a temporary `ThreeDBackgroundHelpers.bench.tsx` file.
+
+## 2024-03-21 - Canvas Render Loop Optimization
+**Learning:** Found a critical performance bottleneck in high-frequency 60fps canvas animation loops (`renderDustParticles`). Math functions like `Math.abs` and redundant basic arithmetic (like multiplying constants or division by 2) inside inner particle iteration loops significantly compound CPU strain.
+**Action:** When implementing or modifying `requestAnimationFrame` render loops, forcefully hoist all frame-invariant calculations (like `width / 2` or `scrollY * 0.3`) outside the inner loop. Cache any repeating expensive math (like `Math.abs(p.z) / 1000`) into a local block variable rather than recalculating it per usage.
