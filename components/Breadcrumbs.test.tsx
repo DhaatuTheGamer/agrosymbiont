@@ -4,6 +4,28 @@ import { MemoryRouter, useLocation } from 'react-router-dom';
 import Breadcrumbs from './Breadcrumbs';
 import { vi, describe, it, expect } from 'vitest';
 
+// Mock react-i18next
+vi.mock('react-i18next', () => ({
+  useTranslation: () => {
+    const translations: Record<string, string> = {
+      'nav_about': 'About Us',
+      'nav_products': 'Products',
+      'nav_technology': 'Technology',
+      'nav_stories': 'Stories',
+      'footer_resources': 'Resources',
+      'nav_insights': 'Insights',
+      'nav_contact': 'Contact',
+      'nav_careers': 'Careers',
+      'nav_faq': 'FAQ',
+      'footer_privacy': 'Privacy Policy',
+      'footer_terms': 'Terms of Service',
+    };
+    return {
+      t: (key: string) => translations[key] || key,
+    };
+  },
+}));
+
 // We mock react-router-dom to easily control useLocation
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
