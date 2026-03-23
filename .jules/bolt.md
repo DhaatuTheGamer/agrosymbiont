@@ -41,3 +41,6 @@ Avoid creating array instances (e.g., `[...Array(n)]` or `Array.from({ length: n
 ## 2026-03-22 - [Unmemoized Localization Map in Breadcrumbs]
 **Learning:** Creating a new `Record<string, string>` object for route name mappings on every render (especially when it calls internationalization functions like `t()`) causes unnecessary memory allocations and garbage collection pressure. This is particularly wasteful if the object is used for static lookups within the render cycle.
 **Action:** Wrap such lookup objects in `useMemo` with appropriate dependencies (like the `t` function from `useTranslation`) to ensure the object is only re-created when strictly necessary, reducing memory churn and improving render performance.
+## 2026-03-24 - [Array.from Overhead in Initialization Loops]
+**Learning:** In high-frequency 60fps loops (like those initializing particles using `Array.from` combined with a mapping callback), allocating hundreds of objects via mapping callback inside `Array.from` incurs measurable performance overhead (function creation and invocation per element).
+**Action:** When initializing large sets of items in performance critical paths, replace `Array.from` mapping patterns with pre-allocating an array using `new Array(count)` and explicitly populating it within a standard `for` loop to avoid the closure and callback overhead.
