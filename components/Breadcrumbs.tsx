@@ -2,23 +2,26 @@
 import React, { useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, ChevronRight } from 'lucide-react';
-
-const routeNameMap: { [key: string]: string } = {
-  'about': 'About Us',
-  'products': 'Products',
-  'technology': 'Technology',
-  'stories': 'Success Stories',
-  'resources': 'Resources',
-  'blog': 'Insights',
-  'contact': 'Contact',
-  'careers': 'Careers',
-  'privacy-policy': 'Privacy Policy',
-  'terms-of-service': 'Terms of Service',
-};
+import { useTranslation } from 'react-i18next';
 
 const Breadcrumbs: React.FC = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const pathnames = useMemo(() => location.pathname.split('/').filter((x) => x), [location.pathname]);
+
+  const routeNameMap: Record<string, string> = useMemo(() => ({
+    'about': t('nav_about'),
+    'products': t('nav_products'),
+    'technology': t('nav_technology'),
+    'stories': t('nav_stories'),
+    'resources': t('footer_resources'),
+    'blog': t('nav_insights'),
+    'contact': t('nav_contact'),
+    'careers': t('nav_careers'),
+    'faq': t('nav_faq'),
+    'privacy-policy': t('footer_privacy'),
+    'terms-of-service': t('footer_terms'),
+  }), [t]);
 
   // Don't show breadcrumbs on the home page
   if (pathnames.length === 0) {
