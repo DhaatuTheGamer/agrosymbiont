@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, act, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
 import ContactForm from './ContactForm';
@@ -78,26 +78,33 @@ describe('ContactForm Component', () => {
     });
 
     it('submits the form successfully when all fields are valid', async () => {
-        const user = userEvent.setup();
         render(<ContactForm />);
 
-        // Fill out the form
-        await user.type(screen.getByLabelText(/Name/), 'John Doe');
-        await user.type(screen.getByLabelText(/Email/), 'john@example.com');
-        await user.type(screen.getByLabelText(/Phone/), '1234567890');
-        await user.selectOptions(screen.getByLabelText(/Inquiry Type/), 'General');
-        await user.type(screen.getByLabelText(/Message/), 'Hello, this is a test message.');
+        // Fill out the form using fireEvent (synchronous, no timing issues)
+        fireEvent.change(screen.getByLabelText(/Name/), { target: { value: 'John Doe', name: 'name' } });
+        fireEvent.change(screen.getByLabelText(/Email/), { target: { value: 'john@example.com', name: 'email' } });
+        fireEvent.change(screen.getByLabelText(/Phone/), { target: { value: '1234567890', name: 'phone' } });
+        fireEvent.change(screen.getByLabelText(/Inquiry Type/), { target: { value: 'General', name: 'inquiryType' } });
+        fireEvent.change(screen.getByLabelText(/Message/), { target: { value: 'Hello, this is a test message.', name: 'message' } });
+
+        // Enable fake timers before submitting to control the setTimeout
+        vi.useFakeTimers();
 
         // Submit the form
         const submitButton = screen.getByRole('button', { name: /Send/ });
-        await user.click(submitButton);
+        fireEvent.click(submitButton);
 
         // Verify sending state
-        expect(await screen.findByText('Sending...')).toBeInTheDocument();
+        expect(screen.getByText('Sending...')).toBeInTheDocument();
 
-        // Wait for the simulated API call to finish and verify success state
-        await waitFor(() => {
-            expect(screen.getByText('Thank you!')).toBeInTheDocument();
-        }, { timeout: 2500 });
-    });
+        // Advance past the simulated API call (1500ms)
+        await act(async () => {
+            vi.advanceTimersByTime(2000);
+        });
+
+        // Verify success state
+        expect(screen.getByText('Thank you!')).toBeInTheDocument();
+
+        vi.useRealTimers();
+    }, 15000);
 });

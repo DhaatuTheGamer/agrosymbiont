@@ -43,12 +43,12 @@ const ROICalculator: React.FC = () => {
                         <div className="bg-green-50/70 dark:bg-green-900/20 p-4 rounded-xl border border-green-200/50 dark:border-green-800/40 relative overflow-hidden backdrop-blur-sm shadow-sm">
                             <div className="absolute top-0 right-0 -mr-4 -mt-4 w-16 h-16 bg-green-400/20 rounded-full blur-xl pointer-events-none"></div>
                             <div className="text-sm text-green-700 dark:text-green-400 font-bold mb-1 tracking-wide">{t('prod_yield_increase')}</div>
-                            <div className="text-2xl sm:text-3xl font-black text-green-600 dark:text-green-300 drop-shadow-sm transition-all">+{Math.round(farmSize * 0.25 * 10).toLocaleString()} <span className="text-sm font-medium opacity-80 text-green-700 dark:text-green-400">{t('prod_tons')}</span></div>
+                            <div className="text-2xl sm:text-3xl font-black text-green-600 dark:text-green-300 drop-shadow-sm transition-all">+{Math.round(farmSize * 0.25 * 10).toLocaleString('en-US')} <span className="text-sm font-medium opacity-80 text-green-700 dark:text-green-400">{t('prod_tons')}</span></div>
                         </div>
                         <div className="bg-blue-50/70 dark:bg-blue-900/20 p-4 rounded-xl border border-blue-200/50 dark:border-blue-800/40 relative overflow-hidden backdrop-blur-sm shadow-sm">
                             <div className="absolute top-0 right-0 -mr-4 -mt-4 w-16 h-16 bg-blue-400/20 rounded-full blur-xl pointer-events-none"></div>
                             <div className="text-sm text-blue-700 dark:text-blue-400 font-bold mb-1 tracking-wide">{t('prod_revenue_boost')}</div>
-                            <div className="text-2xl sm:text-3xl font-black text-cerulean-blue dark:text-blue-300 drop-shadow-sm transition-all">+${(farmSize * 1250).toLocaleString()}</div>
+                            <div className="text-2xl sm:text-3xl font-black text-cerulean-blue dark:text-blue-300 drop-shadow-sm transition-all">+${(farmSize * 1250).toLocaleString('en-US')}</div>
                         </div>
                     </div>
                 </div>
