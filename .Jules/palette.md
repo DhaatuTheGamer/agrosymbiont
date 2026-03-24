@@ -16,3 +16,7 @@
 ## 2025-03-22 - Missing keyboard focus states on primary form action buttons
 **Learning:** Found an accessibility pattern across multiple form components (`InvestorContactForm`, `ContactForm`, `JobApplicationForm`) where the primary `type="submit"` buttons (and success state buttons like "Submit another inquiry") had elaborate hover and shadow states but completely lacked focus indicators. This makes submitting forms via keyboard navigation unpredictable as users cannot tell if the button has received focus.
 **Action:** Always explicitly define `focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2` (and appropriate color variants) on all primary form action buttons to ensure keyboard visibility is preserved.
+
+## 2025-03-22 - Screen reader unfriendliness with dynamic results and errors
+**Learning:** Found an accessibility issue pattern where conditionally rendered form field errors, global form errors, and async operation results (like the Crop Problem Solver diagnosis) appear visually but are completely silent to screen readers.
+**Action:** Always wrap dynamic form field errors in `<div aria-live="polite">` (or `<p aria-live="polite">`) and use `role="alert"` on top-level global error summaries. Ensure async interactive tools that show results without reloading the page also present those results within an `aria-live="polite"` region.

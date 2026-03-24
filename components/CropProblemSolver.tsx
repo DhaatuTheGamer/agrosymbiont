@@ -64,7 +64,7 @@ const DiagnosisResult: React.FC<{
   recommendedSolution: Solution | null;
   t: (key: string) => string;
 }> = ({ isAnalyzing, showResult, recommendedSolution, t }) => (
-  <div className="bg-stone-50 dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-700 p-6 flex flex-col items-center justify-center min-h-[300px] text-center relative overflow-hidden h-full">
+  <div aria-live="polite" className="bg-stone-50 dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-700 p-6 flex flex-col items-center justify-center min-h-[300px] text-center relative overflow-hidden h-full">
       {isAnalyzing ? (
           <div className="flex flex-col items-center gap-4">
               <div className="w-16 h-16 border-4 border-cerulean-blue/30 border-t-cerulean-blue rounded-full animate-spin"></div>

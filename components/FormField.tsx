@@ -17,12 +17,14 @@ const FormField: React.FC<FormFieldProps> = ({ label, name, id, required, error,
                 {label} {required && <span className="text-burnt-orange dark:text-orange-400">*</span>}
             </label>
             {children}
-            {error && (
-                <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
-                    <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
-                    {error}
-                </p>
-            )}
+            <div aria-live="polite">
+                {error && (
+                    <div className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
+                        <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
+                        {error}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
