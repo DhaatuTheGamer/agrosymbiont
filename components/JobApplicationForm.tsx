@@ -33,12 +33,14 @@ const FormField: React.FC<FormFieldProps> = ({ label, name, type, id, placeholde
                 className={`${inputClass} ${error ? 'border-red-500 dark:border-red-500 focus:ring-red-500 dark:focus:ring-red-500 bg-red-50/50 dark:bg-red-900/10' : ''}`}
                 placeholder={placeholder}
             />
-            {error && (
-                <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
-                    <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
-                    {error}
-                </p>
-            )}
+            <div aria-live="polite">
+                {error && (
+                    <div className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
+                        <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
+                        {error}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
@@ -84,12 +86,14 @@ const ResumeUploadField: React.FC<ResumeUploadFieldProps> = ({
                 {resume && <p className="text-sm font-semibold text-green-600 dark:text-green-400 mt-2 bg-green-50 dark:bg-green-900/20 py-1 px-3 rounded-full inline-block">{selectedText}{resume.name}</p>}
             </div>
         </div>
-        {error && (
-            <p className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
-                <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
-                {error}
-            </p>
-        )}
+        <div aria-live="polite">
+            {error && (
+                <div className="mt-2 ml-1 text-sm text-red-600 dark:text-red-400 font-medium flex items-center">
+                    <AlertCircle className="w-4 h-4 mr-1.5" strokeWidth={2} />
+                    {error}
+                </div>
+            )}
+        </div>
     </div>
 );
 
@@ -141,9 +145,9 @@ const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle
         const newErrors: { [key: string]: string } = {};
         const fields: (keyof typeof formData)[] = ['name', 'email', 'linkedin', 'resume'];
 
-        fields.forEach(field => {
-            const error = validateField(field, formData[field]);
-            if (error) newErrors[field] = error;
+        fields.forEach((field) => {
+            const error = validateField(field as string, formData[field]);
+            if (error) newErrors[field as string] = error;
         });
 
         return newErrors;
@@ -182,7 +186,7 @@ const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle
     return (
         <form noValidate onSubmit={handleSubmit} className="space-y-6">
             {Object.keys(errors).length > 0 && (
-                <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-start">
+                <div role="alert" className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-start">
                     <AlertCircle className="w-5 h-5 text-red-500 dark:text-red-400 mt-0.5 mr-3 flex-shrink-0" strokeWidth={2} />
                     <div>
                         <h4 className="text-red-800 dark:text-red-300 font-bold text-sm mb-1">{t('car_form_error_header')}</h4>

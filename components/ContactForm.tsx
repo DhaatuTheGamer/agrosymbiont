@@ -116,7 +116,7 @@ const ContactForm: React.FC = () => {
     return (
         <form noValidate onSubmit={handleSubmit} className="bg-white/60 dark:bg-stone-800/60 backdrop-blur-xl p-10 rounded-[2.5rem] shadow-2xl border border-white/50 dark:border-stone-700/50 space-y-8">
             {Object.keys(errors).length > 0 && (
-                <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 rounded-xl flex items-start">
+                <div role="alert" className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 rounded-xl flex items-start">
                     <div className="w-5 h-5 text-red-500 dark:text-red-400 mt-0.5 mr-3 flex-shrink-0">⚠️</div>
                     <div>
                         <h4 className="text-red-800 dark:text-red-300 font-bold text-sm mb-1">{t('contact_error_header')}</h4>
