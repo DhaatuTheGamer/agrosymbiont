@@ -40,6 +40,21 @@ const BlogPostPage: React.FC = () => {
     }
   }, [id, navigate]);
 
+
+  const sanitizeUrl = (url?: string) => {
+    if (!url) return '';
+    // Strip control characters (tabs, newlines, etc.) to prevent common protocol bypasses
+    const sanitizedUrl = url.replace(/[\x00-\x1F\x7F-\x9F\s]/g, '');
+    const protocolMatch = sanitizedUrl.match(/^([^:]+):/);
+    if (protocolMatch) {
+      const protocol = protocolMatch[1].toLowerCase();
+      if (['javascript', 'data', 'vbscript'].includes(protocol)) {
+        return '';
+      }
+    }
+    return sanitizedUrl;
+  };
+
   if (!post) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-ivory/20 dark:bg-stone-900/20">
@@ -97,7 +112,20 @@ const BlogPostPage: React.FC = () => {
             <div className="p-8 md:p-12 text-[#000000] dark:text-gray-200">
               <div className="prose prose-lg prose-stone dark:prose-invert max-w-none prose-p:mb-8 prose-p:leading-relaxed prose-headings:mt-12 prose-headings:mb-6 prose-li:mb-2 text-[#000000] dark:text-gray-200">
                 <div className="markdown-body">
-                  <Markdown>{post.content || post.excerpt}</Markdown>
+                  <Markdown
+                    skipHtml
+                    disallowedElements={['script', 'iframe', 'object', 'embed', 'form', 'link', 'meta', 'style']}
+                    components={{
+                      a: ({ node, ...props }) => (
+                        <a {...props} href={sanitizeUrl(props.href)} />
+                      ),
+                      img: ({ node, ...props }) => (
+                        <img {...props} src={sanitizeUrl(props.src)} />
+                      ),
+                    }}
+                  >
+                    {post.content || post.excerpt}
+                  </Markdown>
                 </div>
               </div>
             </div>
