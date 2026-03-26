@@ -27,6 +27,22 @@ export interface DustParticle {
   opacity: number;
 }
 
+
+// Performance optimization: Pre-calculated lookup table for Math.random()
+// Since Math.random() is relatively slow when called thousands of times per frame,
+// we pre-generate a large array of random floats and cycle through it.
+// 4096 is a power of 2, allowing us to use a fast bitwise AND for modulo.
+const RAND_COUNT = 4096;
+const randTable = new Float64Array(RAND_COUNT);
+for (let i = 0; i < RAND_COUNT; i++) {
+  randTable[i] = Math.random();
+}
+let randIdx = 0;
+const fastRandom = () => {
+  randIdx = (randIdx + 1) & 4095;
+  return randTable[randIdx];
+};
+
 export const createSphereParticles = (count: number, colors: string[]): SphereParticle[] => {
   const arr = new Array(count);
   const colorsLength = colors.length;
@@ -222,9 +238,9 @@ export const renderConnections = (
        // 80 * 80 = 6400. Compare squared distance to avoid Math.sqrt if possible
        if (distSq < 6400) {
          ctx.beginPath();
-         // Dynamic opacity based on distance
-         // Precalculated value for 0.12 / 80 = 0.0015
-         ctx.strokeStyle = `rgba(42, 82, 190, ${0.12 - (0.0015 * Math.sqrt(distSq))})`;
+         // Dynamic opacity based on squared distance
+         // Precalculated value for 0.12 / 6400 = 0.00001875
+         ctx.strokeStyle = `rgba(42, 82, 190, ${0.12 - (0.00001875 * distSq)})`;
          ctx.moveTo(p1x, p1y);
          ctx.lineTo(p2.x, p2.y);
          ctx.stroke();
