@@ -48,3 +48,6 @@ Avoid creating array instances (e.g., `[...Array(n)]` or `Array.from({ length: n
 ## 2024-05-25 - [Missing Lazy Loading on Below-The-Fold Images]
 **Learning:** Rendering below-the-fold images without `loading="lazy"` forces the browser to download all heavy assets simultaneously during the initial page load. This blocks the main thread and severely degrades the Time to Interactive (TTI) and First Contentful Paint (FCP) metrics.
 **Action:** Always include the `loading="lazy"` attribute on `<img>` tags that are not immediately visible in the initial viewport (e.g., gallery items, related posts, deep page content) to defer loading until the user scrolls near them.
+
+### 2025-03-08
+* When rendering large arrays of unchanging components derived from external state (e.g., `Geography` components loaded from an external topojson file in `InteractiveMap.tsx`), applying `useMemo` inline around the array map callback prevents expensive re-renders and re-calculations triggered by unrelated component state changes (e.g., `selectedProject`).
