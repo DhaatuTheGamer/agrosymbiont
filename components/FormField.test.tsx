@@ -3,82 +3,86 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import FormField from './FormField';
 
-// Mock lucide-react icons
+// Mock lucide-react to avoid complex SVG rendering issues in JSDOM
 vi.mock('lucide-react', () => ({
-    AlertCircle: () => <div data-testid="icon-alert-circle" />,
+    AlertCircle: () => <span data-testid="alert-icon">AlertCircle</span>
 }));
 
-describe('FormField Component', () => {
+describe('FormField', () => {
+    const defaultProps = {
+        label: 'Test Label',
+        name: 'testName',
+        id: 'test-id',
+    };
+
     it('renders the label and children correctly', () => {
         render(
-            <FormField label="Test Label" name="testName" id="testId">
-                <input data-testid="test-input" />
+            <FormField {...defaultProps}>
+                <input data-testid="test-input" id="test-id" />
             </FormField>
         );
 
-        // Check for the label text
-        const label = screen.getByText('Test Label');
-        expect(label).toBeInTheDocument();
-
-        // Check for the htmlFor mapping
-        expect(label).toHaveAttribute('for', 'testId');
-
-        // Check for children
+        expect(screen.getByText('Test Label')).toBeInTheDocument();
         expect(screen.getByTestId('test-input')).toBeInTheDocument();
+
+        // Verify htmlFor matches the id for accessibility
+        const labelElement = screen.getByText(/Test Label/);
+        expect(labelElement).toHaveAttribute('for', 'test-id');
     });
 
     it('renders the required asterisk when required is true', () => {
         render(
-            <FormField label="Test Label" name="testName" id="testId" required>
-                <input data-testid="test-input" />
+            <FormField {...defaultProps} required>
+                <input id="test-id" />
             </FormField>
         );
 
-        // The asterisk should be rendered
         const asterisk = screen.getByText('*');
         expect(asterisk).toBeInTheDocument();
-        expect(asterisk).toHaveClass('text-burnt-orange dark:text-orange-400');
+        expect(asterisk).toHaveClass('text-burnt-orange', 'dark:text-orange-400');
     });
 
-    it('does not render the required asterisk when required is false or omitted', () => {
-        render(
-            <FormField label="Test Label" name="testName" id="testId">
-                <input data-testid="test-input" />
+    it('does not render the required asterisk when required is false or undefined', () => {
+        const { rerender } = render(
+            <FormField {...defaultProps}>
+                <input id="test-id" />
             </FormField>
         );
 
-        // The asterisk should not be rendered
-        const asterisk = screen.queryByText('*');
-        expect(asterisk).not.toBeInTheDocument();
+        expect(screen.queryByText('*')).not.toBeInTheDocument();
+
+        rerender(
+            <FormField {...defaultProps} required={false}>
+                <input id="test-id" />
+            </FormField>
+        );
+
+        expect(screen.queryByText('*')).not.toBeInTheDocument();
     });
 
-    it('renders the error message and icon when error is provided', () => {
+    it('renders the error message and icon when error prop is provided', () => {
         const errorMessage = 'This field is required';
         render(
-            <FormField label="Test Label" name="testName" id="testId" error={errorMessage}>
-                <input data-testid="test-input" />
+            <FormField {...defaultProps} error={errorMessage}>
+                <input id="test-id" />
             </FormField>
         );
 
-        // The error message should be rendered
         expect(screen.getByText(errorMessage)).toBeInTheDocument();
+        expect(screen.getByTestId('alert-icon')).toBeInTheDocument();
 
-        // The icon should be rendered
-        expect(screen.getByTestId('icon-alert-circle')).toBeInTheDocument();
+        // Verify it's within the aria-live polite region
+        const politeRegion = screen.getByText(errorMessage).closest('[aria-live="polite"]');
+        expect(politeRegion).toBeInTheDocument();
     });
 
-    it('does not render the error block when error is omitted', () => {
+    it('does not render the error message when error prop is not provided', () => {
         render(
-            <FormField label="Test Label" name="testName" id="testId">
-                <input data-testid="test-input" />
+            <FormField {...defaultProps}>
+                <input id="test-id" />
             </FormField>
         );
 
-        // The error message should not be rendered
-        const errorDiv = screen.queryByText('This field is required');
-        expect(errorDiv).not.toBeInTheDocument();
-
-        // The icon should not be rendered
-        expect(screen.queryByTestId('icon-alert-circle')).not.toBeInTheDocument();
+        expect(screen.queryByTestId('alert-icon')).not.toBeInTheDocument();
     });
 });
