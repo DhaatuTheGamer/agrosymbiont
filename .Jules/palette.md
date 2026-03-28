@@ -28,3 +28,7 @@
 ## 2024-05-24 - Missing focus rings on footer links and social icons
 **Learning:** Navigational lists and social icon links within footers often contain complex hover styles and active states but miss explicit focus indicators, creating an accessibility gap for keyboard users traversing the bottom of the page.
 **Action:** Always append `focus:outline-none focus-visible:ring-2 focus-visible:ring-[color] focus-visible:ring-offset-2` (matching the section's background) to footer links and custom icon anchors to preserve clear keyboard accessibility.
+
+## 2026-03-28 - Missing keyboard focus states on custom carousels
+**Learning:** Custom UI components like image or team carousels often implement their own "Next/Previous" and pagination dot controls using raw `<button>` elements with heavy custom styling (e.g., circular, absolute positioning). This completely overrides native focus rings, rendering them completely inaccessible to keyboard users navigating through the interactive dots or arrows.
+**Action:** When creating custom carousels or modifying existing ones, explicitly append `focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2` (using appropriate theme colors like `focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900`) to both directional arrows and pagination dots.
