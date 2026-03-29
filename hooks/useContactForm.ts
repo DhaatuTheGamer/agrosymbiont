@@ -3,7 +3,6 @@ import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { EMAIL_REGEX } from '../utils/validation';
 
-
 export const useContactForm = () => {
     const { t } = useTranslation();
 

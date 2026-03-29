@@ -4,7 +4,6 @@ import { EMAIL_REGEX } from '../utils/validation';
 import { AlertCircle, UploadCloud, Loader2 } from 'lucide-react';
 import { EMAIL_REGEX } from '../utils/validation';
 
-
 interface JobApplicationFormProps {
     jobId?: string;
     jobTitle?: string;
