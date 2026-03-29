@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { isValidEmail } from '../utils/validation';
+
 
 const BlogNewsletterForm: React.FC = () => {
   const { t } = useTranslation();
@@ -15,7 +17,7 @@ const BlogNewsletterForm: React.FC = () => {
       const trimmedValue = value.trim();
       if (!trimmedValue) {
           setEmailError(t('blog_email_required'));
-      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedValue)) {
+      } else if (!isValidEmail(trimmedValue)) {
           setEmailError(t('blog_email_invalid'));
       } else {
           setEmailError('');
@@ -28,7 +30,7 @@ const BlogNewsletterForm: React.FC = () => {
     if (!trimmedEmail) {
         setEmailError(t('blog_email_required'));
         return;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+    } else if (!isValidEmail(trimmedEmail)) {
         setEmailError(t('blog_email_invalid'));
         return;
     }
