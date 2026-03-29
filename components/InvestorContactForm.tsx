@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import AnimatedSection from './AnimatedSection';
 import { motion } from 'framer-motion';
 import { FileText, ShieldCheck, Check, Loader2 } from 'lucide-react';
+import { isValidEmail } from '../utils/validation';
+
 
 const InvestorContactForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -19,7 +21,7 @@ const InvestorContactForm: React.FC = () => {
     if (!formData.name.trim()) tempErrors.name = "Name is required";
     if (!formData.email.trim()) {
       tempErrors.email = "Email is required";
-    } else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/.test(formData.email)) {
+    } else if (!isValidEmail(formData.email)) {
       tempErrors.email = "Invalid email format";
     }
     if (!formData.company.trim()) tempErrors.company = "Company is required";
