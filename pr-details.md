@@ -1,16 +1,17 @@
-# 🧪 [testing improvement] Add tests for TeamCarousel
+# 🧹 Code Health: Refactor deeply nested logic and deduplicate validation in ResourcesPage
 
-🎯 **What:** The `TeamCarousel` component was missing tests, specifically for its interactive features like pagination, next/previous buttons, and swipe functionality.
+## 🎯 **What:**
+The `ResourcesPage` component contained deeply nested logic specifically around massive inline Tailwind CSS `className` template strings for its input and button elements. It also had duplicated email validation logic spread across the `handleEmailChange` and `handleSubmit` functions, along with a duplicate import of the validation utility. This PR refactors the component to solve these code health issues.
 
-📊 **Coverage:** The following scenarios are now covered with tests:
-- Initial rendering of all team members.
-- Navigation to the next slide via the "Next slide" button.
-- Looping behavior when clicking "Next slide" on the last slide.
-- Navigation to the previous slide via the "Previous slide" button, including wrapping to the last item when starting at the first slide.
-- Navigation to specific slides by clicking pagination dots.
-- Touch events for swiping left (distance > 50) to move to the next slide.
-- Touch events for swiping right (distance < -50) to move to the previous slide.
-- Edge cases where the swipe distance is less than the minimum threshold (no slide change).
-- Edge cases where touch ends without a valid start (no slide change).
+## 💡 **Why:**
+By extracting the duplicated validation logic into a reusable `validateEmail` helper and moving the complex `className` template strings into structured helper arrays outside of the component body, we vastly improve the file's readability and maintainability. It breaks down complex, deeply nested logic into smaller, digestible pieces and adheres strictly to DRY principles.
 
-✨ **Result:** Improved test coverage and reliability for `TeamCarousel`, ensuring the swipe logic and slide transitions work as expected.
+## ✅ **Verification:**
+- Confirmed changes via `git diff` to ensure no functional regressions were introduced.
+- Verified the code compiles and passes the typechecker using `pnpm lint`.
+- Ensured the production build completes successfully via `pnpm build`.
+- Ran the test suite via `pnpm test` and ensured `pages/ResourcesPage.test.tsx` passes flawlessly.
+- Used Playwright to manually test the application locally and took screenshots to visually verify that the error and success states remain fully intact.
+
+## ✨ **Result:**
+A significantly cleaner `ResourcesPage` component structure with zero changes to existing functionality, preventing future bugs and greatly improving future maintainability.
