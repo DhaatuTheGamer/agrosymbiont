@@ -1,16 +1,9 @@
-# 🧪 [testing improvement] Add tests for TeamCarousel
+# ⚡ Bolt: Memoize static presentation components
 
-🎯 **What:** The `TeamCarousel` component was missing tests, specifically for its interactive features like pagination, next/previous buttons, and swipe functionality.
+💡 **What:** Wrapped static UI sub-components (`FeatureCard`, `ServiceIconCard`, `WhyChooseItem`, and `CaseStudyCard`) in `React.memo` to prevent unnecessary re-renders. Additionally, cleaned up multiple duplicate import statements across several components that were causing linting errors.
 
-📊 **Coverage:** The following scenarios are now covered with tests:
-- Initial rendering of all team members.
-- Navigation to the next slide via the "Next slide" button.
-- Looping behavior when clicking "Next slide" on the last slide.
-- Navigation to the previous slide via the "Previous slide" button, including wrapping to the last item when starting at the first slide.
-- Navigation to specific slides by clicking pagination dots.
-- Touch events for swiping left (distance > 50) to move to the next slide.
-- Touch events for swiping right (distance < -50) to move to the previous slide.
-- Edge cases where the swipe distance is less than the minimum threshold (no slide change).
-- Edge cases where touch ends without a valid start (no slide change).
+🎯 **Why:** Static functional subcomponents defined inside or outside of parent components can still trigger re-renders down the tree whenever the parent state changes (e.g., scroll effects, local component state). Wrapping them in `React.memo` bails out of re-rendering as their props do not change.
 
-✨ **Result:** Improved test coverage and reliability for `TeamCarousel`, ensuring the swipe logic and slide transitions work as expected.
+📊 **Impact:** Reduces React virtual DOM reconciliation overhead and re-renders for mostly static list items and cards on the Home, Services, and Use Cases pages.
+
+🔬 **Measurement:** Using the React Profiler would show fewer render cycles for these static sub-components when their parent components update. All TypeScript linting errors caused by duplicate `isValidEmail` imports were resolved, ensuring a clean build.

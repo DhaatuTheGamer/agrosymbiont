@@ -8,7 +8,7 @@ import { ArrowRight, TrendingUp, Sparkles, Coins, CheckCircle, Zap } from 'lucid
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 
-const FeatureCard: React.FC<{ title: string; description: string; icon: React.ReactNode }> = ({ title, description, icon }) => (
+const FeatureCard: React.FC<{ title: string; description: string; icon: React.ReactNode }> = React.memo(({ title, description, icon }) => (
     <TiltCard className="h-full">
         <div 
           className="group relative bg-white/80 dark:bg-stone-900/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl hover:shadow-2xl flex flex-col items-center text-center h-full border border-white/50 dark:border-stone-700/50 overflow-hidden" 
@@ -26,7 +26,7 @@ const FeatureCard: React.FC<{ title: string; description: string; icon: React.Re
             <p className="text-stone-600 dark:text-stone-400 leading-relaxed text-sm transform transition-all group-hover:translate-z-2">{description}</p>
         </div>
     </TiltCard>
-);
+));
 
 
 const HomePage: React.FC = () => {
