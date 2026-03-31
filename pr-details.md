@@ -1,16 +1,14 @@
-# 🧪 [testing improvement] Add tests for TeamCarousel
+Title: 🧹 Code Health: Extract ROI Calculation Logic from JSX
 
-🎯 **What:** The `TeamCarousel` component was missing tests, specifically for its interactive features like pagination, next/previous buttons, and swipe functionality.
+Description:
 
-📊 **Coverage:** The following scenarios are now covered with tests:
-- Initial rendering of all team members.
-- Navigation to the next slide via the "Next slide" button.
-- Looping behavior when clicking "Next slide" on the last slide.
-- Navigation to the previous slide via the "Previous slide" button, including wrapping to the last item when starting at the first slide.
-- Navigation to specific slides by clicking pagination dots.
-- Touch events for swiping left (distance > 50) to move to the next slide.
-- Touch events for swiping right (distance < -50) to move to the previous slide.
-- Edge cases where the swipe distance is less than the minimum threshold (no slide change).
-- Edge cases where touch ends without a valid start (no slide change).
+🎯 **What:** I refactored `components/products/ROICalculator.tsx` to resolve a code health issue involving deeply nested logic. I extracted the inline return calculations (`Math.round(farmSize * 0.25 * 10)` and `farmSize * 1250`) and declared them as standalone variables (`yieldIncrease` and `revenueBoost`) immediately before the functional component's `return` statement.
 
-✨ **Result:** Improved test coverage and reliability for `TeamCarousel`, ensuring the swipe logic and slide transitions work as expected.
+💡 **Why:** By extracting the computational business logic out of the deeply nested presentational JSX structure, the code becomes easier to read, maintain, and digest. The new variable declarations serve as self-documenting code, separating the raw calculations from their string formatted `.toLocaleString('en-US')` display forms.
+
+✅ **Verification:**
+- Ran the Python string substitution modification script, and successfully verified exact variable extraction mapping using `git diff --cached`.
+- Ran `pnpm lint` and confirmed there were no typescript or code-style violations introduced by my changes.
+- Executed `pnpm test components/products/ROICalculator.test.tsx` and a full suite `pnpm test`, all of which passed successfully, verifying existing components function as expected with the new syntax.
+
+✨ **Result:** The overall component rendering is vastly cleaner, improving codebase readability and health, with zero change in the existing UI behavior or functionality.

@@ -6,6 +6,9 @@ const ROICalculator: React.FC = () => {
     const { t } = useTranslation();
     const [farmSize, setFarmSize] = useState(10);
 
+    const yieldIncrease = Math.round(farmSize * 0.25 * 10);
+    const revenueBoost = farmSize * 1250;
+
     return (
         <div className="lg:col-span-2 bg-gradient-to-br from-white to-stone-50 dark:from-stone-800 dark:to-stone-900 rounded-2xl shadow-lg border border-stone-200 dark:border-stone-700 p-6 sm:p-8 flex flex-col justify-center relative overflow-hidden text-left hover:shadow-xl transition-shadow">
             <div className="relative z-10">
@@ -40,12 +43,12 @@ const ROICalculator: React.FC = () => {
                         <div className="bg-green-50/70 dark:bg-green-900/20 p-4 rounded-xl border border-green-200/50 dark:border-green-800/40 relative overflow-hidden backdrop-blur-sm shadow-sm">
                             <div className="absolute top-0 right-0 -mr-4 -mt-4 w-16 h-16 bg-green-400/20 rounded-full blur-xl pointer-events-none"></div>
                             <div className="text-sm text-green-700 dark:text-green-400 font-bold mb-1 tracking-wide">{t('prod_yield_increase')}</div>
-                            <div className="text-2xl sm:text-3xl font-black text-green-600 dark:text-green-300 drop-shadow-sm transition-all">+{Math.round(farmSize * 0.25 * 10).toLocaleString('en-US')} <span className="text-sm font-medium opacity-80 text-green-700 dark:text-green-400">{t('prod_tons')}</span></div>
+                            <div className="text-2xl sm:text-3xl font-black text-green-600 dark:text-green-300 drop-shadow-sm transition-all">+{yieldIncrease.toLocaleString('en-US')} <span className="text-sm font-medium opacity-80 text-green-700 dark:text-green-400">{t('prod_tons')}</span></div>
                         </div>
                         <div className="bg-blue-50/70 dark:bg-blue-900/20 p-4 rounded-xl border border-blue-200/50 dark:border-blue-800/40 relative overflow-hidden backdrop-blur-sm shadow-sm">
                             <div className="absolute top-0 right-0 -mr-4 -mt-4 w-16 h-16 bg-blue-400/20 rounded-full blur-xl pointer-events-none"></div>
                             <div className="text-sm text-blue-700 dark:text-blue-400 font-bold mb-1 tracking-wide">{t('prod_revenue_boost')}</div>
-                            <div className="text-2xl sm:text-3xl font-black text-cerulean-blue dark:text-blue-300 drop-shadow-sm transition-all">+${(farmSize * 1250).toLocaleString('en-US')}</div>
+                            <div className="text-2xl sm:text-3xl font-black text-cerulean-blue dark:text-blue-300 drop-shadow-sm transition-all">+${revenueBoost.toLocaleString('en-US')}</div>
                         </div>
                     </div>
                 </div>
