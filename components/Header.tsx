@@ -126,6 +126,7 @@ const Header: React.FC = () => {
                 onClick={toggleTheme}
                 className="p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900"
                 aria-label="Toggle Dark Mode"
+              title={theme === 'light' ? 'Enable Dark Mode' : 'Enable Light Mode'}
               >
                 {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
               </button>
@@ -144,6 +145,7 @@ const Header: React.FC = () => {
               onClick={toggleTheme}
               className={`p-2 rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${scrolled || isOpen ? 'text-gray-800 dark:text-gray-200' : 'text-gray-900 dark:text-white'}`}
               aria-label="Toggle Dark Mode"
+              title={theme === 'light' ? 'Enable Dark Mode' : 'Enable Light Mode'}
             >
               {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
             </button>
@@ -151,6 +153,7 @@ const Header: React.FC = () => {
               onClick={() => setIsOpen(!isOpen)}
               className={`inline-flex items-center justify-center p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${scrolled || isOpen ? 'text-gray-800 dark:text-gray-200' : 'text-gray-900 dark:text-white'}`}
               aria-label={isOpen ? 'Close menu' : 'Open menu'}
+              title={isOpen ? 'Close menu' : 'Open menu'}
             >
               {isOpen ? (
                 <X className="h-6 w-6" strokeWidth={2} />
