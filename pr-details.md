@@ -1,16 +1,9 @@
-# 🧪 [testing improvement] Add tests for TeamCarousel
+Title: 🧹 [Code Health] Extract WaitlistForm states to improve readability
 
-🎯 **What:** The `TeamCarousel` component was missing tests, specifically for its interactive features like pagination, next/previous buttons, and swipe functionality.
+🎯 **What:** The main return statement in `components/products/WaitlistForm.tsx` had deeply nested inline JSX conditionals to handle the `isSubmitted` state. This was refactored by extracting the success message UI into a `renderSuccessState()` helper function and the form UI into a `renderFormState()` helper function, simplifying the return to a clean ternary statement. Additionally, duplicate imports and identifier conflicts regarding `isValidEmail` and `EMAIL_REGEX` in several components and `utils/validation.ts` were cleaned up.
 
-📊 **Coverage:** The following scenarios are now covered with tests:
-- Initial rendering of all team members.
-- Navigation to the next slide via the "Next slide" button.
-- Looping behavior when clicking "Next slide" on the last slide.
-- Navigation to the previous slide via the "Previous slide" button, including wrapping to the last item when starting at the first slide.
-- Navigation to specific slides by clicking pagination dots.
-- Touch events for swiping left (distance > 50) to move to the next slide.
-- Touch events for swiping right (distance < -50) to move to the previous slide.
-- Edge cases where the swipe distance is less than the minimum threshold (no slide change).
-- Edge cases where touch ends without a valid start (no slide change).
+💡 **Why:** Deeply nested conditional logic makes components harder to read, maintain, and reason about. Extracting these states into named helper functions immediately clarifies the component's structure and makes the render intent much clearer. Consolidating the validation utilities fixes linting errors and prevents future import confusion across the codebase.
 
-✨ **Result:** Improved test coverage and reliability for `TeamCarousel`, ensuring the swipe logic and slide transitions work as expected.
+✅ **Verification:** Verified by running the full project test suite (`pnpm test`), confirming all 239 tests pass without any new regressions. Format and lint checks were successfully resolved using `pnpm lint`. A manual visual check via `git diff` confirmed the refactoring preserved all original CSS classes, attributes, and logic.
+
+✨ **Result:** A more readable `WaitlistForm` component with clear, separated render states. A cleaner codebase with standardized validation imports, successfully passing all static analysis tools and tests.
