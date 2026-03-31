@@ -3,8 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { isValidEmail } from '../utils/validation';
 
 import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
-import { isValidEmail } from '../utils/validation';
 
+
+const EmailErrorMessage: React.FC<{ message: string }> = ({ message }) => {
+    if (!message) return null;
+    return (
+        <p className="absolute -bottom-6 left-0 sm:left-4 text-xs text-red-400 font-medium w-full text-center sm:text-left flex items-center justify-center sm:justify-start">
+            <AlertCircle className="w-3 h-3 mr-1" strokeWidth={2} />
+            {message}
+        </p>
+    );
+};
 
 const BlogNewsletterForm: React.FC = () => {
   const { t } = useTranslation();
@@ -13,27 +22,28 @@ const BlogNewsletterForm: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const validateEmailInput = (emailValue: string): string => {
+      const trimmed = emailValue.trim();
+      if (!trimmed) {
+          return t('blog_email_required');
+      }
+      if (!isValidEmail(trimmed)) {
+          return t('blog_email_invalid');
+      }
+      return '';
+  };
+
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       setEmail(value);
-      const trimmedValue = value.trim();
-      if (!trimmedValue) {
-          setEmailError(t('blog_email_required'));
-      } else if (!isValidEmail(trimmedValue)) {
-          setEmailError(t('blog_email_invalid'));
-      } else {
-          setEmailError('');
-      }
+      setEmailError(validateEmailInput(value));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const trimmedEmail = email.trim();
-    if (!trimmedEmail) {
-        setEmailError(t('blog_email_required'));
-        return;
-    } else if (!isValidEmail(trimmedEmail)) {
-        setEmailError(t('blog_email_invalid'));
+    const error = validateEmailInput(email);
+    if (error) {
+        setEmailError(error);
         return;
     }
 
@@ -73,12 +83,7 @@ const BlogNewsletterForm: React.FC = () => {
                   aria-label="Email for blog notifications"
                 />
                 <div aria-live="polite">
-                    {emailError && (
-                        <p className="absolute -bottom-6 left-0 sm:left-4 text-xs text-red-400 font-medium w-full text-center sm:text-left flex items-center justify-center sm:justify-start">
-                            <AlertCircle className="w-3 h-3 mr-1" strokeWidth={2} />
-                            {emailError}
-                        </p>
-                    )}
+                    <EmailErrorMessage message={emailError} />
                 </div>
             </div>
             <button
