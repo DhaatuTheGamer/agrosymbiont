@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isValidEmail } from '../utils/validation';
+import { isValidEmail } from "../utils/validation";
 
 import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
-import { isValidEmail } from '../utils/validation';
 
 
 const BlogNewsletterForm: React.FC = () => {

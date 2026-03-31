@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { isValidEmail } from '../utils/validation';
+import { isValidEmail } from "../utils/validation";
 
 import AnimatedSection from '../components/AnimatedSection';
 import TiltCard from '../components/TiltCard';
 import InvestorContactForm from '../components/InvestorContactForm';
 import { TrendingUp, ArrowRight, Globe, Lightbulb } from 'lucide-react';
-import { isValidEmail } from '../utils/validation';
 
 
 const InvestorsPage: React.FC = () => {

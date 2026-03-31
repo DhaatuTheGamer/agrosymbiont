@@ -1,7 +1,6 @@
-import { EMAIL_REGEX } from '../utils/validation';
+import { isValidEmail } from "../utils/validation";
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isValidEmail } from '../utils/validation';
 
 export const useContactForm = () => {
     const { t } = useTranslation();

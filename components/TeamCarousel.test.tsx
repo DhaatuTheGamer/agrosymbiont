@@ -47,7 +47,7 @@ describe('TeamCarousel', () => {
 
         // Check initial transform
         const carouselContainer = screen.getByText(teamMembers[0].name).closest('.flex');
-        expect(carouselContainer).toHaveStyle('transform: translateX(calc(-0 * (100% / var(--items-per-screen, 1))))');
+        expect(carouselContainer).toHaveStyle('transform: translateX(calc(-0 * (100% / var(--items-per-screen))))');
     });
 
     it('navigates to the next slide when clicking the Next button', () => {
@@ -57,7 +57,7 @@ describe('TeamCarousel', () => {
         fireEvent.click(nextButton);
 
         const carouselContainer = screen.getByText(teamMembers[0].name).closest('.flex');
-        expect(carouselContainer).toHaveStyle('transform: translateX(calc(-1 * (100% / var(--items-per-screen, 1))))');
+        expect(carouselContainer).toHaveStyle('transform: translateX(calc(-1 * (100% / var(--items-per-screen))))');
     });
 
     it('loops to the first slide when clicking Next on the last slide', () => {
@@ -71,7 +71,7 @@ describe('TeamCarousel', () => {
         }
 
         const carouselContainer = screen.getByText(teamMembers[0].name).closest('.flex');
-        expect(carouselContainer).toHaveStyle('transform: translateX(calc(-0 * (100% / var(--items-per-screen, 1))))');
+        expect(carouselContainer).toHaveStyle('transform: translateX(calc(-0 * (100% / var(--items-per-screen))))');
     });
 
     it('navigates to the previous slide when clicking the Previous button', () => {
@@ -82,7 +82,7 @@ describe('TeamCarousel', () => {
         fireEvent.click(prevButton);
 
         const carouselContainer = screen.getByText(teamMembers[0].name).closest('.flex');
-        expect(carouselContainer).toHaveStyle('transform: translateX(calc(-4 * (100% / var(--items-per-screen, 1))))');
+        expect(carouselContainer).toHaveStyle('transform: translateX(calc(-4 * (100% / var(--items-per-screen))))');
     });
 
     it('navigates to a specific slide when clicking a pagination dot', () => {
@@ -93,7 +93,7 @@ describe('TeamCarousel', () => {
         fireEvent.click(dot);
 
         const carouselContainer = screen.getByText(teamMembers[0].name).closest('.flex');
-        expect(carouselContainer).toHaveStyle('transform: translateX(calc(-2 * (100% / var(--items-per-screen, 1))))');
+        expect(carouselContainer).toHaveStyle('transform: translateX(calc(-2 * (100% / var(--items-per-screen))))');
     });
 
     it('navigates to the next slide on swipe left', () => {
@@ -108,7 +108,7 @@ describe('TeamCarousel', () => {
             fireEvent.touchEnd(wrapperDiv);
 
             const carouselContainer = screen.getByText(teamMembers[0].name).closest('.flex');
-            expect(carouselContainer).toHaveStyle('transform: translateX(calc(-1 * (100% / var(--items-per-screen, 1))))');
+            expect(carouselContainer).toHaveStyle('transform: translateX(calc(-1 * (100% / var(--items-per-screen))))');
         }
     });
 
@@ -124,7 +124,7 @@ describe('TeamCarousel', () => {
             fireEvent.touchEnd(wrapperDiv);
 
             const carouselContainer = screen.getByText(teamMembers[0].name).closest('.flex');
-            expect(carouselContainer).toHaveStyle('transform: translateX(calc(-4 * (100% / var(--items-per-screen, 1))))');
+            expect(carouselContainer).toHaveStyle('transform: translateX(calc(-4 * (100% / var(--items-per-screen))))');
         }
     });
 
@@ -141,7 +141,7 @@ describe('TeamCarousel', () => {
 
             const carouselContainer = screen.getByText(teamMembers[0].name).closest('.flex');
             // Should remain at 0
-            expect(carouselContainer).toHaveStyle('transform: translateX(calc(-0 * (100% / var(--items-per-screen, 1))))');
+            expect(carouselContainer).toHaveStyle('transform: translateX(calc(-0 * (100% / var(--items-per-screen))))');
         }
     });
 
@@ -156,7 +156,7 @@ describe('TeamCarousel', () => {
 
             const carouselContainer = screen.getByText(teamMembers[0].name).closest('.flex');
             // Should remain at 0
-            expect(carouselContainer).toHaveStyle('transform: translateX(calc(-0 * (100% / var(--items-per-screen, 1))))');
+            expect(carouselContainer).toHaveStyle('transform: translateX(calc(-0 * (100% / var(--items-per-screen))))');
         }
     });
 });

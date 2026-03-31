@@ -15,14 +15,16 @@ const PaginationDot = memo(({ index, isActive, onClick }: { index: number, isAct
     );
 });
 
+const teamMembers = [
+    { name: "Dhaatrik Chowdhury", title: "Founder & CEO", imageUrl: "https://picsum.photos/400/600?random=1" },
+    { name: "Aarav Patel", title: "Chief Technology Officer", imageUrl: "https://picsum.photos/400/600?random=2" },
+    { name: "Priya Sharma", title: "Head of Global Operations", imageUrl: "https://picsum.photos/400/600?random=3" },
+    { name: "Rohan Desai", title: "Lead Agronomist", imageUrl: "https://picsum.photos/400/600?random=4" },
+    { name: "Ananya Singh", title: "VP of Sustainability", imageUrl: "https://picsum.photos/400/600?random=5" },
+];
+
 const TeamCarousel: React.FC = () => {
-    const teamMembers = [
-        { name: "Dhaatrik Chowdhury", title: "Founder & CEO", imageUrl: "https://picsum.photos/400/600?random=1" },
-        { name: "Aarav Patel", title: "Chief Technology Officer", imageUrl: "https://picsum.photos/400/600?random=2" },
-        { name: "Priya Sharma", title: "Head of Global Operations", imageUrl: "https://picsum.photos/400/600?random=3" },
-        { name: "Rohan Desai", title: "Lead Agronomist", imageUrl: "https://picsum.photos/400/600?random=4" },
-        { name: "Ananya Singh", title: "VP of Sustainability", imageUrl: "https://picsum.photos/400/600?random=5" },
-    ];
+
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -34,16 +36,28 @@ const TeamCarousel: React.FC = () => {
 
     const minSwipeDistance = 50;
 
-    const onTouchStart = (e: React.TouchEvent) => {
+    const onTouchStart = useCallback((e: React.TouchEvent) => {
         setTouchEnd(null);
         setTouchStart(e.targetTouches[0].clientX);
-    };
+    }, []);
 
-    const onTouchMove = (e: React.TouchEvent) => {
+    const onTouchMove = useCallback((e: React.TouchEvent) => {
         setTouchEnd(e.targetTouches[0].clientX);
-    };
+    }, []);
 
-    const onTouchEnd = () => {
+    const nextSlide = useCallback(() => {
+        setCurrentIndex((prevIndex) =>
+            prevIndex === teamMembers.length - 1 ? 0 : prevIndex + 1
+        );
+    }, [teamMembers.length]);
+
+    const prevSlide = useCallback(() => {
+        setCurrentIndex((prevIndex) =>
+            prevIndex === 0 ? teamMembers.length - 1 : prevIndex - 1
+        );
+    }, [teamMembers.length]);
+
+    const onTouchEnd = useCallback(() => {
         if (!touchStart || !touchEnd) return;
         const distance = touchStart - touchEnd;
         const isLeftSwipe = distance > minSwipeDistance;
@@ -54,19 +68,7 @@ const TeamCarousel: React.FC = () => {
         } else if (isRightSwipe) {
             prevSlide();
         }
-    };
-
-    const nextSlide = () => {
-        setCurrentIndex((prevIndex) =>
-            prevIndex === teamMembers.length - 1 ? 0 : prevIndex + 1
-        );
-    };
-
-    const prevSlide = () => {
-        setCurrentIndex((prevIndex) =>
-            prevIndex === 0 ? teamMembers.length - 1 : prevIndex - 1
-        );
-    };
+    }, [touchStart, touchEnd, nextSlide, prevSlide]);
 
     return (
         <div
@@ -77,13 +79,9 @@ const TeamCarousel: React.FC = () => {
         >
             <div className="overflow-hidden rounded-3xl">
                 <div
-                    className="flex transition-transform duration-700 ease-in-out"
-                    style={{ transform: `translateX(calc(-${currentIndex} * (100% / var(--items-per-screen, 1))))` }}
+                    className="flex transition-transform duration-700 ease-in-out [--items-per-screen:1] md:[--items-per-screen:2] lg:[--items-per-screen:3]"
+                    style={{ transform: `translateX(calc(-${currentIndex} * (100% / var(--items-per-screen))))` }}
                 >
-                    <style>{`
-                        @media (min-width: 768px) { .flex { --items-per-screen: 2; } }
-                        @media (min-width: 1024px) { .flex { --items-per-screen: 3; } }
-                    `}</style>
                     {teamMembers.map((member, index) => (
                         <div key={index} className="w-full flex-shrink-0 px-2 sm:px-4 md:w-1/2 lg:w-1/3">
                             <TeamMemberCard name={member.name} title={member.title} imageUrl={member.imageUrl} />
