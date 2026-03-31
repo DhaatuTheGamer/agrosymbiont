@@ -71,37 +71,51 @@ const DiagnosisResult: React.FC<{
   showResult: boolean;
   recommendedSolution: Solution | null;
   t: (key: string) => string;
-}> = ({ isAnalyzing, showResult, recommendedSolution, t }) => (
-  <div aria-live="polite" className="bg-stone-50 dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-700 p-6 flex flex-col items-center justify-center min-h-[300px] text-center relative overflow-hidden h-full">
-      {isAnalyzing ? (
-          <div className="flex flex-col items-center gap-4">
-              <div className="w-16 h-16 border-4 border-cerulean-blue/30 border-t-cerulean-blue rounded-full animate-spin"></div>
-              <p className="text-stone-500 font-medium animate-pulse">{t('solver_analyzing')}</p>
-          </div>
-      ) : showResult && recommendedSolution ? (
-          <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="flex flex-col items-center"
-          >
-              <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center mb-4">
-                  <CheckCircle2 className="w-8 h-8" />
+}> = ({ isAnalyzing, showResult, recommendedSolution, t }) => {
+  const renderContent = () => {
+      if (isAnalyzing) {
+          return (
+              <div className="flex flex-col items-center gap-4">
+                  <div className="w-16 h-16 border-4 border-cerulean-blue/30 border-t-cerulean-blue rounded-full animate-spin"></div>
+                  <p className="text-stone-500 font-medium animate-pulse">{t('solver_analyzing')}</p>
               </div>
-              <h3 className="text-sm font-bold text-stone-500 uppercase tracking-wider mb-2">{t('solver_recommended')}</h3>
-              <h4 className="text-2xl font-black text-cerulean-blue dark:text-blue-400 mb-4">{recommendedSolution.name}</h4>
-              <p className="text-stone-600 dark:text-stone-300 mb-6 max-w-sm">{recommendedSolution.desc}</p>
-              <button className="bg-mustard-yellow text-stone-900 font-bold py-2 px-6 rounded-lg hover:bg-yellow-500 transition-colors shadow-md flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900">
-                  {t('solver_view_product')} <ArrowRight className="w-4 h-4" />
-              </button>
-          </motion.div>
-      ) : (
+          );
+      }
+
+      if (showResult && recommendedSolution) {
+          return (
+              <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex flex-col items-center"
+              >
+                  <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center mb-4">
+                      <CheckCircle2 className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-sm font-bold text-stone-500 uppercase tracking-wider mb-2">{t('solver_recommended')}</h3>
+                  <h4 className="text-2xl font-black text-cerulean-blue dark:text-blue-400 mb-4">{recommendedSolution.name}</h4>
+                  <p className="text-stone-600 dark:text-stone-300 mb-6 max-w-sm">{recommendedSolution.desc}</p>
+                  <button className="bg-mustard-yellow text-stone-900 font-bold py-2 px-6 rounded-lg hover:bg-yellow-500 transition-colors shadow-md flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900">
+                      {t('solver_view_product')} <ArrowRight className="w-4 h-4" />
+                  </button>
+              </motion.div>
+          );
+      }
+
+      return (
           <div className="text-stone-400 dark:text-stone-500 flex flex-col items-center gap-3">
               <Search className="w-12 h-12 opacity-50" />
               <p>{t('solver_placeholder')}</p>
           </div>
-      )}
-  </div>
-);
+      );
+  };
+
+  return (
+      <div aria-live="polite" className="bg-stone-50 dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-700 p-6 flex flex-col items-center justify-center min-h-[300px] text-center relative overflow-hidden h-full">
+          {renderContent()}
+      </div>
+  );
+};
 
 const CropProblemSolver: React.FC = () => {
   const { t } = useTranslation();
