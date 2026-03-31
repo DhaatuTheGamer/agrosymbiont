@@ -49,6 +49,52 @@ const WhyChooseItem: React.FC<{children: React.ReactNode}> = ({children}) => (
 // to avoid unnecessary object creation/GC pressure on every render.
 const SERVICE_SKELETON_ITEMS = [1, 2, 3, 4];
 
+
+const ServiceLoadingGrid: React.FC = () => (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {SERVICE_SKELETON_ITEMS.map(i => <ServiceSkeletonCard key={i} />)}
+        <div className="md:col-span-2 flex justify-center">
+            <div className="max-w-xl w-full">
+                <ServiceSkeletonCard />
+            </div>
+        </div>
+    </div>
+);
+
+const ServiceGrid: React.FC<{ t: any }> = ({ t }) => (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <ServiceIconCard
+            title={t('tech_service_1_title')}
+            description={t('tech_service_1_desc')}
+            icon={<Sparkles className="w-8 h-8" strokeWidth={1.5} />}
+        />
+        <ServiceIconCard
+            title={t('tech_service_2_title')}
+            description={t('tech_service_2_desc')}
+            icon={<TrendingUp className="w-8 h-8" strokeWidth={1.5} />}
+        />
+        <ServiceIconCard
+            title={t('tech_service_3_title')}
+            description={t('tech_service_3_desc')}
+            icon={<Shield className="w-8 h-8" strokeWidth={1.5} />}
+        />
+        <ServiceIconCard
+            title={t('tech_service_4_title')}
+            description={t('tech_service_4_desc')}
+            icon={<FlaskConical className="w-8 h-8" strokeWidth={1.5} />}
+        />
+        <div className="md:col-span-2 flex justify-center">
+            <div className="max-w-xl w-full">
+                <ServiceIconCard
+                    title={t('tech_service_5_title')}
+                    description={t('tech_service_5_desc')}
+                    icon={<FileText className="w-8 h-8" strokeWidth={1.5} />}
+                />
+            </div>
+        </div>
+    </div>
+);
+
 const ServicesPage: React.FC = () => {
     const { t } = useTranslation();
     const [isLoading, setIsLoading] = useState(true);
@@ -74,48 +120,7 @@ const ServicesPage: React.FC = () => {
                 </AnimatedSection>
 
                 <AnimatedSection className="mt-16">
-                    {isLoading ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {SERVICE_SKELETON_ITEMS.map(i => <ServiceSkeletonCard key={i} />)}
-                            <div className="md:col-span-2 flex justify-center">
-                                <div className="max-w-xl w-full">
-                                    <ServiceSkeletonCard />
-                                </div>
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <ServiceIconCard 
-                                title={t('tech_service_1_title')}
-                                description={t('tech_service_1_desc')}
-                                icon={<Sparkles className="w-8 h-8" strokeWidth={1.5} />}
-                            />
-                             <ServiceIconCard 
-                                title={t('tech_service_2_title')}
-                                description={t('tech_service_2_desc')}
-                                icon={<TrendingUp className="w-8 h-8" strokeWidth={1.5} />}
-                            />
-                             <ServiceIconCard 
-                                title={t('tech_service_3_title')}
-                                description={t('tech_service_3_desc')}
-                                icon={<Shield className="w-8 h-8" strokeWidth={1.5} />}
-                            />
-                             <ServiceIconCard 
-                                title={t('tech_service_4_title')}
-                                description={t('tech_service_4_desc')}
-                                icon={<FlaskConical className="w-8 h-8" strokeWidth={1.5} />}
-                            />
-                             <div className="md:col-span-2 flex justify-center">
-                                <div className="max-w-xl w-full">
-                                    <ServiceIconCard 
-                                        title={t('tech_service_5_title')}
-                                        description={t('tech_service_5_desc')}
-                                        icon={<FileText className="w-8 h-8" strokeWidth={1.5} />}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    )}
+                    {isLoading ? <ServiceLoadingGrid /> : <ServiceGrid t={t} />}
                 </AnimatedSection>
 
                 {/* Why Choose Us Section */}
