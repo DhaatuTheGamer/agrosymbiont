@@ -46,6 +46,25 @@ const CaseStudyCard: React.FC<{ title: string, category: string, challenge: stri
 );
 }
 
+
+const UseCasesCTA: React.FC = () => {
+    const { t } = useTranslation();
+    return (
+        <div className="bg-gradient-to-br from-cerulean-blue to-blue-900 dark:from-blue-900 dark:to-stone-900 rounded-[3rem] p-12 md:p-20 shadow-2xl text-white max-w-5xl mx-auto relative overflow-hidden border border-blue-800/50 dark:border-stone-700/50">
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+            <div className="relative z-10">
+                <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('use_cases_cta_title')}</h2>
+                <p className="text-blue-100 dark:text-blue-200 mb-10 text-lg font-light">
+                    {t('use_cases_cta_desc')}
+                </p>
+                <Link to="/contact" className="inline-block bg-mustard-yellow dark:bg-yellow-500 text-cerulean-blue dark:text-blue-900 font-bold py-4 px-10 rounded-full hover:bg-white dark:hover:bg-stone-100 transition duration-300 shadow-solid-md shadow-[#b3993d] dark:shadow-solid-md dark:shadow-[#a18836] hover:shadow-solid-lg hover:shadow-[#b3993d] dark:hover:shadow-solid-lg dark:hover:shadow-[#a18836] active:shadow-solid-none active:shadow-[#b3993d] dark:active:shadow-solid-none dark:active:shadow-[#a18836] transform hover:-translate-y-1 active:translate-y-1">
+                    {t('use_cases_cta_btn')}
+                </Link>
+            </div>
+        </div>
+    );
+};
+
 const UseCasesPage: React.FC = () => {
   const { t } = useTranslation();
   return (
@@ -144,18 +163,7 @@ const UseCasesPage: React.FC = () => {
             </AnimatedSection>
             
             <AnimatedSection className="mt-32 text-center">
-                <div className="bg-gradient-to-br from-cerulean-blue to-blue-900 dark:from-blue-900 dark:to-stone-900 rounded-[3rem] p-12 md:p-20 shadow-2xl text-white max-w-5xl mx-auto relative overflow-hidden border border-blue-800/50 dark:border-stone-700/50">
-                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-                    <div className="relative z-10">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('use_cases_cta_title')}</h2>
-                        <p className="text-blue-100 dark:text-blue-200 mb-10 text-lg font-light">
-                            {t('use_cases_cta_desc')}
-                        </p>
-                        <Link to="/contact" className="inline-block bg-mustard-yellow dark:bg-yellow-500 text-cerulean-blue dark:text-blue-900 font-bold py-4 px-10 rounded-full hover:bg-white dark:hover:bg-stone-100 transition duration-300 shadow-solid-md shadow-[#b3993d] dark:shadow-solid-md dark:shadow-[#a18836] hover:shadow-solid-lg hover:shadow-[#b3993d] dark:hover:shadow-solid-lg dark:hover:shadow-[#a18836] active:shadow-solid-none active:shadow-[#b3993d] dark:active:shadow-solid-none dark:active:shadow-[#a18836] transform hover:-translate-y-1 active:translate-y-1">
-                            {t('use_cases_cta_btn')}
-                        </Link>
-                    </div>
-                </div>
+                <UseCasesCTA />
             </AnimatedSection>
         </div>
     </div>
