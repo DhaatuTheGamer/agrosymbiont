@@ -1,6 +1,8 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isValidEmail } from '../utils/validation';
+import FormErrorSummary from './FormErrorSummary';
+
 
 import { AlertCircle, UploadCloud, Loader2 } from 'lucide-react';
 import { EMAIL_REGEX } from '../utils/validation';
@@ -205,19 +207,7 @@ const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle
 
     return (
         <form noValidate onSubmit={handleSubmit} className="space-y-6">
-            {Object.keys(errors).length > 0 && (
-                <div role="alert" className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-start">
-                    <AlertCircle className="w-5 h-5 text-red-500 dark:text-red-400 mt-0.5 mr-3 flex-shrink-0" strokeWidth={2} />
-                    <div>
-                        <h4 className="text-red-800 dark:text-red-300 font-bold text-sm mb-1">{t('car_form_error_header')}</h4>
-                        <ul className="list-disc list-inside text-red-600 dark:text-red-400 text-sm">
-                            {Object.values(errors).map((error, index) => (
-                                <li key={index}>{error}</li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-            )}
+            <FormErrorSummary errors={errors} headerText={t('car_form_error_header')} />
 
             <FormField
                 label={t('car_form_name')}

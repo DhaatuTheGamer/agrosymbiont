@@ -1,16 +1,18 @@
-# 🧪 [testing improvement] Add tests for TeamCarousel
+Title: 🧹 Extract FormErrorSummary to resolve deeply nested error UI logic
 
-🎯 **What:** The `TeamCarousel` component was missing tests, specifically for its interactive features like pagination, next/previous buttons, and swipe functionality.
+**Description:**
 
-📊 **Coverage:** The following scenarios are now covered with tests:
-- Initial rendering of all team members.
-- Navigation to the next slide via the "Next slide" button.
-- Looping behavior when clicking "Next slide" on the last slide.
-- Navigation to the previous slide via the "Previous slide" button, including wrapping to the last item when starting at the first slide.
-- Navigation to specific slides by clicking pagination dots.
-- Touch events for swiping left (distance > 50) to move to the next slide.
-- Touch events for swiping right (distance < -50) to move to the previous slide.
-- Edge cases where the swipe distance is less than the minimum threshold (no slide change).
-- Edge cases where touch ends without a valid start (no slide change).
+🎯 **What:**
+Identified a deeply nested and duplicated inline `div[role="alert"]` used for rendering dynamic form validation errors in both `ContactForm.tsx` and `JobApplicationForm.tsx`. Extracted this into a new, reusable `<FormErrorSummary />` component and updated the call sites to use it. Also added standard test coverage for the new component.
 
-✨ **Result:** Improved test coverage and reliability for `TeamCarousel`, ensuring the swipe logic and slide transitions work as expected.
+💡 **Why:**
+The previous inline logic bloated the forms, making the JSX harder to read and maintain. By extracting the rendering logic of the errors into a standardized functional component, we flatten the component tree of the consuming forms. This adheres to DRY principles, centralizes styling (including the newly unified `AlertCircle` icon from `lucide-react`), and makes testing the error rendering paths significantly easier and isolated from complex form state.
+
+✅ **Verification:**
+- Successfully passed all existing test suites (`ContactForm.test.tsx`, `JobApplicationForm.test.tsx`).
+- Created and passed a new test suite specifically for `FormErrorSummary.tsx`.
+- Visually verified via Playwright screenshot that the error alerts render correctly in the browser when attempting to submit blank forms on both the `/contact` and `/careers` pages.
+- Verified successful production build via `pnpm build`.
+
+✨ **Result:**
+Cleaner, more maintainable code within the complex form components. Reduced line counts in `ContactForm` and `JobApplicationForm` while standardizing the UI experience for form errors across the application.
