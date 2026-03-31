@@ -72,11 +72,9 @@ const AboutPage: React.FC = () => {
                         <blockquote className="text-xl md:text-2xl font-light leading-relaxed text-stone-300 italic mb-8 relative">
                             {t('about_founder_quote')}
                         </blockquote>
-                        <div className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-4">
-                            <div>
-                                <h4 className="font-bold text-xl text-white">{t('about_founder_name')}</h4>
-                                <p className="text-mustard-yellow font-medium uppercase tracking-wider text-sm">{t('about_founder_role')}</p>
-                            </div>
+                        <div className="flex flex-col items-center justify-center md:items-start md:justify-start">
+                            <h4 className="font-bold text-xl text-white">{t('about_founder_name')}</h4>
+                            <p className="text-mustard-yellow font-medium uppercase tracking-wider text-sm">{t('about_founder_role')}</p>
                         </div>
                     </div>
                 </AnimatedSection>
@@ -150,7 +148,8 @@ const AboutPage: React.FC = () => {
                     <h2 className="text-4xl font-bold text-gray-900 dark:text-white">{t('about_journey_title')}</h2>
                 </AnimatedSection>
                 <div className="max-w-5xl mx-auto px-4 relative">
-                    {/* Mobile Timeline (Swipeable Carousel) *                     <div className="md:hidden flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 scrollbar-hide -mx-4 px-4">
+                    {/* Mobile Timeline (Swipeable Carousel) */}
+                    <div className="md:hidden flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 scrollbar-hide -mx-4 px-4">
                          <AnimatedSection className="relative flex-shrink-0 w-[85%] snap-center bg-white dark:bg-stone-800 p-8 rounded-3xl shadow-lg border border-stone-100 dark:border-stone-700">
                             <span className="text-cerulean-blue dark:text-blue-400 font-bold text-2xl block mb-2">{t('about_journey_1_year')}</span>
                             <h3 className="font-bold text-xl text-gray-800 dark:text-white mb-2">{t('about_journey_1_title')}</h3>

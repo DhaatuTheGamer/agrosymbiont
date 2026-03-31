@@ -117,7 +117,7 @@ describe('AboutPage Component', () => {
 
     // Check Timeline
     expect(screen.getByText('about_journey_title')).toBeInTheDocument();
-    expect(screen.getByText('about_journey_1_title')).toBeInTheDocument();
+    expect(screen.getAllByText('about_journey_1_title')[0]).toBeInTheDocument();
 
     // Check Leaders
     expect(screen.getByText('about_leaders_title')).toBeInTheDocument();
