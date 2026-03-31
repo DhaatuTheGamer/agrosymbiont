@@ -3,6 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import TiltCard from './TiltCard';
 import { Job } from '../data/careers';
+import JobBadge from './JobBadge';
 
 interface JobCardProps {
     title: string;
@@ -21,8 +22,8 @@ const JobCard: React.FC<JobCardProps> = React.memo(({ title, location, type, onA
                 <div className="mb-6 md:mb-0 translate-z-4">
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-cerulean-blue dark:group-hover:text-blue-400 transition-colors">{title}</h3>
                     <div className="flex gap-4 mt-3 text-sm text-stone-500 dark:text-stone-400">
-                        <span className="flex items-center bg-stone-50 dark:bg-stone-900/50 px-3 py-1 rounded-full border border-stone-100 dark:border-stone-700 group-hover:border-cerulean-blue/30 dark:group-hover:border-blue-500/30 transition-colors"><span className="mr-2 text-lg">📍</span> {location}</span>
-                        <span className="flex items-center bg-stone-50 dark:bg-stone-900/50 px-3 py-1 rounded-full border border-stone-100 dark:border-stone-700 group-hover:border-cerulean-blue/30 dark:group-hover:border-blue-500/30 transition-colors"><span className="mr-2 text-lg">💼</span> {type}</span>
+                        <JobBadge icon="📍" text={location} className="group-hover:border-cerulean-blue/30 dark:group-hover:border-blue-500/30 transition-colors" />
+                        <JobBadge icon="💼" text={type} className="group-hover:border-cerulean-blue/30 dark:group-hover:border-blue-500/30 transition-colors" />
                     </div>
                 </div>
                 <button
