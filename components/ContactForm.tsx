@@ -3,10 +3,7 @@ import { Check, ChevronDown, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { isValidEmail } from '../utils/validation';
 
-import { useContactForm } from '../hooks/useContactForm';
-import { EMAIL_REGEX } from '../utils/validation';
 import FormField from './FormField';
-import { EMAIL_REGEX } from '../utils/validation';
 
 
 const ContactForm: React.FC = () => {

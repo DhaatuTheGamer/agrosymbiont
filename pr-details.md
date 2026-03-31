@@ -1,16 +1,10 @@
-# 🧪 [testing improvement] Add tests for TeamCarousel
+Title: 🧹 [Clean up duplicate and invalid imports]
 
-🎯 **What:** The `TeamCarousel` component was missing tests, specifically for its interactive features like pagination, next/previous buttons, and swipe functionality.
+Description:
+🎯 **What:** Removed duplicate `isValidEmail` imports and invalid `EMAIL_REGEX` and unused `useContactForm` imports across multiple files (`components/BlogNewsletterForm.tsx`, `components/ContactForm.tsx`, `components/InvestorContactForm.tsx`, `components/JobApplicationForm.tsx`, `components/products/WaitlistForm.tsx`, `hooks/useContactForm.ts`, `pages/InvestorsPage.tsx`, `pages/ResourcesPage.tsx`).
 
-📊 **Coverage:** The following scenarios are now covered with tests:
-- Initial rendering of all team members.
-- Navigation to the next slide via the "Next slide" button.
-- Looping behavior when clicking "Next slide" on the last slide.
-- Navigation to the previous slide via the "Previous slide" button, including wrapping to the last item when starting at the first slide.
-- Navigation to specific slides by clicking pagination dots.
-- Touch events for swiping left (distance > 50) to move to the next slide.
-- Touch events for swiping right (distance < -50) to move to the previous slide.
-- Edge cases where the swipe distance is less than the minimum threshold (no slide change).
-- Edge cases where touch ends without a valid start (no slide change).
+💡 **Why:** This resolves duplicate identifier compilation errors and removes dead code references, significantly improving code health and slightly reducing bundle sizes. It ensures the codebase passes typechecking cleanly via `pnpm lint`.
 
-✨ **Result:** Improved test coverage and reliability for `TeamCarousel`, ensuring the swipe logic and slide transitions work as expected.
+✅ **Verification:** Verified by successfully running `pnpm lint` with 0 errors, and executing `pnpm test` showing 100% test success across 239 assertions, confirming no logic regressions.
+
+✨ **Result:** A cleaner codebase with proper import structures and error-free compilation.
