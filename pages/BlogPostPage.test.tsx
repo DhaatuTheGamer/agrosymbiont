@@ -63,7 +63,13 @@ import { blogs } from '../data/blogs';
 
 // Mock react-markdown
 vi.mock('react-markdown', () => ({
-  default: ({ children }: { children: React.ReactNode }) => <div data-testid="markdown">{children}</div>,
+  default: ({ children, components }: any) => (
+    <div data-testid="markdown">
+      {children}
+      {components?.a?.({ href: 'https://safe.com', children: 'safe link' })}
+      {components?.a?.({ href: 'javascript:alert(1)', children: 'malicious link' })}
+    </div>
+  ),
 }));
 
 // Mock Framer Motion
@@ -204,5 +210,24 @@ describe('BlogPostPage', () => {
     });
 
     expect(screen.queryByText('Related Posts')).not.toBeInTheDocument();
+  });
+
+  it('sanitizes dangerous URLs rendered via Markdown components', async () => {
+    const validPost = mockBlogsData[0];
+    renderWithRouter(`/blog/${validPost.id}`);
+
+    await waitFor(() => {
+      expect(screen.getByText(validPost.title)).toBeInTheDocument();
+    });
+
+    const safeLink = screen.getByText('safe link').closest('a');
+    const maliciousLink = screen.getByText('malicious link').closest('a');
+
+    expect(safeLink?.getAttribute('href')).toBe('https://safe.com');
+    const maliciousHref = maliciousLink?.getAttribute('href');
+    // Current implementation returns '' for javascript:
+    // New one will return 'about:blank'
+    expect(maliciousHref === '' || maliciousHref === 'about:blank').toBe(true);
+    expect(maliciousHref).not.toBe('javascript:alert(1)');
   });
 });

@@ -43,16 +43,39 @@ const BlogPostPage: React.FC = () => {
 
   const sanitizeUrl = (url?: string) => {
     if (!url) return '';
-    // Strip control characters (tabs, newlines, etc.) to prevent common protocol bypasses
+
+    // Remove whitespace and control characters that could be used for bypasses
     const sanitizedUrl = url.replace(/[\x00-\x1F\x7F-\x9F\s]/g, '');
-    const protocolMatch = sanitizedUrl.match(/^([^:]+):/);
-    if (protocolMatch) {
-      const protocol = protocolMatch[1].toLowerCase();
-      if (['javascript', 'data', 'vbscript'].includes(protocol)) {
-        return '';
+
+    // Allow relative URLs (starting with /, #, ?)
+    if (sanitizedUrl.startsWith('/') || sanitizedUrl.startsWith('#') || sanitizedUrl.startsWith('?')) {
+      return sanitizedUrl;
+    }
+
+    try {
+      // Attempt to parse as an absolute URL
+      // We use 'http://localhost' as a base for relative-looking URLs that might still have protocols
+      const parsedUrl = new URL(sanitizedUrl, 'http://localhost');
+      const allowedProtocols = ['http:', 'https:', 'mailto:', 'tel:'];
+
+      if (allowedProtocols.includes(parsedUrl.protocol.toLowerCase())) {
+        return sanitizedUrl;
+      }
+
+      // If it was parsed as http because of the base, check if it originally had any protocol
+      if (parsedUrl.protocol === 'http:' && !sanitizedUrl.toLowerCase().startsWith('http:')) {
+          if (!sanitizedUrl.includes(':')) {
+              return sanitizedUrl;
+          }
+      }
+    } catch (e) {
+      // If URL parsing fails, it might be a relative path without a protocol
+      if (!sanitizedUrl.includes(':')) {
+        return sanitizedUrl;
       }
     }
-    return sanitizedUrl;
+
+    return 'about:blank';
   };
 
   if (!post) {
