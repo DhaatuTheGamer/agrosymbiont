@@ -33,7 +33,6 @@ const ContactForm: React.FC = () => {
         message: '',
     });
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -72,7 +71,7 @@ const ContactForm: React.FC = () => {
         return newErrors;
     }, [formData, validateField]);
 
-    const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formErrors = validateForm();
         if (Object.keys(formErrors).length > 0) {
@@ -81,24 +80,10 @@ const ContactForm: React.FC = () => {
         }
 
         setErrors({});
-        setIsSubmitting(true);
-
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
-
-        setIsSubmitting(false);
         setIsSubmitted(true);
     }, [formData, validateForm]);
 
     const getButtonText = () => {
-        if (isSubmitting) {
-            return (
-                <>
-                    <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" />
-                    {t('contact_sending')}
-                </>
-            );
-        }
         return t('contact_send');
     };
 
@@ -169,8 +154,8 @@ const ContactForm: React.FC = () => {
             <div className="pt-4">
                 <button
                     type="submit"
-                    disabled={isSubmitting}
-                    className={`w-full bg-cerulean-blue dark:bg-blue-600 text-white font-bold py-5 px-6 rounded-xl transition duration-300 transform shadow-solid-md shadow-blue-900 dark:shadow-solid-md dark:shadow-blue-800 hover:shadow-solid-lg hover:shadow-blue-900 dark:hover:shadow-solid-lg dark:hover:shadow-blue-800 active:shadow-solid-none active:shadow-blue-900 dark:active:shadow-solid-none dark:active:shadow-blue-800 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : 'hover:bg-blue-700 dark:hover:bg-blue-500 hover:-translate-y-1 active:translate-y-1'}`}
+                    disabled={isSubmitted}
+                    className={`w-full bg-cerulean-blue dark:bg-blue-600 text-white font-bold py-5 px-6 rounded-xl transition duration-300 transform shadow-solid-md shadow-blue-900 dark:shadow-solid-md dark:shadow-blue-800 hover:shadow-solid-lg hover:shadow-blue-900 dark:hover:shadow-solid-lg dark:hover:shadow-blue-800 active:shadow-solid-none active:shadow-blue-900 dark:active:shadow-solid-none dark:active:shadow-blue-800 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 ${isSubmitted ? 'opacity-75 cursor-not-allowed' : 'hover:bg-blue-700 dark:hover:bg-blue-500 hover:-translate-y-1 active:translate-y-1'}`}
                 >
                     {getButtonText()}
                 </button>
