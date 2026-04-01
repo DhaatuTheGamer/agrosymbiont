@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import AnimatedSection from './AnimatedSection';
 import { motion } from 'framer-motion';
 import { FileText, ShieldCheck, Check, Loader2 } from 'lucide-react';
-import { isValidEmail } from '../utils/validation';
 
 
 const InvestorContactForm: React.FC = () => {
