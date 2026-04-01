@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import ServicesPage from './ServicesPage';
+import { API_SIMULATION_DELAY } from '../utils/constants';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 // Mock i18next
@@ -75,7 +76,7 @@ describe('ServicesPage', () => {
 
     // Fast-forward past the 1500ms timeout
     act(() => {
-        vi.advanceTimersByTime(1500);
+        vi.advanceTimersByTime(API_SIMULATION_DELAY);
     });
 
     // Skeletons should be gone

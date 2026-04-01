@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import ProductsPage from './ProductsPage';
+import { API_SIMULATION_DELAY } from '../utils/constants';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 // Mock i18next
@@ -168,7 +169,7 @@ describe('ProductsPage', () => {
 
     // Wait for the mock API to finish
     await act(async () => {
-        vi.advanceTimersByTime(1500);
+        vi.advanceTimersByTime(API_SIMULATION_DELAY);
     });
 
     // Wait for the micro-interaction to finish

@@ -1,6 +1,6 @@
+import { API_SIMULATION_DELAY } from '../../utils/constants';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isValidEmail } from '../../utils/validation';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Loader2, ArrowRight } from 'lucide-react';
@@ -84,7 +84,7 @@ const WaitlistForm: React.FC = () => {
       setIsSubmitting(true);
 
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise(resolve => setTimeout(resolve, API_SIMULATION_DELAY));
 
       setIsSubmitting(false);
       setShowParticles(true);

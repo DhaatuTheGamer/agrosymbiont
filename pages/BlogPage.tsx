@@ -1,4 +1,4 @@
-
+import { API_SIMULATION_DELAY } from '../utils/constants';
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
@@ -32,7 +32,7 @@ const BlogPage: React.FC = () => {
   useEffect(() => {
       const timer = setTimeout(() => {
           setIsLoading(false);
-      }, 1500);
+      }, API_SIMULATION_DELAY);
       return () => {
           clearTimeout(timer);
           if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);

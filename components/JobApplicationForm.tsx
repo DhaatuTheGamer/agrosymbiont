@@ -1,3 +1,4 @@
+import { API_SIMULATION_DELAY } from '../utils/constants';
 import React, { useState, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isValidEmail } from '../utils/validation';
@@ -185,7 +186,7 @@ const JobApplicationForm: React.FC<JobApplicationFormProps> = ({ jobId, jobTitle
         setIsSubmitting(true);
 
         // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        await new Promise(resolve => setTimeout(resolve, API_SIMULATION_DELAY));
 
         setIsSubmitting(false);
         setIsSubmitted(true);

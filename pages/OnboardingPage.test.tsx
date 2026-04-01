@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import OnboardingPage from './OnboardingPage';
+import { API_SIMULATION_DELAY } from '../utils/constants';
 import { vi, describe, it, expect, beforeEach } from 'vitest';
 
 // Mock i18next
@@ -107,7 +108,7 @@ describe('OnboardingPage Component', () => {
 
     // Fast-forward form submission delay
     await act(async () => {
-      vi.advanceTimersByTime(1500);
+      vi.advanceTimersByTime(API_SIMULATION_DELAY);
     });
 
     // Step 6 (Success)

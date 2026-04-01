@@ -1,9 +1,9 @@
+import { API_SIMULATION_DELAY } from '../utils/constants';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isValidEmail } from '../utils/validation';
 
 import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
-import { isValidEmail } from '../utils/validation';
 
 
 const BlogNewsletterForm: React.FC = () => {
@@ -38,7 +38,7 @@ const BlogNewsletterForm: React.FC = () => {
     }
 
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, API_SIMULATION_DELAY));
     setIsSubmitting(false);
     setIsSubmitted(true);
   };

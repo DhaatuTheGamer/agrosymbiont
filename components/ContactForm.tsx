@@ -1,3 +1,4 @@
+import { API_SIMULATION_DELAY } from '../utils/constants';
 import React, { useState, useCallback } from 'react';
 import { Check, ChevronDown, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -6,7 +7,6 @@ import { isValidEmail } from '../utils/validation';
 import { useContactForm } from '../hooks/useContactForm';
 import { EMAIL_REGEX } from '../utils/validation';
 import FormField from './FormField';
-import { EMAIL_REGEX } from '../utils/validation';
 
 
 const ContactForm: React.FC = () => {
@@ -84,7 +84,7 @@ const ContactForm: React.FC = () => {
         setIsSubmitting(true);
 
         // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        await new Promise(resolve => setTimeout(resolve, API_SIMULATION_DELAY));
 
         setIsSubmitting(false);
         setIsSubmitted(true);

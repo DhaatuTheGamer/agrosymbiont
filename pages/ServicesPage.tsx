@@ -1,4 +1,4 @@
-
+import { API_SIMULATION_DELAY } from '../utils/constants';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
@@ -56,7 +56,7 @@ const ServicesPage: React.FC = () => {
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsLoading(false);
-        }, 1500);
+        }, API_SIMULATION_DELAY);
         return () => clearTimeout(timer);
     }, []);
 

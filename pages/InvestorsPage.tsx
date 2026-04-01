@@ -1,3 +1,4 @@
+import { API_SIMULATION_DELAY } from '../utils/constants';
 import React, { useState } from 'react';
 import { isValidEmail } from '../utils/validation';
 
@@ -44,7 +45,7 @@ const InvestorsPage: React.FC = () => {
     if (validate()) {
       setIsSubmitting(true);
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise(resolve => setTimeout(resolve, API_SIMULATION_DELAY));
       setIsSubmitting(false);
       setIsSubmitted(true);
       setFormData({ name: '', email: '', company: '', message: '' });

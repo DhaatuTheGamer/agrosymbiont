@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { API_SIMULATION_DELAY } from '../utils/constants';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import BlogNewsletterForm from './BlogNewsletterForm';
 
@@ -64,7 +65,7 @@ describe('BlogNewsletterForm', () => {
     expect(screen.getByRole('button', { name: /Submitting\.\.\./i })).toBeInTheDocument();
 
     await act(async () => {
-      vi.advanceTimersByTime(1500);
+      vi.advanceTimersByTime(API_SIMULATION_DELAY);
     });
 
     await waitFor(() => {

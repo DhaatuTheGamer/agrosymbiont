@@ -1,3 +1,4 @@
+import { API_SIMULATION_DELAY } from '../utils/constants';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, Check, Clock } from 'lucide-react';
@@ -28,7 +29,7 @@ const OnboardingPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, API_SIMULATION_DELAY));
     setIsSubmitting(false);
     setStep(TOTAL_STEPS);
   };

@@ -1,4 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
+import { API_SIMULATION_DELAY } from '../../utils/constants';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useContactForm } from '../useContactForm';
 import React from 'react';
@@ -165,7 +166,7 @@ describe('useContactForm', () => {
 
         // Fast forward time
         await act(async () => {
-            vi.advanceTimersByTime(1500);
+            vi.advanceTimersByTime(API_SIMULATION_DELAY);
             await submitPromise;
         });
 

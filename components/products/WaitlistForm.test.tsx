@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
+import { API_SIMULATION_DELAY } from '../../utils/constants';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import WaitlistForm from './WaitlistForm';
@@ -105,7 +106,7 @@ describe('WaitlistForm Component', () => {
 
     // Advance timers for "API call" (1500ms)
     await act(async () => {
-      vi.advanceTimersByTime(1500);
+      vi.advanceTimersByTime(API_SIMULATION_DELAY);
     });
 
     // Should show particles/success check (showParticles state)

@@ -1,4 +1,5 @@
 import { EMAIL_REGEX } from '../utils/validation';
+import { API_SIMULATION_DELAY } from '../utils/constants';
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isValidEmail } from '../utils/validation';
@@ -78,7 +79,7 @@ export const useContactForm = () => {
         setIsSubmitting(true);
 
         // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        await new Promise(resolve => setTimeout(resolve, API_SIMULATION_DELAY));
 
         setIsSubmitting(false);
         setIsSubmitted(true);

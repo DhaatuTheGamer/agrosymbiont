@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { useContactForm } from './useContactForm';
+import { API_SIMULATION_DELAY } from '../utils/constants';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 // Mock react-i18next
@@ -114,7 +115,7 @@ describe('useContactForm', () => {
         expect(result.current.isSubmitted).toBe(false);
 
         await act(async () => {
-            vi.advanceTimersByTime(1500);
+            vi.advanceTimersByTime(API_SIMULATION_DELAY);
             await submitPromise;
         });
 

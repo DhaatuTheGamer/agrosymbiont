@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { API_SIMULATION_DELAY } from '../utils/constants';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import BlogPage from './BlogPage';
 
@@ -123,7 +124,7 @@ describe('BlogPage Component', () => {
     expect(skeletons.length).toBeGreaterThan(0);
 
     await act(async () => {
-      vi.advanceTimersByTime(1500);
+      vi.advanceTimersByTime(API_SIMULATION_DELAY);
     });
 
     await waitFor(() => {
@@ -137,7 +138,7 @@ describe('BlogPage Component', () => {
     renderWithRouter(<BlogPage />);
 
     await act(async () => {
-      vi.advanceTimersByTime(1500);
+      vi.advanceTimersByTime(API_SIMULATION_DELAY);
     });
 
     await waitFor(() => {
@@ -165,7 +166,7 @@ describe('BlogPage Component', () => {
     renderWithRouter(<BlogPage />);
 
     await act(async () => {
-      vi.advanceTimersByTime(1500);
+      vi.advanceTimersByTime(API_SIMULATION_DELAY);
     });
 
     await waitFor(() => {
@@ -182,7 +183,7 @@ describe('BlogPage Component', () => {
     renderWithRouter(<BlogPage />);
 
     await act(async () => {
-      vi.advanceTimersByTime(1500);
+      vi.advanceTimersByTime(API_SIMULATION_DELAY);
     });
 
     await waitFor(() => {
