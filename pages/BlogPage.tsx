@@ -1,5 +1,5 @@
 
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -19,7 +19,7 @@ const BlogPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const showToast = (message: string) => {
+  const showToast = useCallback((message: string) => {
       setToastMessage(message);
       if (toastTimeoutRef.current) {
           clearTimeout(toastTimeoutRef.current);
@@ -27,7 +27,7 @@ const BlogPage: React.FC = () => {
       toastTimeoutRef.current = setTimeout(() => {
           setToastMessage(null);
       }, 5000);
-  };
+  }, []);
 
   useEffect(() => {
       const timer = setTimeout(() => {
@@ -46,6 +46,14 @@ const BlogPage: React.FC = () => {
       ? blogs
       : blogs.filter(post => post.category === selectedCategory);
   }, [selectedCategory]);
+
+  const handleReadMore = useCallback((post: typeof blogs[0]) => {
+      if (post.date === "Coming Soon") {
+          showToast(t('blog_toast_msg'));
+      } else {
+          navigate(`/blog/${post.id}`);
+      }
+  }, [t, navigate, showToast]);
 
   return (
     <div className="py-20 min-h-screen">
@@ -90,13 +98,7 @@ const BlogPage: React.FC = () => {
                             onCategoryClick={setSelectedCategory}
                             readPreviewText={t('blog_read_preview')}
                             readArticleText={t('blog_read_article')}
-                            onReadMore={() => {
-                                if (post.date === "Coming Soon") {
-                                    showToast(t('blog_toast_msg'));
-                                } else {
-                                    navigate(`/blog/${post.id}`);
-                                }
-                            }}
+                            onReadMore={handleReadMore}
                         />
                     ))}
                 </div>
