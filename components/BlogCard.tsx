@@ -5,15 +5,15 @@ import { BlogPost } from '../data/blogs';
 interface BlogCardProps {
     post: BlogPost;
     onCategoryClick: (category: string) => void;
-    onReadMore: () => void;
+    onReadMore: (post: BlogPost) => void;
     readPreviewText: string;
     readArticleText: string;
 }
 
-const BlogCard: React.FC<BlogCardProps> = ({ post, onCategoryClick, onReadMore, readPreviewText, readArticleText }) => {
+const BlogCard: React.FC<BlogCardProps> = React.memo(({ post, onCategoryClick, onReadMore, readPreviewText, readArticleText }) => {
     const handleReadMore = (e: React.MouseEvent) => {
         e.preventDefault();
-        onReadMore();
+        onReadMore(post);
     };
 
     const handleCategoryClick = (e: React.MouseEvent) => {
@@ -52,6 +52,6 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, onCategoryClick, onReadMore, 
             </div>
         </TiltCard>
     );
-};
+});
 
 export default BlogCard;

@@ -1,7 +1,16 @@
-Title: ⚡ Bolt: Memoize static translation arrays to reduce React render overhead
+## PR Title
+⚡ Bolt: Add React.memo() to BlogCard to prevent unnecessary re-renders
 
-Description:
-💡 **What**: Wrapped statically defined configuration arrays containing `react-i18next` translation functions (`t(...)`) in `useMemo` hooks inside `CropProblemSolver.tsx`, `StepChallenge.tsx`, `StepCrop.tsx`, `StepSoilType.tsx`, and `StepFarmSize.tsx`.
-🎯 **Why**: Because the arrays included translation calls, they were previously being recreated on every component render cycle. Extracting them purely outside the component body wasn't feasible without wrapping them in functions (which would still run on every render). By memoizing them with `useMemo`, we preserve exactly one instance of the array reference until the translation dependencies change.
-📊 **Impact**: Reduces unnecessary array allocations and garbage collection (GC) pressure, especially critical during heavy re-renders or Framer Motion animations in the onboarding flow.
-🔬 **Measurement**: Verify by running `pnpm test` (all tests pass) and profiling component re-renders during interactions using React DevTools Profiler, observing fewer deep object diffs.
+## PR Description
+
+**💡 What:**
+Wrapped the `BlogCard` component in `React.memo()` and updated its `onReadMore` prop to accept the `post` object instead of relying on a parameterless callback. Correspondingly, updated `BlogPage` to pass a stable `useCallback` for `onReadMore`, along with stabilizing the `showToast` dependency.
+
+**🎯 Why:**
+Previously, `BlogCard` received an inline anonymous function `() => { ... }` as a prop in the `.map()` loop, and was not wrapped in `React.memo()`. This caused every `BlogCard` instance to re-render whenever the parent `BlogPage` re-rendered, even for unrelated state changes like displaying the "Coming Soon" toast notification. By memoizing `BlogCard` and stabilizing its callbacks, we prevent this cascading re-render entirely.
+
+**📊 Impact:**
+Reduces the number of React component re-renders when interacting with the blog list (especially when triggering notifications), saving CPU cycles and improving the perceived responsiveness of the UI, particularly on lower-end devices processing the `framer-motion` effects attached to the cards.
+
+**🔬 Measurement:**
+Run `pnpm test` to confirm all 245 tests pass. Use the React DevTools Profiler to record interactions on the `/blog` route, notably clicking on a "Coming Soon" card: you will now observe that the sibling `BlogCard` components skip rendering when the toast state changes.
