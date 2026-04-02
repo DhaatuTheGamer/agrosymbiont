@@ -1,8 +1,8 @@
-# Title
-⚡ Bolt: Memoize CropProblemSolver configurations to fix SymptomButton re-renders
+# ⚡ Bolt: Extract static array to improve render performance
 
-# Description
-💡 **What:** Wrapped `cropOptions`, `symptomOptions`, and `solutions` objects inside `components/CropProblemSolver.tsx` in `React.useMemo` hooks.
-🎯 **Why:** These configuration objects, which depend on the `t` (translation) function, were previously defined inline and recreated on every single render. This caused the shallow equality checks in the memoized child component (`SymptomButton`) to fail continuously, resulting in unnecessary re-renders of all buttons whenever the selection state changed.
-📊 **Impact:** Reduces unnecessary re-renders of the `SymptomButton` components to exactly 0 when unselected options remain unselected, significantly decreasing React reconciliation overhead during user interaction.
-🔬 **Measurement:** Verified via React DevTools Profiler that interacting with the buttons no longer causes re-renders of un-modified sibling elements. Also verified against the full `pnpm test` suite to ensure no regressions in behavior.
+## Description
+
+* **💡 What:** Extracted the static `teamMembers` array outside of the `TeamCarousel` component body.
+* **🎯 Why:** To prevent recreating the array and its object references on every render cycle, which causes unnecessary memory allocation and garbage collection pressure during high-frequency events like touch/swipe interactions.
+* **📊 Impact:** Reduces unnecessary array recreations on every render for `TeamCarousel`, making animations slightly smoother and memory usage more stable.
+* **🔬 Measurement:** Observe memory usage and render times in React DevTools during rapid swiping.
