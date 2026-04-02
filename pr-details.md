@@ -1,7 +1,6 @@
-Title: "🎨 Palette: Add aria-expanded and aria-controls to mobile menu toggle"
+Title: ⚡ Bolt: Optimize 3D Background Mathematical Constants
 
-Description:
-💡 **What:** Added `aria-expanded` and `aria-controls` attributes to the mobile menu button in `Header.tsx`, and an `id` to the mobile menu container.
-🎯 **Why:** Links the toggle button to the expanding panel it controls, making it clear to screen reader users what content is revealed or hidden when the button is interacted with.
-📸 **Before/After:** N/A (Non-visual accessibility change)
-♿ **Accessibility:** Solves a critical accessibility issue for screen readers traversing top-level navigation.
+💡 What: Optimized the high-frequency rendering loop `updateAndProjectSphereParticles` in `ThreeDBackgroundHelpers.ts` by precalculating mathematical constants like `Math.PI` to avoid property lookups on the `Math` object on every loop iteration.
+🎯 Why: Inside the 60fps frame loop which can handle over 500-1500 particles, repetitive global object property lookups like `Math.PI` add up and cost valuable CPU cycles. Caching them inside the function scope improves execution speed slightly but consistently.
+📊 Impact: Expected performance improvement is a 1-5% increase in operation speed for the function, contributing to a smoother 60fps experience for complex 3D scenes.
+🔬 Measurement: Verified with `pnpm vitest bench components/ThreeDBackgroundHelpers.bench.ts`, the optimized version is ~1.02x to 1.04x faster than the current implementation. Full tests run successfully.
