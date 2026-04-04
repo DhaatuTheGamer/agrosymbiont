@@ -145,6 +145,45 @@ describe('ThemeProvider', () => {
     expect(localStorage.getItem('theme')).toBe('light');
   });
 
+  it('defaults to light theme when matchMedia is undefined and no saved theme', () => {
+    const originalMatchMedia = window.matchMedia;
+    // @ts-ignore
+    delete window.matchMedia;
+
+    render(
+      <ThemeProvider>
+        <TestComponent />
+      </ThemeProvider>
+    );
+
+    expect(screen.getByTestId('theme-value')).toHaveTextContent('light');
+    expect(document.documentElement.classList.contains('light')).toBe(true);
+
+    // Restore matchMedia
+    window.matchMedia = originalMatchMedia;
+  });
+
+  it('handles invalid theme in localStorage by falling back to OS preference', () => {
+    // Mock OS preference as dark
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: vi.fn().mockImplementation(query => ({
+        matches: query === '(prefers-color-scheme: dark)',
+      })),
+    });
+
+    localStorage.setItem('theme', 'invalid-theme');
+
+    render(
+      <ThemeProvider>
+        <TestComponent />
+      </ThemeProvider>
+    );
+
+    expect(screen.getByTestId('theme-value')).toHaveTextContent('dark');
+    expect(document.documentElement.classList.contains('dark')).toBe(true);
+  });
+
   it('throws an error when useTheme is used outside of ThemeProvider', () => {
     // Suppress console.error for this test as it expects an error
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
