@@ -26,7 +26,7 @@ const BlogPostPage: React.FC = () => {
     const foundPost = blogs.find(b => b.id === id);
     if (foundPost) {
       setPost(foundPost);
-      
+
       // Update meta description
       document.title = `${foundPost.title} | AgroSymbiont Blog`;
       let metaDescription = document.querySelector('meta[name="description"]');
@@ -58,20 +58,20 @@ const BlogPostPage: React.FC = () => {
     <div className="py-20 min-h-screen bg-ivory/20 dark:bg-stone-900/20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection>
-          <Link 
-            to="/blog" 
+          <Link
+            to="/blog"
             className="inline-flex items-center text-cerulean-blue dark:text-blue-400 hover:text-burnt-orange dark:hover:text-orange-400 font-medium mb-8 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Blog
           </Link>
-          
+
           <div className="bg-white dark:bg-stone-800 rounded-[2rem] shadow-xl overflow-hidden border border-stone-100 dark:border-stone-700">
             <TiltCard>
               <div className="h-64 md:h-96 w-full relative preserve-3d">
-                <img 
-                  src={post.imageUrl} 
-                  alt={post.title} 
+                <img
+                  src={post.imageUrl}
+                  alt={post.title}
                   className="w-full h-full object-cover translate-z-0"
                   referrerPolicy="no-referrer"
                   loading="lazy"
@@ -97,7 +97,7 @@ const BlogPostPage: React.FC = () => {
                 </div>
               </div>
             </TiltCard>
-            
+
             <div className="p-8 md:p-12 text-[#000000] dark:text-gray-200">
               <div className="prose prose-lg prose-stone dark:prose-invert max-w-none prose-p:mb-8 prose-p:leading-relaxed prose-headings:mt-12 prose-headings:mb-6 prose-li:mb-2 text-[#000000] dark:text-gray-200">
                 <div className="markdown-body">
@@ -120,7 +120,7 @@ const BlogPostPage: React.FC = () => {
               </div>
             </div>
           </div>
-          
+
           {relatedPosts.length > 0 && (
             <div className="mt-16">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Related Posts</h2>
