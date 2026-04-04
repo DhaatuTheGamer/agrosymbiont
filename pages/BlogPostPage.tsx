@@ -4,6 +4,7 @@ import { ArrowLeft, Calendar, User } from 'lucide-react';
 import AnimatedSection from '../components/AnimatedSection';
 import { blogs, BlogPost } from '../data/blogs';
 import Markdown from 'react-markdown';
+import { sanitizeUrl } from '../utils/validation';
 
 import TiltCard from '../components/TiltCard';
 
@@ -39,44 +40,6 @@ const BlogPostPage: React.FC = () => {
       navigate('/blog');
     }
   }, [id, navigate]);
-
-
-  const sanitizeUrl = (url?: string) => {
-    if (!url) return '';
-
-    // Remove whitespace and control characters that could be used for bypasses
-    const sanitizedUrl = url.replace(/[\x00-\x1F\x7F-\x9F\s]/g, '');
-
-    // Allow relative URLs (starting with /, #, ?)
-    if (sanitizedUrl.startsWith('/') || sanitizedUrl.startsWith('#') || sanitizedUrl.startsWith('?')) {
-      return sanitizedUrl;
-    }
-
-    try {
-      // Attempt to parse as an absolute URL
-      // We use 'http://localhost' as a base for relative-looking URLs that might still have protocols
-      const parsedUrl = new URL(sanitizedUrl, 'http://localhost');
-      const allowedProtocols = ['http:', 'https:', 'mailto:', 'tel:'];
-
-      if (allowedProtocols.includes(parsedUrl.protocol.toLowerCase())) {
-        return sanitizedUrl;
-      }
-
-      // If it was parsed as http because of the base, check if it originally had any protocol
-      if (parsedUrl.protocol === 'http:' && !sanitizedUrl.toLowerCase().startsWith('http:')) {
-          if (!sanitizedUrl.includes(':')) {
-              return sanitizedUrl;
-          }
-      }
-    } catch (e) {
-      // If URL parsing fails, it might be a relative path without a protocol
-      if (!sanitizedUrl.includes(':')) {
-        return sanitizedUrl;
-      }
-    }
-
-    return 'about:blank';
-  };
 
   if (!post) {
     return (
@@ -141,10 +104,10 @@ const BlogPostPage: React.FC = () => {
                     disallowedElements={['script', 'iframe', 'object', 'embed', 'form', 'link', 'meta', 'style']}
                     components={{
                       a: ({ node, ...props }) => (
-                        <a {...props} href={sanitizeUrl(props.href)} />
+                        <a {...props} href={sanitizeUrl(props.href as string)} />
                       ),
                       img: ({ node, ...props }) => (
-                        <img {...props} loading="lazy" src={sanitizeUrl(props.src)} />
+                        <img {...props} loading="lazy" src={sanitizeUrl(props.src as string)} />
                       ),
                     }}
                   >
