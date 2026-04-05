@@ -33,7 +33,7 @@ const Breadcrumbs: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ol className="flex items-center space-x-2 text-sm overflow-x-auto whitespace-nowrap scrollbar-hide pb-2">
           <li>
-            <Link to="/" className="text-stone-gray/60 dark:text-stone-400 hover:text-cerulean-blue dark:hover:text-blue-400 transition-colors flex items-center">
+            <Link to="/" className="text-stone-gray/60 dark:text-stone-400 hover:text-cerulean-blue dark:hover:text-blue-400 transition-colors flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-blue-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900 rounded">
                 <Home className="h-4 w-4" />
                 <span className="sr-only">Home</span>
             </Link>
@@ -49,7 +49,7 @@ const Breadcrumbs: React.FC = () => {
                 {isLast ? (
                   <span className="font-semibold text-cerulean-blue dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-3 py-1 rounded-full" aria-current="page">{name}</span>
                 ) : (
-                  <Link to={to} className="text-stone-gray/60 dark:text-stone-400 hover:text-cerulean-blue dark:hover:text-blue-400 transition-colors">
+                  <Link to={to} className="text-stone-gray/60 dark:text-stone-400 hover:text-cerulean-blue dark:hover:text-blue-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-blue-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900 rounded">
                     {name}
                   </Link>
                 )}
