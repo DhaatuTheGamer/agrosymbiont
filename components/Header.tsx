@@ -57,13 +57,14 @@ const Header: React.FC = () => {
           <div className="hidden lg:flex items-center space-x-1">
             <NavLinks t={t} />
             <div className="flex items-center border-l border-stone-300 dark:border-stone-700 ml-4 pl-4 space-x-4">
-              <div className="flex items-center gap-1 text-stone-600 dark:text-stone-300 hover:text-cerulean-blue dark:hover:text-blue-400">
-                <Globe className="w-4 h-4" />
+              <div className="flex items-center gap-1 text-stone-600 dark:text-stone-300 hover:text-cerulean-blue dark:hover:text-blue-400 p-2 rounded-full hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors focus-within:ring-2 focus-within:ring-inset focus-within:ring-offset-2 focus-within:ring-cerulean-blue dark:focus-within:ring-offset-stone-900">
+                <Globe className="w-5 h-5" />
                 <select 
-                  className="bg-transparent text-sm font-bold uppercase cursor-pointer appearance-none focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900 rounded"
+                  className="bg-transparent text-sm font-bold uppercase cursor-pointer appearance-none focus:outline-none"
                   value={i18n.language?.split('-')[0] || 'en'}
                   onChange={(e) => i18n.changeLanguage(e.target.value)}
                   aria-label="Select Language"
+                  title="Change Language"
                 >
                   <option value="en" className="text-gray-900 bg-white">EN</option>
                   <option value="hi" className="text-gray-900 bg-white">HI</option>
