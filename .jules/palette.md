@@ -1,3 +1,6 @@
 ## 2025-04-08 - Added "Skip to Content" Link
 **Learning:** A standard skip-to-content link is missing from the main application layout wrapper. Adding this greatly improves keyboard accessibility by allowing users to bypass the long navigation header to reach the `<main>` content directly. Focus management needs to be carefully handled to avoid breaking visual tab order or throwing global focus rings.
 **Action:** Always verify a layout wrapper includes a skip link targeting the main content block. Use `sr-only focus:not-sr-only` to visually hide it until focused, and ensure the target `<main>` tag receives an `id` and `tabIndex={-1}` with `outline-none` so it can be programmatically focused without a disruptive visual outline.
+## 2025-04-09 - Accessible Form Validation
+**Learning:** Custom form wrappers like `InvestorContactForm.tsx` and `WaitlistForm.tsx` that manage their own error states without using shared components often forget to associate error messages with their inputs via ARIA attributes. This leaves screen reader users unaware of specific validation failures.
+**Action:** Always ensure that when validation fails, inputs receive `aria-invalid="true"` and `aria-describedby` pointing to the exact `id` of the error message container. This is a quick and critical accessibility win.
