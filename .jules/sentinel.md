@@ -10,3 +10,6 @@
 **Vulnerability:** The `<input type="file">` for uploading resumes in `JobApplicationForm.tsx` lacked an `accept` attribute, which allowed users to select any file format including executables.
 **Learning:** While client-side `accept` attributes are not a substitute for proper backend file type validation, omitting them provides poor UX and unnecessarily broadens the attack surface for accidental or automated uploads of insecure file types.
 **Prevention:** Always restrict file input fields on the client-side to only the explicitly allowed MIME types or extensions (e.g., `accept=".pdf,.doc,.docx"`) to provide defense-in-depth UI restrictions.
+## 2026-04-11 - Fix Supply Chain Vulnerability in Import Map
+**Learning:** In Vite-based projects, explicit import maps pointing to external CDNs for core dependencies like React are completely redundant because Vite natively resolves these from `node_modules` during development and bundles them securely during the production build. Removing the import map resolves the supply chain risk without breaking the application logic.
+**Action:** When auditing Vite projects, explicitly look for unnecessary `importmap` tags in `index.html`, as they introduce supply chain risks and performance bottlenecks by bypassing the local build process and SRI checks.
