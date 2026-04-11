@@ -5,6 +5,7 @@ import { isValidEmail } from '../utils/validation';
 import AnimatedSection from '../components/AnimatedSection';
 import { motion } from 'framer-motion';
 import { Check, Loader2 } from 'lucide-react';
+import { submitResourceNotification } from '../services/api';
 
 
 const ResourcesPage: React.FC = () => {
@@ -39,8 +40,7 @@ const ResourcesPage: React.FC = () => {
     
     setIsSubmitting(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await submitResourceNotification(trimmedEmail);
     
     setIsSubmitting(false);
     setIsSubmitted(true);

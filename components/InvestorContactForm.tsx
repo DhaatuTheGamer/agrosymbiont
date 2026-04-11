@@ -4,6 +4,7 @@ import { isValidEmail } from '../utils/validation';
 import AnimatedSection from './AnimatedSection';
 import { motion } from 'framer-motion';
 import { FileText, ShieldCheck, Check } from 'lucide-react';
+import { submitInvestorContactForm } from '../services/api';
 
 
 const InvestorContactForm: React.FC = () => {
@@ -36,10 +37,10 @@ const InvestorContactForm: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      // ⚡ Bolt Optimization: Removed artificial 1500ms delay to provide instant user feedback and improve form efficiency.
+      await submitInvestorContactForm(formData);
       setIsSubmitted(true);
       setFormData({ name: '', email: '', company: '', message: '' });
     }

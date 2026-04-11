@@ -4,6 +4,7 @@ import { isValidEmail } from '../../utils/validation';
 
 import { motion } from 'framer-motion';
 import { Check, Loader2, ArrowRight } from 'lucide-react';
+import { submitWaitlistForm } from '../../services/api';
 import { Link } from 'react-router-dom';
 import WaitlistButtonContent from './WaitlistButtonContent';
 import WaitlistParticles from './WaitlistParticles';
@@ -43,8 +44,7 @@ const WaitlistForm: React.FC = () => {
 
       setIsSubmitting(true);
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await submitWaitlistForm(trimmedEmail);
 
       setIsSubmitting(false);
       setShowParticles(true);

@@ -5,6 +5,7 @@ import AnimatedSection from '../components/AnimatedSection';
 import TiltCard from '../components/TiltCard';
 import InvestorContactForm from '../components/InvestorContactForm';
 import { TrendingUp, ArrowRight, Globe, Lightbulb } from 'lucide-react';
+import { submitInvestorContactForm } from '../services/api';
 
 
 const InvestorsPage: React.FC = () => {
@@ -42,8 +43,7 @@ const InvestorsPage: React.FC = () => {
     e.preventDefault();
     if (validate()) {
       setIsSubmitting(true);
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await submitInvestorContactForm(formData);
       setIsSubmitting(false);
       setIsSubmitted(true);
       setFormData({ name: '', email: '', company: '', message: '' });
