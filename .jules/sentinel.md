@@ -10,6 +10,11 @@
 **Vulnerability:** The `<input type="file">` for uploading resumes in `JobApplicationForm.tsx` lacked an `accept` attribute, which allowed users to select any file format including executables.
 **Learning:** While client-side `accept` attributes are not a substitute for proper backend file type validation, omitting them provides poor UX and unnecessarily broadens the attack surface for accidental or automated uploads of insecure file types.
 **Prevention:** Always restrict file input fields on the client-side to only the explicitly allowed MIME types or extensions (e.g., `accept=".pdf,.doc,.docx"`) to provide defense-in-depth UI restrictions.
-## 2026-04-11 - Fix Supply Chain Vulnerability in Import Map
-**Learning:** In Vite-based projects, explicit import maps pointing to external CDNs for core dependencies like React are completely redundant because Vite natively resolves these from `node_modules` during development and bundles them securely during the production build. Removing the import map resolves the supply chain risk without breaking the application logic.
-**Action:** When auditing Vite projects, explicitly look for unnecessary `importmap` tags in `index.html`, as they introduce supply chain risks and performance bottlenecks by bypassing the local build process and SRI checks.
+## 2024-05-18 - [Missing Subresource Integrity (SRI) for CDN Scripts]
+**Vulnerability:** The Tailwind CSS script from  lacked an SRI hash. This exposes the site to Supply Chain Attacks; if the CDN is compromised, malicious code could be served to all users.
+**Learning:** Using versionless URLs for external scripts prevents the generation of a stable SRI hash, making it impossible to guarantee the integrity of the downloaded code over time.
+**Action:** Always pin external scripts to a specific version (e.g., ) and include a  attribute with the cryptographic hash (e.g., ) and  to ensure the script has not been tampered with.
+## 2024-05-18 - [Missing Subresource Integrity (SRI) for CDN Scripts]
+**Vulnerability:** The Tailwind CSS script from `cdn.tailwindcss.com` lacked an SRI hash. This exposes the site to Supply Chain Attacks; if the CDN is compromised, malicious code could be served to all users.
+**Learning:** Using versionless URLs for external scripts prevents the generation of a stable SRI hash, making it impossible to guarantee the integrity of the downloaded code over time.
+**Action:** Always pin external scripts to a specific version (e.g., `cdn.tailwindcss.com/3.4.15`) and include a `integrity` attribute with the cryptographic hash (e.g., `sha384-...`) and `crossorigin="anonymous"` to ensure the script has not been tampered with.
