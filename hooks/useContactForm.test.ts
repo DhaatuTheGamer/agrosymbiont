@@ -1,6 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
 import { useContactForm } from './useContactForm';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
+import * as api from '../services/api';
 
 // Mock react-i18next
 vi.mock('react-i18next', () => ({
@@ -120,5 +121,43 @@ describe('useContactForm', () => {
 
         expect(result.current.isSubmitting).toBe(false);
         expect(result.current.isSubmitted).toBe(true);
+    });
+
+    it('should handle API errors on submit', async () => {
+        const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+        const submitSpy = vi.spyOn(api, 'submitContactForm').mockRejectedValueOnce(new Error('Network error'));
+
+        const { result } = renderHook(() => useContactForm());
+
+        // Fill form
+        act(() => {
+            result.current.handleChange({ target: { name: 'name', value: 'John' } } as any);
+            result.current.handleChange({ target: { name: 'email', value: 'john@example.com' } } as any);
+            result.current.handleChange({ target: { name: 'phone', value: '1234567890' } } as any);
+            result.current.handleChange({ target: { name: 'inquiryType', value: 'General' } } as any);
+            result.current.handleChange({ target: { name: 'message', value: 'Hello' } } as any);
+        });
+
+        const e = { preventDefault: vi.fn() } as any;
+
+        let submitPromise: Promise<void>;
+        act(() => {
+            submitPromise = result.current.handleSubmit(e);
+        });
+
+        expect(e.preventDefault).toHaveBeenCalled();
+        expect(result.current.isSubmitting).toBe(true);
+        expect(result.current.isSubmitted).toBe(false);
+
+        await act(async () => {
+            await submitPromise;
+        });
+
+        expect(consoleSpy).toHaveBeenCalledWith('Failed to submit contact form', expect.any(Error));
+        expect(result.current.isSubmitting).toBe(false);
+        expect(result.current.isSubmitted).toBe(false);
+
+        consoleSpy.mockRestore();
+        submitSpy.mockRestore();
     });
 });
