@@ -65,11 +65,11 @@ const WaitlistForm: React.FC = () => {
                     <p className="text-stone-500 dark:text-stone-400 mb-8">{t('prod_success_desc')}</p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
-                        <a href="https://x.com/intent/tweet?text=I%20just%20joined%20the%20waitlist%20for%20AgroSymbiont!%20Excited%20to%20see%20how%20nanotechnology%20can%20transform%20farming.%20%23AgroSymbiont%20%23SustainableFarming" target="_blank" rel="noopener noreferrer" className="bg-black dark:bg-white text-white dark:text-black font-bold py-3 px-6 rounded-xl hover:bg-stone-800 dark:hover:bg-stone-200 transition-colors flex items-center gap-2">
+                        <a href="https://x.com/intent/tweet?text=I%20just%20joined%20the%20waitlist%20for%20AgroSymbiont!%20Excited%20to%20see%20how%20nanotechnology%20can%20transform%20farming.%20%23AgroSymbiont%20%23SustainableFarming" target="_blank" rel="noopener noreferrer" className="bg-black dark:bg-white text-white dark:text-black font-bold py-3 px-6 rounded-xl hover:bg-stone-800 dark:hover:bg-stone-200 transition-colors flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900">
                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.007 3.84H5.078z"></path></svg>
                            {t('prod_share_x')}
                         </a>
-                        <Link to="/resources" className="text-cerulean-blue dark:text-blue-400 font-bold hover:underline inline-flex items-center gap-1 ml-4 shadow-sm px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
+                        <Link to="/resources" className="text-cerulean-blue dark:text-blue-400 font-bold hover:underline inline-flex items-center gap-1 ml-4 shadow-sm px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-cerulean-blue dark:focus-visible:ring-offset-stone-900">
                             {t('prod_read_nano')} <ArrowRight className="w-4 h-4 ml-1" />
                         </Link>
                     </div>

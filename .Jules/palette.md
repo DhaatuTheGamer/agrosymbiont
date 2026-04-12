@@ -46,3 +46,7 @@
 ## 2026-04-12 - Missing keyboard focus states on navigational links
 **Learning:** Found an accessibility issue where NavLink elements and custom icon links in the mobile header navigation lacked focus-visible states. This makes keyboard navigation impossible as the focus is completely invisible.
 **Action:** Always append `focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2` (and appropriate color variants) on interactive anchor tags (`<a>` and `<NavLink>`) in navigation headers to ensure keyboard visibility is preserved.
+
+## 2025-04-12 - Missing keyboard focus states on success links in Waitlist form
+**Learning:** Found an accessibility issue pattern where links conditionally rendered after a successful form submission (like the "Share on X" and "Read about Nano-yield" links in the Waitlist Form) lacked focus indicators. This makes post-submission actions inaccessible for keyboard users.
+**Action:** Always explicitly define `focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2` (and appropriate color variants) on conditionally rendered interactive elements in success/error states to ensure keyboard accessibility is maintained throughout the entire user journey.
