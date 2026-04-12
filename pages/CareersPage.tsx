@@ -14,6 +14,25 @@ interface JobModalProps {
     onClose: () => void;
 }
 
+// ⚡ Bolt Optimization: Memoized the category button to prevent all buttons from re-rendering
+// when the active tab changes. Only the buttons whose selection state changes will re-render.
+interface CategoryButtonProps {
+    categoryId: JobCategory;
+    isActive: boolean;
+    onClick: (categoryId: JobCategory) => void;
+    label: string;
+}
+
+const MemoizedCategoryButton = React.memo(({ categoryId, isActive, onClick, label }: CategoryButtonProps) => (
+    <button
+        onClick={() => onClick(categoryId)}
+        className={`px-6 py-2 rounded-full font-bold transition-all duration-300 ${isActive ? 'bg-cerulean-blue text-white shadow-lg' : 'bg-stone-100 dark:bg-stone-800 text-stone-500 hover:bg-stone-200 dark:hover:bg-stone-700'}`}
+    >
+        {label}
+    </button>
+));
+MemoizedCategoryButton.displayName = 'MemoizedCategoryButton';
+
 const JobModal: React.FC<JobModalProps> = React.memo(({ job, onClose }) => {
     const { t } = useTranslation();
 
@@ -115,13 +134,13 @@ const CareersPage: React.FC = () => {
                 <AnimatedSection className="mt-12 mb-16">
                     <div className="flex flex-wrap justify-center gap-4 mb-12">
                         {jobCategories.map((cat) => (
-                            <button
+                            <MemoizedCategoryButton
                                 key={cat.id}
-                                onClick={() => setActiveTab(cat.id)}
-                                className={`px-6 py-2 rounded-full font-bold transition-all duration-300 ${activeTab === cat.id ? 'bg-cerulean-blue text-white shadow-lg' : 'bg-stone-100 dark:bg-stone-800 text-stone-500 hover:bg-stone-200 dark:hover:bg-stone-700'}`}
-                            >
-                                {t(cat.labelKey)}
-                            </button>
+                                categoryId={cat.id}
+                                isActive={activeTab === cat.id}
+                                onClick={setActiveTab}
+                                label={t(cat.labelKey)}
+                            />
                         ))}
                     </div>
 
