@@ -17,9 +17,9 @@ interface JobModalProps {
 // ⚡ Bolt Optimization: Memoized the category button to prevent all buttons from re-rendering
 // when the active tab changes. Only the buttons whose selection state changes will re-render.
 interface CategoryButtonProps {
-    categoryId: string;
+    categoryId: JobCategory;
     isActive: boolean;
-    onClick: (categoryId: string) => void;
+    onClick: (categoryId: JobCategory) => void;
     label: string;
 }
 
