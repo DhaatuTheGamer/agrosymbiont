@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>🌱 AgroSymbiont</h1>
+  <h1><img src="public/favicon.png" width="48" height="48" align="center" alt="Logo" /> AgroSymbiont</h1>
   <p><strong>Transforming Agriculture, Sustainably.</strong></p>
   <p>Harnessing nanotechnology and organic innovation to create profitable, eco-friendly farming systems.</p>
 
