@@ -1,68 +1,76 @@
-# 🌱 AgroSymbiont
-
 <div align="center">
+  <h1>🌱 AgroSymbiont</h1>
   <p><strong>Transforming Agriculture, Sustainably.</strong></p>
   <p>Harnessing nanotechnology and organic innovation to create profitable, eco-friendly farming systems.</p>
+
+  [![CI](https://github.com/dhaatrik/agrosymbiont/actions/workflows/ci.yml/badge.svg)](https://github.com/dhaatrik/agrosymbiont/actions/workflows/ci.yml)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+  [![React](https://img.shields.io/badge/React-19.0-blue.svg)](https://react.dev/)
+  [![Vite](https://img.shields.io/badge/Vite-6.2.0-purple.svg)](https://vitejs.dev/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-5.8.2-blue.svg)](https://www.typescriptlang.org/)
 </div>
 
 ---
 
 ## 📖 Table of Contents
+
 - [About the Project](#-about-the-project)
 - [Key Features](#-key-features)
 - [Tech Stack](#-tech-stack)
-- [Installation \& Requirements](#-installation--requirements)
-- [Usage Instructions](#-usage-instructions)
-- [Contributing](#-contributing)
-- [Testing](#-testing)
+- [Installation & Requirements](#-installation--requirements)
+- [Usage Instructions & Examples](#-usage-instructions--examples)
+- [Contributing Guidelines](#-contributing-guidelines)
+- [Testing Instructions](#-testing-instructions)
 - [License](#-license)
 - [Contact](#-contact)
 
 ## 🎯 About the Project
 
-**AgroSymbiont** is a modern web platform designed to showcase and provide solutions for sustainable agriculture. We combine nanotechnology, certified organic inputs, and expert agronomy to empower farmers, restore soil health, and boost productivity.
-
-With a focus on stunning aesthetics and interactive user experiences, the platform serves as a virtual storefront and educational hub for sustainable farming practices, reaching farmers across India and global markets.
+**AgroSymbiont** is a high-performance, modern web platform designed to pioneer and deliver solutions for sustainable agriculture. Our unified platform combines nanotechnology, certified organic methodologies, and expert agronomic advice to empower farmers, restore essential soil ecology, and safely maximize crop yield.
 
 ### The Problem It Solves
-Traditional agriculture often relies heavily on chemical fertilizers, leading to soil degradation, reduced yields over time, and environmental harm. AgroSymbiont addresses this by offering eco-friendly, highly targeted nano-powered crop care and soil restoration solutions that cut farming costs while maintaining global quality standards.
+Traditional modern agriculture leans heavily on chemical fertilizers, yielding short-term results while causing severe long-term soil degradation, decreasing output quality, and widespread ecological harm. 
+
+**AgroSymbiont** solves this by establishing a digital marketplace and educational hub outlining eco-friendly, highly targeted nano-powered crop care and soil restoration treatments. These solutions actively curtail operational farming costs while rigidly adhering to global quality schemas.
 
 ## ✨ Key Features
-- **Responsive & Dynamic Design:** Built with a futuristic, glassmorphism UI featuring 3D backgrounds, tilt cards, and smooth micro-animations.
-- **Deeper Engagement:** Educational content, technological breakdowns, and success stories beautifully presented.
-- **Eco-Friendly Solutions Catalog:** Explores advanced bio-stimulants and carbon enhancers.
-- **Dark/Light Mode:** Full theming support tailored for modern browsers.
+
+- **Responsive & Dynamic Design:** Built with a futuristic, glassmorphism UI offering 3D backgrounds, engaging tilt cards, and smooth micro-animations.
+- **Deeper Engagement:** Clean integration of educational blogs, detailed technological breakdowns, and success stories.
+- **Eco-Friendly Solutions Catalog:** Intuitive access to advanced bio-stimulants, carbon enhancers, and ROI calculators for farmers.
+- **Dark/Light Mode:** Full theming support explicitly tailored to adapt to user operating system preferences.
+- **Progressive Web App (PWA):** Seamlessly caches core pages and provides offline fallbacks for rural environments.
 
 ## 🛠 Tech Stack
 
-AgroSymbiont is built using cutting-edge technologies to ensure amazing performance, maintainability, and user experience:
+AgroSymbiont is engineered using modern standards to ensure outstanding performance, exceptional maintainability, and top-tier user experiences:
 
 - **Frontend Framework:** [React 19](https://react.dev/)
 - **Build Tool:** [Vite](https://vitejs.dev/)
 - **Language:** [TypeScript](https://www.typescriptlang.org/)
 - **Routing:** [React Router v7](https://reactrouter.com/)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/) & Vanilla CSS for custom animations
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) combined with Vanilla CSS for deep custom animations
 - **Animations:** [Framer Motion](https://www.framer.com/motion/)
-- **Icons:** [Lucide React](https://lucide.dev/)
-- **Interactive Maps:** [React Simple Maps](https://www.react-simple-maps.io/) & [d3-geo](https://d3js.org/)
-- **Markdown Rendering:** [React Markdown](https://github.com/remarkjs/react-markdown)
+- **Data Visualization:** [React Simple Maps](https://www.react-simple-maps.io/) & [d3-geo](https://d3js.org/)
+- **Testing Engine:** [Vitest](https://vitest.dev/) with React Testing Library
 
 ## 💻 Installation & Requirements
 
-To set up the project locally on your machine, follow these steps:
+To set up the AgroSymbiont web platform locally on your machine, follow these steps:
 
-### Prerequisites
-- [Node.js](https://nodejs.org/) (v18 or higher recommended)
-- [npm](https://www.npmjs.com/) (v9 or higher)
+### System Requirements
+- **Node.js**: v18.0.0 or higher recommended
+- **npm**: v9.0.0 or higher
 
-### Steps
+### Installation Steps
 
-1. **Clone the repository** (if applicable) or navigate to the project root:
+1. **Clone the repository:**
    ```bash
+   git clone https://github.com/dhaatrik/agrosymbiont.git
    cd agrosymbiont
    ```
 
-2. **Install dependencies:**
+2. **Install all dependencies:**
    ```bash
    npm install
    ```
@@ -73,52 +81,68 @@ To set up the project locally on your machine, follow these steps:
    ```
 
 4. **Open your browser:**
-   Navigate to the URL provided by Vite (usually `http://localhost:3000`).
+   Navigate to the URL provided by Vite in your terminal (usually `http://localhost:3000`).
 
-## 🚀 Usage Instructions
+## 🚀 Usage Instructions & Examples
 
-The project uses a standard Vite + React setup. Here are some common tasks:
+Once your local development server is running, you can explore the user interface simply by navigating through the application.
 
-### Running locally
-As mentioned above, use `npm run dev` to start the live-reloading development server.
+### Common Development Tasks
 
-### Building for Production
-To create an optimized production build:
+**Running locally in development mode:**
+Start the live-reloading development server to preview your UI and logic changes instantly.
+```bash
+npm run dev
+```
+
+**Building for Production Environment:**
+To create an optimized production build that minifies code and generates Web Workers for PWA support:
 ```bash
 npm run build
 ```
-The output will be generated in the `dist` directory, ready to be deployed to your favorite hosting provider (Vercel, Netlify, Cloudflare Pages, etc.).
+The output will securely be generated in the isolated `dist/` directory, completely ready to be deployed to hosting providers.
 
-### Previewing Production Build
+**Previewing Production Build Locally:**
+Verify the compiled bundle behaves correctly before shipping:
 ```bash
 npm run preview
 ```
 
-## 🤝 Contributing
+## 🤝 Contributing Guidelines
 
-Contributions make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what make the open-source and professional software community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-Please adhere to this project's Code of Conduct and consider the [Contributor Covenant](https://www.contributor-covenant.org/) as an industry standard.
+This project abides strictly by the [Contributor Covenant](https://www.contributor-covenant.org/) as our code of conduct. 
 
+### How to contribute:
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+3. Install dependencies and ensure tests pass locally (`npm test`)
+4. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+5. Push to the Branch (`git push origin feature/AmazingFeature`)
+6. Open a formal Pull Request
 
-## 🧪 Testing
+For exhaustive details, please refer to our dedicated [CONTRIBUTING.md](CONTRIBUTING.md) guide.
 
-Testing instructions will be added as the testing suite (e.g., Vitest, React Testing Library) is integrated into the project. Currently, ensure all code changes cleanly compile via TypeScript and do not break the Vite build process.
+## 🧪 Testing Instructions
 
-To verify the build works without errors:
+AgroSymbiont has a fully structured test suite encompassing UI components, routing mechanisms, and custom React hooks built atop the blazing-fast `Vitest` and `React Testing Library`.
+
+### Running Automated Tests
+
+To execute the entire test suite once and print an output log:
 ```bash
-npm run build
+npm run test
 ```
+
+*Note: All core tests reside accurately within the isolated `tests/` directory natively resolving source aliases.*
 
 ## 📄 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+This project is open-source software and heavily distributed under the MIT License. See the highly-detailed `LICENSE` file in the root workspace for deep legal information.
 
 ## ✉️ Contact
 
-Project Link: https://github.com/DhaatuTheGamer/agrosymbiont
+Project Link: [https://github.com/dhaatrik/agrosymbiont](https://github.com/dhaatrik/agrosymbiont)
+
+Author: **Dhaatrik Chowdhury**
