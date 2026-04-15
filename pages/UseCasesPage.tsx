@@ -7,7 +7,8 @@ import InteractiveMap from '../components/InteractiveMap';
 import { TrendingUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-const CaseStudyCard: React.FC<{ title: string, category: string, challenge: string, solution: string, result: string, testimonial?: string }> = ({ title, category, challenge, solution, result, testimonial }) => {
+// ⚡ Bolt Optimization: Wrapped CaseStudyCard in React.memo to prevent unnecessary re-renders when mapping.
+const CaseStudyCard: React.FC<{ title: string, category: string, challenge: string, solution: string, result: string, testimonial?: string }> = React.memo(({ title, category, challenge, solution, result, testimonial }) => {
     const { t } = useTranslation();
     return (
     <TiltCard className="h-full">
@@ -44,7 +45,7 @@ const CaseStudyCard: React.FC<{ title: string, category: string, challenge: stri
         </div>
     </TiltCard>
 );
-}
+});
 
 const UseCasesPage: React.FC = () => {
   const { t } = useTranslation();

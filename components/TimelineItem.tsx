@@ -1,7 +1,8 @@
 import React from 'react';
 import TiltCard from './TiltCard';
 
-const TimelineItem: React.FC<{ year: string, title: string, description: string, align: 'left' | 'right' }> = ({ year, title, description, align }) => (
+// ⚡ Bolt Optimization: Wrapped TimelineItem in React.memo to prevent unnecessary re-renders when mapping.
+const TimelineItem: React.FC<{ year: string, title: string, description: string, align: 'left' | 'right' }> = React.memo(({ year, title, description, align }) => (
     <div className={`mb-16 flex w-full ${align === 'right' ? 'flex-row-reverse' : ''} items-center justify-between group perspective-1000`}>
         <div className="w-[45%]">
             <TiltCard>
@@ -21,6 +22,6 @@ const TimelineItem: React.FC<{ year: string, title: string, description: string,
 
         <div className="w-[45%]"></div>
     </div>
-);
+));
 
 export default TimelineItem;
