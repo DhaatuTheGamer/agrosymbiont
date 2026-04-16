@@ -2,6 +2,7 @@ import React, { useState, memo, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Wheat, Apple, Coffee, Sprout, Search, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 type CropType = 'wheat' | 'apple' | 'coffee' | 'vegetables' | null;
 type SymptomType = 'yellow_leaves' | 'stunted_growth' | 'low_yield' | 'pests' | null;
@@ -82,12 +83,14 @@ const DiagnosisResult = memo(({
   isAnalyzing,
   showResult,
   recommendedSolution,
-  t
+  t,
+  onViewProduct
 }: {
   isAnalyzing: boolean;
   showResult: boolean;
   recommendedSolution: Solution | null;
   t: (key: string) => string;
+  onViewProduct: () => void;
 }) => (
   <div aria-live="polite" className="bg-stone-50 dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-700 p-6 flex flex-col items-center justify-center min-h-[300px] text-center relative overflow-hidden h-full">
       {isAnalyzing ? (
@@ -107,7 +110,10 @@ const DiagnosisResult = memo(({
               <h3 className="text-sm font-bold text-stone-500 uppercase tracking-wider mb-2">{t('solver_recommended')}</h3>
               <h4 className="text-2xl font-black text-cerulean-blue dark:text-blue-400 mb-4">{recommendedSolution.name}</h4>
               <p className="text-stone-600 dark:text-stone-300 mb-6 max-w-sm">{recommendedSolution.desc}</p>
-              <button className="bg-mustard-yellow text-stone-900 font-bold py-2 px-6 rounded-lg hover:bg-yellow-500 transition-colors shadow-md flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900">
+              <button
+                  onClick={onViewProduct}
+                  className="bg-mustard-yellow text-stone-900 font-bold py-2 px-6 rounded-lg hover:bg-yellow-500 transition-colors shadow-md flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-mustard-yellow focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-900"
+              >
                   {t('solver_view_product')} <ArrowRight className="w-4 h-4" />
               </button>
           </motion.div>
@@ -122,6 +128,7 @@ const DiagnosisResult = memo(({
 
 const CropProblemSolver: React.FC = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const cropOptions = useMemo(() => [
     { id: 'wheat' as CropType, label: t('solver_crop_cereals'), icon: <Wheat className="w-6 h-6" /> },
@@ -245,6 +252,7 @@ const CropProblemSolver: React.FC = () => {
             showResult={showResult}
             recommendedSolution={recommendedSolution}
             t={t}
+            onViewProduct={() => navigate('/products')}
         />
       </div>
     </div>
