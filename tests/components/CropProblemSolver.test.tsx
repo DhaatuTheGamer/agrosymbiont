@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import CropProblemSolver from '@/components/CropProblemSolver';
+import { MemoryRouter } from 'react-router-dom';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 // Mock i18next
@@ -39,7 +40,7 @@ describe('CropProblemSolver Component', () => {
   });
 
   it('renders initial state correctly', () => {
-    render(<CropProblemSolver />);
+    render(<MemoryRouter><CropProblemSolver /></MemoryRouter>);
 
     // Check title and subtitle
     expect(screen.getByText('solver_title')).toBeInTheDocument();
@@ -60,7 +61,7 @@ describe('CropProblemSolver Component', () => {
   });
 
   it('selects a crop and reveals symptoms', () => {
-    render(<CropProblemSolver />);
+    render(<MemoryRouter><CropProblemSolver /></MemoryRouter>);
 
     // Click on wheat
     const wheatBtn = screen.getByText('solver_crop_cereals');
@@ -76,7 +77,7 @@ describe('CropProblemSolver Component', () => {
   });
 
   it('selects a symptom and reveals analyze button', () => {
-    render(<CropProblemSolver />);
+    render(<MemoryRouter><CropProblemSolver /></MemoryRouter>);
 
     // Click on wheat
     fireEvent.click(screen.getByText('solver_crop_cereals'));
@@ -89,7 +90,7 @@ describe('CropProblemSolver Component', () => {
   });
 
   it('clicks analyze to show loading and then results', () => {
-    render(<CropProblemSolver />);
+    render(<MemoryRouter><CropProblemSolver /></MemoryRouter>);
 
     // Click on wheat
     fireEvent.click(screen.getByText('solver_crop_cereals'));
@@ -124,7 +125,7 @@ describe('CropProblemSolver Component', () => {
   });
 
   it('changing crop resets the symptom and result', () => {
-    render(<CropProblemSolver />);
+    render(<MemoryRouter><CropProblemSolver /></MemoryRouter>);
 
     // Click on wheat, symptom, analyze
     fireEvent.click(screen.getByText('solver_crop_cereals'));
