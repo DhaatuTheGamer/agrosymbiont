@@ -1,22 +1,10 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import AnimatedSection from '../components/AnimatedSection';
 import TiltCard from '../components/TiltCard';
 import { Check, Sparkles, TrendingUp, Shield, FlaskConical, FileText } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-
-const ServiceSkeletonCard: React.FC = () => (
-    <div className="bg-white dark:bg-stone-800 p-10 rounded-[2rem] shadow-lg flex flex-col h-full border border-stone-100 dark:border-stone-700 animate-pulse">
-        <div className="flex items-center mb-8">
-            <div className="mr-6 flex-shrink-0 w-16 h-16 bg-stone-200 dark:bg-stone-700 rounded-2xl"></div>
-            <div className="h-8 bg-stone-200 dark:bg-stone-700 rounded w-1/2"></div>
-        </div>
-        <div className="h-4 bg-stone-200 dark:bg-stone-700 rounded w-full mb-2"></div>
-        <div className="h-4 bg-stone-200 dark:bg-stone-700 rounded w-5/6 mb-2"></div>
-        <div className="h-4 bg-stone-200 dark:bg-stone-700 rounded w-4/5"></div>
-    </div>
-);
 
 // ⚡ Bolt Optimization: Memoized presentation component to prevent unnecessary re-renders.
 const ServiceIconCard: React.FC<{ title: string; description: string; icon: React.ReactNode }> = React.memo(({ title, description, icon }) => (
@@ -47,20 +35,8 @@ const WhyChooseItem: React.FC<{children: React.ReactNode}> = React.memo(({childr
     </li>
 ));
 
-// Performance optimization: Pre-allocate static array outside the render loop
-// to avoid unnecessary object creation/GC pressure on every render.
-const SERVICE_SKELETON_ITEMS = [1, 2, 3, 4];
-
 const ServicesPage: React.FC = () => {
     const { t } = useTranslation();
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 1500);
-        return () => clearTimeout(timer);
-    }, []);
 
     return (
         <div className="py-20">
@@ -76,48 +52,37 @@ const ServicesPage: React.FC = () => {
                 </AnimatedSection>
 
                 <AnimatedSection className="mt-16">
-                    {isLoading ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {SERVICE_SKELETON_ITEMS.map(i => <ServiceSkeletonCard key={i} />)}
-                            <div className="md:col-span-2 flex justify-center">
-                                <div className="max-w-xl w-full">
-                                    <ServiceSkeletonCard />
-                                </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <ServiceIconCard
+                            title={t('tech_service_1_title')}
+                            description={t('tech_service_1_desc')}
+                            icon={<Sparkles className="w-8 h-8" strokeWidth={1.5} />}
+                        />
+                         <ServiceIconCard
+                            title={t('tech_service_2_title')}
+                            description={t('tech_service_2_desc')}
+                            icon={<TrendingUp className="w-8 h-8" strokeWidth={1.5} />}
+                        />
+                         <ServiceIconCard
+                            title={t('tech_service_3_title')}
+                            description={t('tech_service_3_desc')}
+                            icon={<Shield className="w-8 h-8" strokeWidth={1.5} />}
+                        />
+                         <ServiceIconCard
+                            title={t('tech_service_4_title')}
+                            description={t('tech_service_4_desc')}
+                            icon={<FlaskConical className="w-8 h-8" strokeWidth={1.5} />}
+                        />
+                         <div className="md:col-span-2 flex justify-center">
+                            <div className="max-w-xl w-full">
+                                <ServiceIconCard
+                                    title={t('tech_service_5_title')}
+                                    description={t('tech_service_5_desc')}
+                                    icon={<FileText className="w-8 h-8" strokeWidth={1.5} />}
+                                />
                             </div>
                         </div>
-                    ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <ServiceIconCard 
-                                title={t('tech_service_1_title')}
-                                description={t('tech_service_1_desc')}
-                                icon={<Sparkles className="w-8 h-8" strokeWidth={1.5} />}
-                            />
-                             <ServiceIconCard 
-                                title={t('tech_service_2_title')}
-                                description={t('tech_service_2_desc')}
-                                icon={<TrendingUp className="w-8 h-8" strokeWidth={1.5} />}
-                            />
-                             <ServiceIconCard 
-                                title={t('tech_service_3_title')}
-                                description={t('tech_service_3_desc')}
-                                icon={<Shield className="w-8 h-8" strokeWidth={1.5} />}
-                            />
-                             <ServiceIconCard 
-                                title={t('tech_service_4_title')}
-                                description={t('tech_service_4_desc')}
-                                icon={<FlaskConical className="w-8 h-8" strokeWidth={1.5} />}
-                            />
-                             <div className="md:col-span-2 flex justify-center">
-                                <div className="max-w-xl w-full">
-                                    <ServiceIconCard 
-                                        title={t('tech_service_5_title')}
-                                        description={t('tech_service_5_desc')}
-                                        icon={<FileText className="w-8 h-8" strokeWidth={1.5} />}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    )}
+                    </div>
                 </AnimatedSection>
 
                 {/* Why Choose Us Section */}
