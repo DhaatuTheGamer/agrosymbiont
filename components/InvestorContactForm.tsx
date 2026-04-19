@@ -5,6 +5,36 @@ import AnimatedSection from './AnimatedSection';
 import { motion } from 'framer-motion';
 import { FileText, ShieldCheck, Check } from 'lucide-react';
 
+interface InputProps {
+    id: string;
+    name: string;
+    type?: string;
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    error?: string;
+    placeholder?: string;
+    label: string;
+}
+
+// ⚡ Bolt Optimization: Wrapped inputs in React.memo to prevent all form fields from re-rendering
+// on every single keystroke. Since the parent InvestorContactForm manages the entire form state,
+// updating one field would previously re-render all fields unnecessarily.
+const MemoizedInput = React.memo(({ id, name, type = "text", value, onChange, error, placeholder, label }: InputProps) => (
+    <div>
+        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2" htmlFor={id}>{label}</label>
+        <input type={type} id={id} name={name} value={value} onChange={onChange} aria-invalid={!!error} aria-describedby={error ? `${id}-error` : undefined} className={`w-full px-5 py-3 rounded-xl bg-stone-50 dark:bg-stone-900 border ${error ? 'border-red-500' : 'border-stone-200 dark:border-stone-700'} text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cerulean-blue transition-all`} placeholder={placeholder} />
+        <div aria-live="polite">{error && <p id={`${id}-error`} className="text-red-500 text-xs mt-1 font-medium">{error}</p>}</div>
+    </div>
+));
+MemoizedInput.displayName = 'MemoizedInput';
+
+const MemoizedTextarea = React.memo(({ id, name, value, onChange, label, placeholder }: InputProps) => (
+    <div>
+        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2" htmlFor={id}>{label}</label>
+        <textarea id={id} name={name} value={value} onChange={onChange} rows={4} className="w-full px-5 py-3 rounded-xl bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cerulean-blue transition-all resize-none" placeholder={placeholder} />
+    </div>
+));
+MemoizedTextarea.displayName = 'MemoizedTextarea';
 
 const InvestorContactForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -29,12 +59,16 @@ const InvestorContactForm: React.FC = () => {
     return Object.keys(tempErrors).length === 0;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    if (errors[e.target.name]) {
-        setErrors({ ...errors, [e.target.name]: '' });
-    }
-  };
+  const handleChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    setErrors(prev => {
+        if (prev[name]) {
+            return { ...prev, [name]: '' };
+        }
+        return prev;
+    });
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,26 +111,19 @@ const InvestorContactForm: React.FC = () => {
              ) : (
                 <form onSubmit={handleSubmit} className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="md:col-span-1 border-stone-200 dark:border-stone-700">
-                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2" htmlFor="name">Full Name *</label>
-                        <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} aria-invalid={!!errors.name} aria-describedby={errors.name ? 'name-error' : undefined} className={`w-full px-5 py-3 rounded-xl bg-stone-50 dark:bg-stone-900 border ${errors.name ? 'border-red-500' : 'border-stone-200 dark:border-stone-700'} text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cerulean-blue transition-all`} placeholder="Jane Doe" />
-                        <div aria-live="polite">{errors.name && <p id="name-error" className="text-red-500 text-xs mt-1 font-medium">{errors.name}</p>}</div>
+                        <MemoizedInput type="text" id="name" name="name" label="Full Name *" value={formData.name} onChange={handleChange} error={errors.name} placeholder="Jane Doe" />
                     </div>
 
                     <div className="md:col-span-1">
-                        <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2" htmlFor="email">Work Email *</label>
-                        <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} aria-invalid={!!errors.email} aria-describedby={errors.email ? 'email-error' : undefined} className={`w-full px-5 py-3 rounded-xl bg-stone-50 dark:bg-stone-900 border ${errors.email ? 'border-red-500' : 'border-stone-200 dark:border-stone-700'} text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cerulean-blue transition-all`} placeholder="jane@investmentfirm.com" />
-                        <div aria-live="polite">{errors.email && <p id="email-error" className="text-red-500 text-xs mt-1 font-medium">{errors.email}</p>}</div>
+                        <MemoizedInput type="email" id="email" name="email" label="Work Email *" value={formData.email} onChange={handleChange} error={errors.email} placeholder="jane@investmentfirm.com" />
                     </div>
 
                     <div className="md:col-span-2">
-                         <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2" htmlFor="company">Firm / Company *</label>
-                         <input type="text" id="company" name="company" value={formData.company} onChange={handleChange} aria-invalid={!!errors.company} aria-describedby={errors.company ? 'company-error' : undefined} className={`w-full px-5 py-3 rounded-xl bg-stone-50 dark:bg-stone-900 border ${errors.company ? 'border-red-500' : 'border-stone-200 dark:border-stone-700'} text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cerulean-blue transition-all`} placeholder="Investment Firm LLC" />
-                         <div aria-live="polite">{errors.company && <p id="company-error" className="text-red-500 text-xs mt-1 font-medium">{errors.company}</p>}</div>
+                         <MemoizedInput type="text" id="company" name="company" label="Firm / Company *" value={formData.company} onChange={handleChange} error={errors.company} placeholder="Investment Firm LLC" />
                     </div>
 
                     <div className="md:col-span-2">
-                         <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2" htmlFor="message">Message (Optional)</label>
-                         <textarea id="message" name="message" value={formData.message} onChange={handleChange} rows={4} className="w-full px-5 py-3 rounded-xl bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cerulean-blue transition-all resize-none" placeholder="Tell us about your investment mandate or any specifics..." />
+                         <MemoizedTextarea id="message" name="message" label="Message (Optional)" value={formData.message} onChange={handleChange} placeholder="Tell us about your investment mandate or any specifics..." />
                     </div>
 
                     <div className="md:col-span-2 flex items-center justify-between mt-4">
