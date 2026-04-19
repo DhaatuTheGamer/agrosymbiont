@@ -1,0 +1,58 @@
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { submitJobApplication, submitContactForm, JobApplicationData, ContactFormData } from '../../services/api';
+import { API_SIMULATION_DELAY } from '../../utils/constants';
+
+describe('API Services', () => {
+    let consoleSpy: any;
+
+    beforeEach(() => {
+        consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+        vi.useFakeTimers();
+    });
+
+    afterEach(() => {
+        consoleSpy.mockRestore();
+        vi.useRealTimers();
+    });
+
+    describe('submitJobApplication', () => {
+        it('should successfully submit a job application and log the output', async () => {
+            const data: JobApplicationData = {
+                name: 'John Doe',
+                email: 'john.doe@example.com',
+                linkedin: 'https://linkedin.com/in/johndoe',
+                resume: null,
+            };
+
+            const promise = submitJobApplication(data);
+
+            expect(consoleSpy).toHaveBeenCalledWith('Submitting job application:', data.name);
+
+            vi.advanceTimersByTime(API_SIMULATION_DELAY);
+
+            const result = await promise;
+
+            expect(result).toEqual({ success: true });
+        });
+    });
+
+    describe('submitContactForm', () => {
+        it('should successfully submit a contact form and log the output immediately', async () => {
+            const data: ContactFormData = {
+                name: 'Jane Doe',
+                email: 'jane.doe@example.com',
+                phone: '123-456-7890',
+                inquiryType: 'general',
+                message: 'Hello, world!',
+            };
+
+            const promise = submitContactForm(data);
+
+            expect(consoleSpy).toHaveBeenCalledWith('Submitting contact form:', data.email);
+
+            const result = await promise;
+
+            expect(result).toEqual({ success: true });
+        });
+    });
+});
