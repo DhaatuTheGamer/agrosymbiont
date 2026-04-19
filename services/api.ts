@@ -20,7 +20,6 @@ export interface ContactFormData {
  */
 export const submitJobApplication = async (data: JobApplicationData): Promise<{ success: boolean }> => {
     console.log('Submitting job application:', data.name);
-    await new Promise(resolve => setTimeout(resolve, API_SIMULATION_DELAY));
     return { success: true };
 };
 
