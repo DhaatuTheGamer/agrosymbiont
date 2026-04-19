@@ -5,3 +5,6 @@
 ## 2026-04-19 - Removing Artificial Loading Delays
 **Learning:** Artificial delays using `setTimeout` in `useEffect` to show skeleton loaders negatively impact perceived performance by forcing a wait even when data is available.
 **Action:** Initialize loading states to `false` if data is static or immediately available, and remove simulated delay logic to improve responsiveness.
+## 2026-04-19 - Removing Artificial Loading Delays
+**Learning:** Artificial delays using `setTimeout` in `useEffect` to show skeleton loaders negatively impact perceived performance by forcing a wait even when data is available.
+**Action:** Initialize loading states to `false` if data is static or immediately available, and remove simulated delay logic to improve responsiveness. Clean up associated Vitest timer mocks.
