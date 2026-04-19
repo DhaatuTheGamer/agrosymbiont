@@ -26,11 +26,11 @@ describe('API Services', () => {
 
             const promise = submitJobApplication(data);
 
-            expect(consoleSpy).toHaveBeenCalledWith('Submitting job application:', data.name);
-
             vi.advanceTimersByTime(API_SIMULATION_DELAY);
 
             const result = await promise;
+
+            expect(consoleSpy).toHaveBeenCalledWith('Submitting job application:', data.name);
 
             expect(result).toEqual({ success: true });
         });
@@ -46,11 +46,9 @@ describe('API Services', () => {
                 message: 'Hello, world!',
             };
 
-            const promise = submitContactForm(data);
+            const result = await submitContactForm(data);
 
             expect(consoleSpy).toHaveBeenCalledWith('Submitting contact form:', data.email);
-
-            const result = await promise;
 
             expect(result).toEqual({ success: true });
         });
