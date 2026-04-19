@@ -101,6 +101,7 @@ describe('useJobApplicationForm', () => {
     });
 
     it('should submit form when all fields are valid', async () => {
+        const submitSpy = vi.spyOn(api, 'submitJobApplication').mockResolvedValueOnce({ success: true });
         const onSuccess = vi.fn();
         const { result } = renderHook(() => useJobApplicationForm(onSuccess));
         const file = new File(['resume content'], 'resume.pdf', { type: 'application/pdf' });
@@ -132,6 +133,8 @@ describe('useJobApplicationForm', () => {
         expect(result.current.isSubmitting).toBe(false);
         expect(result.current.isSubmitted).toBe(true);
         expect(onSuccess).toHaveBeenCalled();
+
+        submitSpy.mockRestore();
     });
 
     it('should handle API errors on submit', async () => {
