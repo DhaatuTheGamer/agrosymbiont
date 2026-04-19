@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, screen, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import ServicesPage from '@/pages/ServicesPage';
-import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { vi, describe, it, expect } from 'vitest';
 
 // Mock i18next
 vi.mock('react-i18next', () => ({
@@ -40,16 +40,6 @@ vi.mock( '@/components/TiltCard', () => ({
 }));
 
 describe('ServicesPage', () => {
-  beforeEach(() => {
-    vi.useFakeTimers();
-  });
-
-  afterEach(() => {
-    vi.clearAllTimers();
-    vi.useRealTimers();
-    vi.clearAllMocks();
-  });
-
   const renderComponent = () => {
     return render(
       <MemoryRouter>
@@ -58,29 +48,8 @@ describe('ServicesPage', () => {
     );
   };
 
-  it('renders initial skeleton loading state', () => {
-    const { container } = renderComponent();
-
-    // Check that we have 5 skeleton items (4 from array + 1 standalone)
-    // The skeletons have the 'animate-pulse' class
-    const skeletons = container.querySelectorAll('.animate-pulse');
-    expect(skeletons.length).toBe(5);
-
-    // Ensure actual content isn't rendered yet
-    expect(screen.queryByText('tech_service_1_title')).not.toBeInTheDocument();
-  });
-
-  it('renders full content after loading timeout', () => {
-    const { container } = renderComponent();
-
-    // Fast-forward past the 1500ms timeout
-    act(() => {
-        vi.advanceTimersByTime(1500);
-    });
-
-    // Skeletons should be gone
-    const skeletons = container.querySelectorAll('.animate-pulse');
-    expect(skeletons.length).toBe(0);
+  it('renders full content', () => {
+    renderComponent();
 
     // Headers and descriptive text
     expect(screen.getByText('tech_expertise')).toBeInTheDocument();
@@ -110,19 +79,5 @@ describe('ServicesPage', () => {
     const ctaButton = screen.getByText('tech_cta_btn');
     expect(ctaButton).toBeInTheDocument();
     expect(ctaButton.closest('a')).toHaveAttribute('href', '/contact');
-  });
-
-  it('cleans up timeout on unmount', () => {
-    const clearTimeoutSpy = vi.spyOn(window, 'clearTimeout');
-
-    const { unmount } = renderComponent();
-
-    // Unmount before timer finishes
-    unmount();
-
-    // Verify clearTimeout was called
-    expect(clearTimeoutSpy).toHaveBeenCalledTimes(1);
-
-    clearTimeoutSpy.mockRestore();
   });
 });
