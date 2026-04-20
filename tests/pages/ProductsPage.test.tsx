@@ -139,7 +139,7 @@ describe('ProductsPage', () => {
 
   it('shows error when submitting invalid email', () => {
     renderComponent();
-    const input = screen.getByLabelText('Email for product notifications');
+    const input = screen.getByLabelText(/Email/i);
     const submitBtn = screen.getByRole('button', { name: /Notify Me/i });
 
     // Type invalid email
@@ -151,7 +151,7 @@ describe('ProductsPage', () => {
 
   it('submits successfully with valid email', async () => {
     renderComponent();
-    const input = screen.getByLabelText('Email for product notifications');
+    const input = screen.getByLabelText(/Email/i);
     const submitBtn = screen.getByRole('button', { name: /Notify Me/i });
 
     // Valid email with ReDoS compliant regex used in app
