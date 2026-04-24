@@ -1,7 +1,7 @@
-
 import React, { Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Layout from './components/Layout';
+import { ConnectivityWrapper } from './components/ConnectivityWrapper';
 
 const HomePage = lazy(() => import('./pages/HomePage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
@@ -34,33 +34,33 @@ import SeedLoader from './components/SeedLoader';
 
 const LoadingFallback = () => <SeedLoader />;
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   return (
     <HashRouter>
       <ScrollToTop />
       <Layout>
         <Suspense fallback={<LoadingFallback />}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/products" element={<ProductsPage />} />
-            <Route path="/technology" element={<ServicesPage />} />
-            <Route path="/stories" element={<UseCasesPage />} />
-            <Route path="/resources" element={<ResourcesPage />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:id" element={<BlogPostPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/onboarding" element={<OnboardingPage />} />
-            <Route path="/careers" element={<CareersPage />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-            <Route path="/terms-of-service" element={<TermsOfServicePage />} />
-            <Route path="/faq" element={<FAQPage />} />
-            <Route path="/investors" element={<InvestorsPage />} />
-          </Routes>
+          <ConnectivityWrapper>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/products" element={<ProductsPage />} />
+              <Route path="/technology" element={<ServicesPage />} />
+              <Route path="/stories" element={<UseCasesPage />} />
+              <Route path="/resources" element={<ResourcesPage />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/:id" element={<BlogPostPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/onboarding" element={<OnboardingPage />} />
+              <Route path="/careers" element={<CareersPage />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+              <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+              <Route path="/faq" element={<FAQPage />} />
+              <Route path="/investors" element={<InvestorsPage />} />
+            </Routes>
+          </ConnectivityWrapper>
         </Suspense>
       </Layout>
     </HashRouter>
   );
 };
-
-export default App;
