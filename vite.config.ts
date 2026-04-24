@@ -25,17 +25,35 @@ export default defineConfig(({ mode }) => {
             globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
             runtimeCaching: [
               {
-                urlPattern: ({ url }) => url.pathname.includes('/faq') || url.pathname.includes('/resources') || url.pathname.includes('/products'),
-                handler: 'CacheFirst',
+                urlPattern: ({ url }) => url.pathname.includes('/faq') || url.pathname.includes('/resources') || url.pathname.includes('/products') || url.pathname.includes('/blog'),
+                handler: 'StaleWhileRevalidate',
                 options: {
                   cacheName: 'essential-pages-cache',
                   expiration: {
-                    maxEntries: 10,
-                    maxAgeSeconds: 60 * 60 * 24 * 7 // 7 days
+                    maxEntries: 20,
+                    maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
                   },
                   cacheableResponse: {
                     statuses: [0, 200]
                   }
+                }
+              },
+              {
+                urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/,
+                handler: 'CacheFirst',
+                options: {
+                  cacheName: 'images-cache',
+                  expiration: {
+                    maxEntries: 50,
+                    maxAgeSeconds: 60 * 60 * 24 * 60 // 60 days
+                  }
+                }
+              },
+              {
+                urlPattern: /^https:\/\/fonts\.googleapis\.com/,
+                handler: 'StaleWhileRevalidate',
+                options: {
+                  cacheName: 'google-fonts-cache'
                 }
               }
             ]
